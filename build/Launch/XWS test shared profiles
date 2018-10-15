@@ -1,0 +1,2 @@
+java -classpath "`dirname "$0"`/lib/*:`dirname "$0"`/conf" org.decisiondeck.jmcda.xws.XWSExecutor -w org.decision_deck.jmcda.xws.ws.XWSSharedProfiles -i "Test files/SharedProfiles/Initial" -o "out/SharedProfiles/Initial"
+java -classpath "`dirname "$0"`/lib/*:`dirname "$0"`/conf" org.decisiondeck.jmcda.xws.XWSExecutor -w org.decision_deck.jmcda.xws.ws.XWSSharedProfiles -i "Test files/SharedProfiles/Constrained" -o "out/SharedProfiles/Constrained"

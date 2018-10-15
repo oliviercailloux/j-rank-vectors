@@ -1,0 +1,1 @@
+java -classpath "`dirname $0`/lib/*:`dirname $0`/conf" org.decisiondeck.jmcda.xws.XWSExecutor -w org.decisiondeck.jmcda.xws.ws.XWSConcordance "$1" "$2" "$3" "$4" $*
