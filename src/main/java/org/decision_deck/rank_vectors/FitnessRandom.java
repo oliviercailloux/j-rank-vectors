@@ -23,62 +23,63 @@ import com.google.common.collect.Iterables;
  */
 public class FitnessRandom implements Fitness {
 
-    private final AllRankVectors m_rvs;
+	private final AllRankVectors m_rvs;
 
-    private Preorder<List<Integer>> m_preorder;
+	private Preorder<List<Integer>> m_preorder;
 
-    public FitnessRandom(AllRankVectors rvs, Preorder<List<Integer>> preorder) {
-	checkNotNull(preorder);
-	checkArgument(rvs != null);
-	m_preorder = preorder;
-	m_rvs = rvs;
-	putDiagonal();
-	m_random = null;
-    }
-
-    @Override
-    public String toString() {
-	return FitnessType.RANDOM.toString();
-    }
-
-    /**
-     * Retrieves a maximally fitted pair. Semantically, the returned pair is unordered, but it is ordered so that the
-     * first element is lower than or equal to the second, lexicographically.
-     * 
-     * @return not <code>null</code>.
-     */
-    @Override
-    public Pair<List<Integer>, List<Integer>> getFittest() {
-	if (m_random == null) {
-	    m_random = new Random();
+	public FitnessRandom(AllRankVectors rvs, Preorder<List<Integer>> preorder) {
+		checkNotNull(preorder);
+		checkArgument(rvs != null);
+		m_preorder = preorder;
+		m_rvs = rvs;
+		putDiagonal();
+		m_random = null;
 	}
-	final Pair<List<Integer>, List<Integer>> inc = getRandomIncomparablePair(m_preorder, m_random);
-	if (inc == null) {
-	    return Pair.create(m_rvs.getRankVectors().first(), m_rvs.getRankVectors().first());
+
+	@Override
+	public String toString() {
+		return FitnessType.RANDOM.toString();
 	}
-	return inc;
-    }
 
-    @SuppressWarnings({ "unused", "all" })
-    private static final Logger s_logger = LoggerFactory.getLogger(FitnessRandom.class);
-
-    private Random m_random;
-
-    private void putDiagonal() {
-	for (List<Integer> rv : m_rvs.getRankVectors()) {
-	    m_preorder.addEqTransitive(rv, rv);
+	/**
+	 * Retrieves a maximally fitted pair. Semantically, the returned pair is
+	 * unordered, but it is ordered so that the first element is lower than or equal
+	 * to the second, lexicographically.
+	 * 
+	 * @return not <code>null</code>.
+	 */
+	@Override
+	public Pair<List<Integer>, List<Integer>> getFittest() {
+		if (m_random == null) {
+			m_random = new Random();
+		}
+		final Pair<List<Integer>, List<Integer>> inc = getRandomIncomparablePair(m_preorder, m_random);
+		if (inc == null) {
+			return Pair.create(m_rvs.getRankVectors().first(), m_rvs.getRankVectors().first());
+		}
+		return inc;
 	}
-    }
 
-    Pair<List<Integer>, List<Integer>> getRandomIncomparablePair(Preorder<List<Integer>> p, Random r) {
-	final Set<Pair<List<Integer>, List<Integer>>> i = RelationUtils.getIncomp(p);
-	if (i.isEmpty()) {
-	    return null;
+	@SuppressWarnings({ "unused", "all" })
+	private static final Logger s_logger = LoggerFactory.getLogger(FitnessRandom.class);
+
+	private Random m_random;
+
+	private void putDiagonal() {
+		for (List<Integer> rv : m_rvs.getRankVectors()) {
+			m_preorder.addEqTransitive(rv, rv);
+		}
 	}
-	return Iterables.get(i, r.nextInt(i.size()));
-    }
 
-    public void setRandom(Random random) {
-	m_random = random;
-    }
+	Pair<List<Integer>, List<Integer>> getRandomIncomparablePair(Preorder<List<Integer>> p, Random r) {
+		final Set<Pair<List<Integer>, List<Integer>>> i = RelationUtils.getIncomp(p);
+		if (i.isEmpty()) {
+			return null;
+		}
+		return Iterables.get(i, r.nextInt(i.size()));
+	}
+
+	public void setRandom(Random random) {
+		m_random = random;
+	}
 }

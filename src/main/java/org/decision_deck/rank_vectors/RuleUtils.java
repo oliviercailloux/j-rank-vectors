@@ -12,36 +12,36 @@ import org.decision_deck.rank_vectors.RuleComparerNbWinners.RandomProfilesGenera
 
 public class RuleUtils {
 
-    public static double getAverageNbWinners(int m, int n, RankBasedVotingRule rule, int nbTests) {
-	checkArgument(nbTests >= 1);
-	checkArgument(m >= 1);
-	checkArgument(n >= 1);
-	checkNotNull(rule);
-	final AbstractCollection<Set<List<Integer>>> testProfiles = new RandomProfilesGenerator(m, n, nbTests);
-	int sumWinners = 0;
-	for (Set<List<Integer>> profile : testProfiles) {
-	    final int nbWinners = rule.getNbWinners(profile);
-	    sumWinners += nbWinners;
+	public static double getAverageNbWinners(int m, int n, RankBasedVotingRule rule, int nbTests) {
+		checkArgument(nbTests >= 1);
+		checkArgument(m >= 1);
+		checkArgument(n >= 1);
+		checkNotNull(rule);
+		final AbstractCollection<Set<List<Integer>>> testProfiles = new RandomProfilesGenerator(m, n, nbTests);
+		int sumWinners = 0;
+		for (Set<List<Integer>> profile : testProfiles) {
+			final int nbWinners = rule.getNbWinners(profile);
+			sumWinners += nbWinners;
+		}
+		return ((double) sumWinners) / nbTests;
 	}
-	return ((double) sumWinners) / nbTests;
-    }
 
-    static public double getAverage(Collection<Double> numbers) {
-	double sum = 0;
-	for (Double number : numbers) {
-	    sum += number;
+	static public double getAverage(Collection<Double> numbers) {
+		double sum = 0;
+		for (Double number : numbers) {
+			sum += number;
+		}
+		final double avg = sum / numbers.size();
+		return avg;
 	}
-	final double avg = sum / numbers.size();
-	return avg;
-    }
 
-    static public double getAverageInt(Collection<Integer> numbers) {
-	int sum = 0;
-	for (Integer number : numbers) {
-            sum += number;
-        }
-	final double avg = (double) sum / numbers.size();
-        return avg;
-    }
+	static public double getAverageInt(Collection<Integer> numbers) {
+		int sum = 0;
+		for (Integer number : numbers) {
+			sum += number;
+		}
+		final double avg = (double) sum / numbers.size();
+		return avg;
+	}
 
 }
