@@ -136,9 +136,9 @@
 
 
 		<dependency>
-			<groupId>org.decision_deck.jmcda</groupId>
-			<artifactId>jmcda-utils</artifactId>
-			<version>0.5.3</version>
+			<groupId>io.github.oliviercailloux.jmcda</groupId>
+			<artifactId>utils</artifactId>
+			<version>0.5.4</version>
 		</dependency>
 		<dependency>
 			<!-- Super Csv is not great after all. -->
