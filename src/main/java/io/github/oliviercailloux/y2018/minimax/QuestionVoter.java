@@ -1,11 +1,11 @@
-package org.decision_deck.rank_vectors;
+package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import io.github.oliviercailloux.y2018.j_voting.*;
 
-public class QuestionVoter implements Question{
+public class QuestionVoter {
 
 	private QuestionType qt;
 	private Voter voter;

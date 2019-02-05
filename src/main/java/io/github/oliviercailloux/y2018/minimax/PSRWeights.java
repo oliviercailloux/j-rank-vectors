@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.j_voting;
+package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,18 +11,15 @@ public class PSRWeights {
 	private final double upperBound;
 	private final double lowerBound;
 	
-	public PSRWeights(List<Double> weights, double ub, double lb) {
-		this.upperBound=ub;
-		this.lowerBound=lb;
+	public PSRWeights(List<Double> weights) {
+		this.upperBound=1;
+		this.lowerBound=0;
+		//TODO check size and 1 m position
 		if(!checkConvexity(weights)) {
 			throw new IllegalArgumentException("Sequence not valid");
 		}
 		this.weights = new LinkedList<Double>();
 		this.weights.addAll(weights);
-	}
-	
-	public PSRWeights(List<Double> weights) {
-		this(weights, 1.0, 0.0);
 	}
 	
 	private boolean checkMonotonicity(List<Double> weights) {
@@ -72,7 +69,7 @@ public class PSRWeights {
 	 * 
 	 * @return the weight of the given rank
 	 */
-	public double getRankWeight(int rank) {
+	public double getWeightAtRank(int rank) {
 		return this.weights.get(rank-1);
 	}
 	

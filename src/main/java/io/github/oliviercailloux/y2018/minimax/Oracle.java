@@ -1,4 +1,4 @@
-package org.decision_deck.rank_vectors;
+package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.Set;
 
@@ -6,18 +6,19 @@ import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class Oracle {
 	
-	private StrictPreference pref;
+	//mustbeamap
+	private VoterStrictPreference pref;
 	private PSRWeights w;
 	
 	public Oracle(StrictPreference pref, PSRWeights w) {
-		this.pref = new StrictPreference(pref.getAlternatives());
+	//	this.pref = new VoterStrictPreference(pref.getAlternatives());
 		this.w = new PSRWeights(w.getWeights());
 	}
 	
 	public boolean isYes(Question q) {
-		switch (q.type()) {
+		switch (q.getType()) {
 		case VOTER_QUESTION:
-			return askVoter((QuestionVoter)q);
+			return pref.askQuestion(q.getQuestionVoter());
 		case COMMITTEE_QUESTION:
 			return askCommittee(q);
 		default:

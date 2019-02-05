@@ -1,10 +1,13 @@
-package io.github.oliviercailloux.y2018.j_voting;
+package io.github.oliviercailloux.y2018.minimax;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.graph.Graph;
 import com.google.common.graph.Graphs;
 import com.google.common.graph.MutableGraph;
+
+import io.github.oliviercailloux.y2018.j_voting.Alternative;
+import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class PartialPreference {
 
@@ -20,7 +23,7 @@ public class PartialPreference {
 		this.pref= Graphs.copyOf(pref);
 	}
 
-	public MutableGraph<Alternative> getPref(){
+	public MutableGraph<Alternative> asGraph(){
 		return this.pref;
 	}
 	

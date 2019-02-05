@@ -1,4 +1,4 @@
-package org.decision_deck.rank_vectors;
+package io.github.oliviercailloux.y2018.minimax;
 
 import com.google.common.collect.ImmutableMap;
 
