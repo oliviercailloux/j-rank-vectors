@@ -6,5 +6,3 @@ image:https://travis-ci.com/oliviercailloux/j-rank-vectors.svg?branch=master["Bu
 
 A software that accompanies the http://www.lamsade.dauphine.fr/~ocailloux/#publications[article]: Cailloux, Olivier and Ulle Endriss. 2014. “Eliciting a Suitable Voting Rule via Examples”.
 
-Extended with code from https://github.com/Perciii/J-Voting/.
-
