@@ -1,7 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 import io.github.oliviercailloux.y2018.j_voting.*;
 
@@ -27,8 +27,14 @@ public class QuestionVoter {
 		return this.voter;
 	}
 	
-	public Set<Alternative> getQuestion(){
-		Set<Alternative> s=new HashSet<Alternative>();
+	
+	/**
+	 * Return a question of the type a > b
+	 *
+	 * @return a list of alternative. The first position contains "a", the second "b".
+	 */
+	public List<Alternative> getQuestion(){
+		List<Alternative> s=new LinkedList<Alternative>();
 		s.add(this.a);
 		s.add(this.b);
 		return s;

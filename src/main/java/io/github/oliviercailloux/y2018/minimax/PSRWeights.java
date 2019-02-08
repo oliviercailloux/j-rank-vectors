@@ -5,30 +5,32 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.apfloat.Aprational;
+
+import com.google.common.base.Preconditions;
+
 public class PSRWeights {
 	
 	private final List<Double> weights;
-	private final double upperBound;
-	private final double lowerBound;
+	private final double upperBound=1;
+	private final double lowerBound=0;
 	
 	public PSRWeights(List<Double> weights) {
-		this.upperBound=1;
-		this.lowerBound=0;
-		//TODO check size and 1 m position
-		if(!checkConvexity(weights)) {
-			throw new IllegalArgumentException("Sequence not valid");
+		Preconditions.checkNotNull(weights);
+		if(weights.size()>1) {
+			if(weights.get(0)!=upperBound || weights.get(weights.size()-1)!=lowerBound || !checkConvexity(weights)) {
+				throw new IllegalArgumentException("Sequence not valid");
+			}
 		}
 		this.weights = new LinkedList<Double>();
 		this.weights.addAll(weights);
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean checkMonotonicity(List<Double> weights) {
 		Iterator<Double> ls= weights.iterator();
-		double curr=this.upperBound;
+		double curr;
 		double prev= ls.next();
-		if(prev != this.upperBound){
-			return false;
-		}
 		while(ls.hasNext()) {
 			curr=ls.next();
 			if(prev < curr) {
@@ -36,20 +38,11 @@ public class PSRWeights {
 			}
 			prev=curr;
 		}
-		if(curr != this.lowerBound){
-			return false;
-		}
 		return true;
 	}
 	
 	private boolean checkConvexity(List<Double> weights){
-		if(weights.size()<3) {
-			//TODO
-		}
 		double wi1,wi2,wi3;
-		if(weights.get(0) != this.upperBound){
-			return false;
-		}
 		for(int i=0;i<weights.size()-2;i++) {
 			wi1=weights.get(i);
 			wi2=weights.get(i+1);
@@ -57,9 +50,6 @@ public class PSRWeights {
 			if((wi1-wi2)<(wi2-wi3)) {
 				return false;
 			}
-		}
-		if(weights.get(weights.size()-1) != this.lowerBound){
-			return false;
 		}
 		return true;
 	}
@@ -75,6 +65,15 @@ public class PSRWeights {
 	
 	public List<Double> getWeights(){
 		return this.weights;
+	}
+	
+	/**
+	 * @return the result of the query (w_i − w_{i+1}) >= λ (w_{i+1} − w_{i+2})
+	 */
+	public boolean askQuestion(QuestionCommittee qc) {
+		int i= qc.getRank();
+		Aprational lambda = qc.getLambda();
+		return (weights.get(i-1)-weights.get(i))>=(lambda.doubleValue()*(weights.get(i)-weights.get(i+1)));
 	}
 	
 	public String toString(){

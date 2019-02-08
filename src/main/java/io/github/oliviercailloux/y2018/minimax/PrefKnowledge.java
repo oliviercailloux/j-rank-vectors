@@ -6,13 +6,12 @@ import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class PrefKnowledge {
 
-	private ConstraintsOnWeights weights;
 	private ImmutableMap<Voter,PartialPreference> profile;
+	private ConstraintsOnWeights weights;
 	
-	
-	public PrefKnowledge(ConstraintsOnWeights weights, ImmutableMap<Voter, PartialPreference> profile) {
+	public PrefKnowledge(ImmutableMap<Voter, PartialPreference> profile, ConstraintsOnWeights weights) {
 		this.weights = weights;
-		this.profile = profile;
+		this.profile = ImmutableMap.copyOf(profile);
 	}
 	
 	
