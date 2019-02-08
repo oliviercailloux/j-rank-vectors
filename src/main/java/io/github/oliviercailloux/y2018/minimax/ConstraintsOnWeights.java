@@ -12,6 +12,7 @@ import io.github.oliviercailloux.jlp.elements.Objective;
 import io.github.oliviercailloux.jlp.elements.RangeOfDouble;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
 import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
+import io.github.oliviercailloux.jlp.elements.Term;
 import io.github.oliviercailloux.jlp.elements.Variable;
 import io.github.oliviercailloux.jlp.elements.VariableDomain;
 import io.github.oliviercailloux.jlp.mp.MP;
@@ -123,6 +124,15 @@ public class ConstraintsOnWeights {
 
 	public int getM() {
 		return builder.getVariables().size();
+	}
+
+	public Term getTerm(double coefficient, int rank) {
+		return Term.of(coefficient, getVariable(rank));
+	}
+
+	public double maximize(SumTerms sum) {
+		builder.setObjective(Objective.max(sum));
+		return solver.solve(builder).getSolution().get().getObjectiveValue();
 	}
 
 	private Variable getVariable(int rank) {
