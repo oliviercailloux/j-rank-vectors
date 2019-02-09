@@ -51,7 +51,7 @@ public class ConstraintsOnWeights {
 		}
 		if (m >= 2) {
 			builder.addVariable(
-					Variable.of("w", VariableDomain.REAL_DOMAIN, RangeOfDouble.closed(0d, 0d), ImmutableSet.of(1)));
+					Variable.of("w", VariableDomain.REAL_DOMAIN, RangeOfDouble.closed(0d, 0d), ImmutableSet.of(m)));
 		}
 		solver = new OrToolsSolver();
 	}
