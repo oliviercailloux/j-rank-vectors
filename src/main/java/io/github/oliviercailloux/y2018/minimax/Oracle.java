@@ -1,40 +1,34 @@
 package io.github.oliviercailloux.y2018.minimax;
 
-import java.util.Set;
+import com.google.common.collect.ImmutableMap;
 
 import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class Oracle {
 	
-	//mustbeamap
-	private VoterStrictPreference pref;
-	private PSRWeights w;
+	private ImmutableMap<Voter,VoterStrictPreference> profile;
+	private PSRWeights weights;
 	
-	public Oracle(StrictPreference pref, PSRWeights w) {
-	//	this.pref = new VoterStrictPreference(pref.getAlternatives());
-		this.w = new PSRWeights(w.getWeights());
+	public Oracle(ImmutableMap<Voter,VoterStrictPreference> pref, PSRWeights w) {
+		this.profile= ImmutableMap.copyOf(pref);
+		this.weights = new PSRWeights(w.getWeights());
 	}
 	
 	public boolean isYes(Question q) {
 		switch (q.getType()) {
-		case VOTER_QUESTION:
-			return pref.askQuestion(q.getQuestionVoter());
-		case COMMITTEE_QUESTION:
-			return askCommittee(q);
+		case VOTER_QUESTION:{
+				QuestionVoter qv= q.getQuestionVoter();
+				Voter v=qv.getVoter();
+				VoterStrictPreference vsp= profile.get(v);
+				return vsp.askQuestion(qv);
+			}
+		case COMMITTEE_QUESTION:{
+			QuestionCommittee qc = q.getQuestionCommittee();
+			return weights.askQuestion(qc);
+		}
 		default:
 			throw new IllegalStateException();
 		}
-	}
-
-	private boolean askVoter(QuestionVoter q) {
-		Voter voter=q.getVoter();
-		Set<Alternative> s= q.getQuestion();
-
-		return false;
-	}
-	
-	private boolean askCommittee(Question q) {
-		return false;
 	}
 	
 }
