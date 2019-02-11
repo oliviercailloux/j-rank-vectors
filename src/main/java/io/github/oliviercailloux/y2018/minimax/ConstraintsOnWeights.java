@@ -34,7 +34,7 @@ public class ConstraintsOnWeights {
 
 	/**
 	 * @param m at least one: the number of ranks, or equivalently, the number of
-	 *          alternatives
+	 *          alternatives.
 	 */
 	public static ConstraintsOnWeights withRankNumber(int m) {
 		return new ConstraintsOnWeights(m);
@@ -59,9 +59,9 @@ public class ConstraintsOnWeights {
 	/**
 	 * Adds the constraint: (w_i − w_{i+1}) OP λ (w_{i+1} − w_{i+2}).
 	 *
-	 * @param i      1 ≤ i ≤ m-2
-	 * @param op     the operator
-	 * @param lambda a finite double
+	 * @param i      1 ≤ i ≤ m-2.
+	 * @param op     the operator.
+	 * @param lambda a finite double.
 	 */
 	public void addConstraint(int i, ComparisonOperator op, double lambda) {
 		checkArgument(i >= 1);
@@ -73,6 +73,16 @@ public class ConstraintsOnWeights {
 		sumBuilder.addTerm(lambda, getVariable(i + 2));
 		final Constraint cst = Constraint.of(sumBuilder.build(), op, 0d);
 		builder.addConstraint(cst);
+	}
+
+	/**
+	 * May be called only once.
+	 */
+	public void setConvexityConstraint() {
+		for (int rank = 1; rank <= getM() - 2; ++rank) {
+			builder.addConstraint(Constraint
+					.GE(SumTerms.of(1d, getVariable(rank), -2d, getVariable(rank + 1), 1d, getVariable(rank + 2)), 0d));
+		}
 	}
 
 	public Range<Double> getRange(int rank) {
