@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.Range;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
+import io.github.oliviercailloux.jlp.elements.SumTerms;
+import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
 
 public class ConstraintsOnWeightsTest {
 	@Test
@@ -20,4 +22,18 @@ public class ConstraintsOnWeightsTest {
 		assertEquals(Range.closed(0d, 0.25d), cow.getRange(2));
 		assertEquals(Range.closed(0d, 0d), cow.getRange(3));
 	}
+	
+	
+	@Test
+	void testMax() throws Exception {
+		final ConstraintsOnWeights cow = ConstraintsOnWeights.withRankNumber(5);
+		SumTermsBuilder sb=SumTerms.builder();
+		sb.add(cow.getTerm(1d, 1));
+		sb.add(cow.getTerm(-2d, 3));
+		sb.add(cow.getTerm(1d, 5));
+		assertEquals(1d,cow.maximize(sb.build()),0d);
+	}
+	
+	
+	
 }
