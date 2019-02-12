@@ -16,7 +16,9 @@ public class VoterPartialPreference {
 
 	public static VoterPartialPreference about(Voter voter, Set<Alternative> alternatives) {
 		final MutableGraph<Alternative> graph = GraphBuilder.directed().build();
-		graph.nodes().addAll(alternatives);
+		for (Alternative alternative : alternatives) {
+			graph.addNode(alternative);
+		}
 		return new VoterPartialPreference(voter, graph);
 	}
 
