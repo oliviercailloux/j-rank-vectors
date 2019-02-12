@@ -21,7 +21,7 @@ public class PrefKnowledge {
 		return new PrefKnowledge(alternatives, voters);
 	}
 
-	private final ImmutableMap<Voter, PartialPreference> partialProfile;
+	private final ImmutableMap<Voter, VoterPartialPreference> partialProfile;
 	private final ConstraintsOnWeights cow;
 	private final Map<Integer, Range<Aprational>> lambdaRanges;
 
@@ -35,9 +35,9 @@ public class PrefKnowledge {
 		cow = ConstraintsOnWeights.withRankNumber(m);
 		cow.setConvexityConstraint();
 
-		final ImmutableMap.Builder<Voter, PartialPreference> builder = ImmutableMap.builder();
+		final ImmutableMap.Builder<Voter, VoterPartialPreference> builder = ImmutableMap.builder();
 		for (Voter voter : voters) {
-			builder.put(voter, PartialPreference.about(voter, alternatives));
+			builder.put(voter, VoterPartialPreference.about(voter, alternatives));
 		}
 		partialProfile = builder.build();
 
@@ -81,7 +81,7 @@ public class PrefKnowledge {
 		lambdaRanges.put(rank, restr);
 	}
 
-	public ImmutableMap<Voter, PartialPreference> getProfile() {
+	public ImmutableMap<Voter, VoterPartialPreference> getProfile() {
 		return partialProfile;
 	}
 
