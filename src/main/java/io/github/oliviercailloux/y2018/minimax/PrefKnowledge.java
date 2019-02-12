@@ -10,6 +10,7 @@ import org.apfloat.Apint;
 import org.apfloat.Aprational;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
@@ -21,11 +22,14 @@ public class PrefKnowledge {
 		return new PrefKnowledge(alternatives, voters);
 	}
 
+	private final ImmutableSet<Alternative> alternatives;
 	private final ImmutableMap<Voter, VoterPartialPreference> partialProfile;
 	private final ConstraintsOnWeights cow;
 	private final Map<Integer, Range<Aprational>> lambdaRanges;
 
 	private PrefKnowledge(Set<Alternative> alternatives, Set<Voter> voters) {
+		this.alternatives = ImmutableSet.copyOf(alternatives);
+
 		final int m = alternatives.size();
 		final int n = voters.size();
 
@@ -53,9 +57,23 @@ public class PrefKnowledge {
 		}
 	}
 
+	/**
+	 * @return a non empty set.
+	 */
+	public ImmutableSet<Alternative> getAlternatives() {
+		return alternatives;
+	}
+
+	/**
+	 * @return a non-empty set.
+	 */
+	public ImmutableSet<Voter> getVoters() {
+		return partialProfile.keySet();
+	}
+
 	public void addConstraint(int rank, ComparisonOperator op, Aprational lambda) {
 		checkArgument(rank >= 1);
-		checkArgument(rank <= getM() - 2);
+		checkArgument(rank <= alternatives.size() - 2);
 		cow.addConstraint(rank, op, lambda.doubleValue());
 
 		/** The constraint is that D_i/D_{i+1} OP lambda. */
@@ -91,22 +109,8 @@ public class PrefKnowledge {
 
 	public Range<Aprational> getLambdaRange(int rank) {
 		checkArgument(rank >= 1);
-		checkArgument(rank <= getM() - 2);
+		checkArgument(rank <= alternatives.size() - 2);
 		return lambdaRanges.get(rank);
-	}
-
-	/**
-	 * @return at least one.
-	 */
-	public int getM() {
-		return cow.getM();
-	}
-
-	/**
-	 * @return at least one.
-	 */
-	public int getN() {
-		return partialProfile.size();
 	}
 
 }
