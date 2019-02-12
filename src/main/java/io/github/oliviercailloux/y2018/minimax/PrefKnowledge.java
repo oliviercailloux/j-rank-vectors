@@ -13,6 +13,14 @@ public class PrefKnowledge {
 		this.weights = weights;
 		this.profile = ImmutableMap.copyOf(profile);
 	}
-	
-	
+
+	public ImmutableMap<Voter, PartialPreference> getProfile() {
+		return profile;
+	}
+
+
+	public ConstraintsOnWeights getWeights() {
+		return weights;
+	}
+
 }
