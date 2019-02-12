@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
+import java.util.Set;
+
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.graph.Graph;
@@ -12,12 +14,14 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class PartialPreference {
 
+	public static PartialPreference about(Voter voter, Set<Alternative> alternatives) {
+		final MutableGraph<Alternative> graph = GraphBuilder.directed().build();
+		graph.nodes().addAll(alternatives);
+		return new PartialPreference(voter, graph);
+	}
+
 	private Voter voter;
 	private MutableGraph<Alternative> pref;
-
-	public PartialPreference(Voter voter) {
-		this(voter, GraphBuilder.directed().build());
-	}
 
 	public PartialPreference(Voter voter, Graph<Alternative> pref) {
 		this.voter = voter;
