@@ -9,12 +9,12 @@ import com.google.common.graph.MutableGraph;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
-public class PartialPreference {
+public class VoterPartialPreference {
 
 	private Voter voter;
 	private MutableGraph<Alternative> pref;
 	
-	public PartialPreference(Voter voter, Graph<Alternative> pref) {
+	public VoterPartialPreference(Voter voter, Graph<Alternative> pref) {
 		this.voter = voter;
 		Preconditions.checkNotNull(pref);
 		if(Graphs.hasCycle(pref)) {
@@ -34,8 +34,8 @@ public class PartialPreference {
 	public boolean equals(Object o) {
 		if(o == this) return true;
 		if(o == null) return false;
-		if(!(o instanceof PartialPreference)) return false;
-		PartialPreference pp = (PartialPreference)o;
+		if(!(o instanceof VoterPartialPreference)) return false;
+		VoterPartialPreference pp = (VoterPartialPreference)o;
 		if(this.voter!=pp.voter || !this.pref.equals(pp.pref)) 
 			return false;
 		return true;
