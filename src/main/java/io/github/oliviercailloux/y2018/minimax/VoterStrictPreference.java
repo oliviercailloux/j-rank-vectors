@@ -26,9 +26,7 @@ public class VoterStrictPreference {
 	 * @return the result of the query a > b
 	 */
 	public boolean askQuestion(QuestionVoter qv) {
-		Alternative a=qv.getQuestion().get(0);
-		Alternative b=qv.getQuestion().get(1);
-		return pref.getAlternativeRank(a) > pref.getAlternativeRank(b);
+		return pref.getAlternativeRank(qv.getFirstAlternative()) > pref.getAlternativeRank(qv.getSecondAlternative());
 	}
 	
 }

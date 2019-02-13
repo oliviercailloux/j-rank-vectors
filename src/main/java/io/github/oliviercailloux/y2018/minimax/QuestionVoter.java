@@ -1,8 +1,5 @@
 package io.github.oliviercailloux.y2018.minimax;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class QuestionVoter {
@@ -29,15 +26,21 @@ public class QuestionVoter {
 	
 	
 	/**
-	 * Return a question of the type a > b
+	 * A Question to the voter has the form a > b
 	 *
-	 * @return a list of alternative. The first position contains "a", the second "b".
+	 * @return a
 	 */
-	public List<Alternative> getQuestion(){
-		List<Alternative> s=new LinkedList<Alternative>();
-		s.add(this.a);
-		s.add(this.b);
-		return s;
+	public Alternative getFirstAlternative(){
+		return a;
+	}
+	
+	/**
+	 * A Question to the voter has the form a > b
+	 *
+	 * @return a
+	 */
+	public Alternative getSecondAlternative(){
+		return b;
 	}
 	
 }
