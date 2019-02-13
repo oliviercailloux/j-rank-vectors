@@ -1,6 +1,8 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
 
 import com.google.common.graph.Graphs;
 import com.google.common.graph.MutableGraph;
@@ -12,31 +14,41 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class Regret {
 
-	public static double getMMR(PrefKnowledge knowledge, ConstraintsOnWeights weights) {
-		double minMR = Double.MAX_VALUE;
+	public static Alternative getMMRAlternative(PrefKnowledge knowledge) {
+		List<Alternative> alt=knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i= alt.listIterator();
+		Alternative minAlt = i.next();
+		double minMR = getMR(minAlt,knowledge);
 		double MR;
-		for (Alternative x : knowledge.getAlternatives()) {
-			MR = getMR(x, knowledge, weights);
+		while (i.hasNext()) {
+			Alternative x= i.next();
+			MR = getMR(x, knowledge);
 			if (MR < minMR) {
 				minMR = MR;
+				minAlt=x;
 			}
 		}
-		return minMR;
+		return minAlt;
 	}
 
-	public static double getMR(Alternative x, PrefKnowledge knowledge, ConstraintsOnWeights weights) {
+	private static double getMR(Alternative x, PrefKnowledge knowledge) {
+		List<Alternative> alt=knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i= alt.listIterator();
 		double maxPMR = Double.MIN_VALUE;
 		double PMR;
-		for (Alternative y : knowledge.getAlternatives()) {
-			PMR = getPMR(x, y, knowledge, weights);
-			if (PMR > maxPMR) {
-				maxPMR = PMR;
+		while(i.hasNext()) {
+			Alternative y = i.next();
+			if(!x.equals(y)) {
+				PMR = getPMR(x, y, knowledge);
+				if (PMR > maxPMR) {
+					maxPMR = PMR;
+				}
 			}
 		}
 		return maxPMR;
 	}
 
-	public static double getPMR(Alternative x, Alternative y, PrefKnowledge knowledge, ConstraintsOnWeights weights) {
+	private static double getPMR(Alternative x, Alternative y, PrefKnowledge knowledge) {
 		MutableGraph<Alternative> pref;
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
@@ -48,13 +60,12 @@ public class Regret {
 			xrank[r[0]]++;
 			yrank[r[1]]++;
 		}
-		ConstraintsOnWeights cow = ConstraintsOnWeights.withRankNumber(nbAlt);
+		ConstraintsOnWeights cow = knowledge.getConstraintsOnWeights();
 		SumTermsBuilder sb = SumTerms.builder();
 		for (int i = 1; i <= nbAlt; i++) {
 			sb.add(cow.getTerm(yrank[i] - xrank[i], i));
 		}
 		SumTerms objective = sb.build();
-		System.out.println(objective.toString());
 		return cow.maximize(objective);
 	}
 

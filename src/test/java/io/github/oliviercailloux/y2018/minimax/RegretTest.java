@@ -1,22 +1,27 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apfloat.Apint;
+import org.apfloat.Aprational;
 import org.junit.jupiter.api.Test;
 
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
+import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class RegretTest {
 
+	
 	@Test
-	void testPMR() throws Exception {
+	void testMMR() throws Exception {
 		Voter v1 = new Voter(1);
 		Voter v2 = new Voter(2);
 		Voter v3 = new Voter(3);
@@ -35,29 +40,142 @@ public class RegretTest {
 		alt.add(c);
 		alt.add(d);
 		
-		final MutableGraph<Alternative> pref1 = GraphBuilder.directed().build();
+		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
+		
+		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
 		pref1.putEdge(a, b);
 		pref1.putEdge(b, c);
 		pref1.putEdge(c, d);
 
-		final MutableGraph<Alternative> pref2 = GraphBuilder.directed().build();
+		MutableGraph<Alternative> pref2 = knowledge.getProfile().get(v2).asGraph();
 		pref2.putEdge(d, a);
 		pref2.putEdge(a, b);
 		pref2.putEdge(b, c);
 
-		final MutableGraph<Alternative> pref3 = GraphBuilder.directed().build();
+		MutableGraph<Alternative> pref3 = knowledge.getProfile().get(v3).asGraph();
 		pref3.putEdge(c, a);
 		pref3.putEdge(a, b);
 		pref3.putEdge(b, d);
-
-		VoterPartialPreference vpp1 = new VoterPartialPreference (v1,pref1);
-		VoterPartialPreference vpp2 = new VoterPartialPreference (v2,pref2);
-		VoterPartialPreference vpp3 = new VoterPartialPreference (v3,pref3);
+			
+		assertEquals(a,Regret.getMMRAlternative(knowledge));	
+	}
+	
+	@Test
+	void testPMR1() throws Exception {
+		/**Test with complete knowledge about voters' preferences**/
+		Voter v1 = new Voter(1);
+		Voter v2 = new Voter(2);
+		Voter v3 = new Voter(3);
+		Set<Voter> voters = new HashSet<Voter>();
+		voters.add(v1);
+		voters.add(v2);
+		voters.add(v3);
+		
+		Alternative a = new Alternative(1);
+		Alternative b = new Alternative(2);
+		Alternative c = new Alternative(3);
+		Alternative d = new Alternative(4);
+		Set<Alternative> alt = new HashSet<Alternative>();
+		alt.add(a);
+		alt.add(b);
+		alt.add(c);
+		alt.add(d);
 		
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 		
+		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
+		pref1.putEdge(a, b);
+		pref1.putEdge(b, c);
+		pref1.putEdge(c, d);
+
+		MutableGraph<Alternative> pref2 = knowledge.getProfile().get(v2).asGraph();
+		pref2.putEdge(d, a);
+		pref2.putEdge(a, b);
+		pref2.putEdge(b, c);
+
+		MutableGraph<Alternative> pref3 = knowledge.getProfile().get(v3).asGraph();
+		pref3.putEdge(c, a);
+		pref3.putEdge(a, b);
+		pref3.putEdge(b, d);
+		
+		/** changed the visibility of the method in class Regret **/
+//		assertEquals(-1d,Regret.getPMR(a, b, knowledge));
+//		assertEquals(0d,Regret.getPMR(a, c, knowledge));
+//		assertEquals(0d,Regret.getPMR(a, d, knowledge));
 	}
 
+	@Test
+	void testPMR2() throws Exception {
+		/**Test with zero knowledge**/
+		Voter v1 = new Voter(1);
+		Voter v2 = new Voter(2);
+		Voter v3 = new Voter(3);
+		Set<Voter> voters = new HashSet<Voter>();
+		voters.add(v1);
+		voters.add(v2);
+		voters.add(v3);
+		
+		Alternative a = new Alternative(1);
+		Alternative b = new Alternative(2);
+		Alternative c = new Alternative(3);
+		Alternative d = new Alternative(4);
+		Set<Alternative> alt = new HashSet<Alternative>();
+		alt.add(a);
+		alt.add(b);
+		alt.add(c);
+		alt.add(d);
+		
+		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
+		/** changed the visibility of the method in class Regret **/	
+//		assertEquals(3d,Regret.getPMR(a, b, knowledge));	
+	}
+	
+	@Test
+	void testPMR3() throws Exception {
+		/**Test with knowledge about weights**/
+		Voter v1 = new Voter(1);
+		Voter v2 = new Voter(2);
+		Voter v3 = new Voter(3);
+		Set<Voter> voters = new HashSet<Voter>();
+		voters.add(v1);
+		voters.add(v2);
+		voters.add(v3);
+		
+		Alternative a = new Alternative(1);
+		Alternative b = new Alternative(2);
+		Alternative c = new Alternative(3);
+		Alternative d = new Alternative(4);
+		Set<Alternative> alt = new HashSet<Alternative>();
+		alt.add(a);
+		alt.add(b);
+		alt.add(c);
+		alt.add(d);
+		
+		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
+		Apint ap2 = new Apint(2);
+		Apint ap3 = new Apint(3);
+		Aprational lambda= new Aprational(ap3,ap2);
+		knowledge.addConstraint(1, ComparisonOperator.GE, lambda);
+		knowledge.addConstraint(2, ComparisonOperator.GE, lambda);
+		
+		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
+		pref1.putEdge(c, b);
+
+		MutableGraph<Alternative> pref2 = knowledge.getProfile().get(v2).asGraph();
+		pref2.putEdge(c, b);
+
+		MutableGraph<Alternative> pref3 = knowledge.getProfile().get(v3).asGraph();
+		pref3.putEdge(c, b);
+		
+		/** changed the visibility of the method in class Regret **/
+//		double PMR = Regret.getPMR(a, b, knowledge);
+//		double w2= PMR/3;
+//		System.out.println(PMR + "  "+ w2);
+//		assertTrue(w2<=0.55);
+//		assertTrue(w2>=0.45);
+	}
+	
+	
 	@Test
 	void testRanksCase1() throws Exception {
 		final MutableGraph<Alternative> pref = GraphBuilder.directed().build();
@@ -90,7 +208,7 @@ public class RegretTest {
 		pref.putEdge(b, b1);
 		pref.putEdge(a1, u1);
 
-		/** changed the visibility of isolatedNodes(pref) in class Regret **/
+		/** changed the visibility of the method in class Regret **/
 		// assertEquals(7,Regret.getWorstRanks(x, y, pref)[0]);
 		// assertEquals(10,Regret.getWorstRanks(x, y, pref)[1]);
 	}
@@ -116,7 +234,7 @@ public class RegretTest {
 		pref.putEdge(x, f);
 		pref.addNode(u);
 
-		/** changed the visibility of isolatedNodes(pref) in class Regret **/
+		/** changed the visibility of the method in class Regret **/
 		// assertEquals(7,Regret.getWorstRanks(x, y, pref)[0]);
 		// assertEquals(2,Regret.getWorstRanks(x, y, pref)[1]);
 	}
@@ -153,7 +271,7 @@ public class RegretTest {
 		pref.putEdge(b, b1);
 		pref.putEdge(a1, u1);
 
-		/** changed the visibility of isolatedNodes(pref) in class Regret **/
+		/** changed the visibility of the method in class Regret **/
 		// assertEquals(11,Regret.getWorstRanks(x, y, pref)[0]);
 		// assertEquals(3,Regret.getWorstRanks(x, y, pref)[1]);
 	}
@@ -180,7 +298,7 @@ public class RegretTest {
 		pref.addNode(f);
 		pref.addNode(b);
 
-		/** changed the visibility of isolatedNodes(pref) in class Regret **/
+		/** changed the visibility of the method in class Regret **/
 		// assertEquals(8,Regret.getWorstRanks(x, y, pref)[0]);
 		// assertEquals(1,Regret.getWorstRanks(x, y, pref)[1]);
 	}
