@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
-import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
@@ -46,12 +46,16 @@ public class StrategyRandom implements Strategy {
 		return new StrategyRandom();
 	}
 
-	private final Random random;
+	private Random random;
 
 	private StrategyRandom() {
 		final long seed = ThreadLocalRandom.current().nextLong();
 		LOGGER.info("Using seed: {}.", seed);
 		random = new Random(seed);
+	}
+
+	void setRandom(Random random) {
+		this.random = requireNonNull(random);
 	}
 
 	@Override
@@ -99,18 +103,18 @@ public class StrategyRandom implements Strategy {
 			assert !questionableVoters.isEmpty();
 			final int idx = random.nextInt(questionableVoters.size());
 			final Voter voter = questionableVoters.asList().get(idx);
-			final ArrayList<Alternative> altsRandom = new ArrayList<>(knowledge.getAlternatives());
-			Collections.shuffle(altsRandom, random);
+			final ArrayList<Alternative> altsRandomOrder = new ArrayList<>(knowledge.getAlternatives());
+			Collections.shuffle(altsRandomOrder, random);
 			/** TODO this should be the transitive closure. */
-			final MutableGraph<Alternative> graph = knowledge.getProfile().get(voter).asGraph();
-			final Optional<Alternative> hasIncomparabilities = altsRandom.stream()
+			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asGraph();
+			final Optional<Alternative> withIncomparabilities = altsRandomOrder.stream()
 					.filter((a1) -> graph.adjacentNodes(a1).size() != m - 1).findAny();
-			assert hasIncomparabilities.isPresent();
-			final Alternative a1 = hasIncomparabilities.get();
-			final Optional<Alternative> isIncomparable = altsRandom.stream()
-					.filter((a2) -> !graph.adjacentNodes(a1).contains(a2)).findAny();
-			assert isIncomparable.isPresent();
-			final Alternative a2 = isIncomparable.get();
+			assert withIncomparabilities.isPresent();
+			final Alternative a1 = withIncomparabilities.get();
+			final Optional<Alternative> incomparable = altsRandomOrder.stream()
+					.filter((a2) -> !a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)).findAny();
+			assert incomparable.isPresent();
+			final Alternative a2 = incomparable.get();
 			q = new Question(new QuestionVoter(voter, a1, a2));
 		}
 
