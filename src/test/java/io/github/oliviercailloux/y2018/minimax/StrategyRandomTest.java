@@ -77,10 +77,10 @@ class StrategyRandomTest {
 
 	@Test
 	void testThreeAltsTwoVKnown() {
-		final StrategyRandom s = StrategyRandom.build();
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(2));
+		final StrategyRandom s = StrategyRandom.build(k);
 		final Random notRandom = new Random(0);
 		s.setRandom(notRandom);
-		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(2));
 		final MutableGraph<Alternative> g1 = k.getProfile().get(new Voter(1)).asGraph();
 		g1.putEdge(new Alternative(1), new Alternative(2));
 		g1.putEdge(new Alternative(2), new Alternative(3));
@@ -88,15 +88,15 @@ class StrategyRandomTest {
 		g2.putEdge(new Alternative(1), new Alternative(2));
 		g2.putEdge(new Alternative(2), new Alternative(3));
 		assertEquals(new Question(new QuestionCommittee(new Aprational(new Apint(3), new Apint(2)), 1)),
-				s.getQuestion(k));
+				s.nextQuestion());
 	}
 
 	@Test
 	void testThreeAltsTwoVAllKnown() {
-		final StrategyRandom s = StrategyRandom.build();
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(2));
+		final StrategyRandom s = StrategyRandom.build(k);
 		final Random notRandom = new Random(0);
 		s.setRandom(notRandom);
-		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(2));
 		final MutableGraph<Alternative> g1 = k.getProfile().get(new Voter(1)).asGraph();
 		g1.putEdge(new Alternative(1), new Alternative(2));
 		g1.putEdge(new Alternative(2), new Alternative(3));
@@ -104,7 +104,7 @@ class StrategyRandomTest {
 		g2.putEdge(new Alternative(1), new Alternative(2));
 		g2.putEdge(new Alternative(2), new Alternative(3));
 		k.addConstraint(1, ComparisonOperator.EQ, new Apint(1));
-		assertThrows(IllegalArgumentException.class, () -> s.getQuestion(k));
+		assertThrows(IllegalArgumentException.class, () -> s.nextQuestion());
 	}
 
 }

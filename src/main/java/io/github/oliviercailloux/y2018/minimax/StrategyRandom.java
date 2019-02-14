@@ -41,14 +41,14 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class StrategyRandom implements Strategy {
 
-	PrefKnowledge knowledge;
-
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyRandom.class);
 
 	public static StrategyRandom build(PrefKnowledge knowledge) {
 		return new StrategyRandom(knowledge);
 	}
+
+	private PrefKnowledge knowledge;
 
 	private Random random;
 
