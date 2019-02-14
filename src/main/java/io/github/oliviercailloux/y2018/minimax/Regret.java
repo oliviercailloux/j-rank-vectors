@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.google.common.graph.Graphs;
-import com.google.common.graph.MutableGraph;
+import com.google.common.graph.Graph;
 
 import io.github.oliviercailloux.jlp.elements.SumTerms;
 import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
@@ -15,30 +14,30 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 public class Regret {
 
 	public static Alternative getMMRAlternative(PrefKnowledge knowledge) {
-		List<Alternative> alt=knowledge.getAlternatives().asList();
-		ListIterator<Alternative> i= alt.listIterator();
+		List<Alternative> alt = knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i = alt.listIterator();
 		Alternative minAlt = i.next();
-		double minMR = getMR(minAlt,knowledge);
+		double minMR = getMR(minAlt, knowledge);
 		double MR;
 		while (i.hasNext()) {
-			Alternative x= i.next();
+			Alternative x = i.next();
 			MR = getMR(x, knowledge);
 			if (MR < minMR) {
 				minMR = MR;
-				minAlt=x;
+				minAlt = x;
 			}
 		}
 		return minAlt;
 	}
 
 	private static double getMR(Alternative x, PrefKnowledge knowledge) {
-		List<Alternative> alt=knowledge.getAlternatives().asList();
-		ListIterator<Alternative> i= alt.listIterator();
+		List<Alternative> alt = knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i = alt.listIterator();
 		double maxPMR = Double.MIN_VALUE;
 		double PMR;
-		while(i.hasNext()) {
+		while (i.hasNext()) {
 			Alternative y = i.next();
-			if(!x.equals(y)) {
+			if (!x.equals(y)) {
 				PMR = getPMR(x, y, knowledge);
 				if (PMR > maxPMR) {
 					maxPMR = PMR;
@@ -49,14 +48,12 @@ public class Regret {
 	}
 
 	private static double getPMR(Alternative x, Alternative y, PrefKnowledge knowledge) {
-		MutableGraph<Alternative> pref;
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
 		int[] r;
 		for (Voter v : knowledge.getProfile().keySet()) {
-			pref = knowledge.getProfile().get(v).asGraph();
-			r = getWorstRanks(x, y, pref);
+			r = getWorstRanks(x, y, knowledge.getProfile().get(v));
 			xrank[r[0]]++;
 			yrank[r[1]]++;
 		}
@@ -69,12 +66,11 @@ public class Regret {
 		return cow.maximize(objective);
 	}
 
-	private static int[] getWorstRanks(Alternative x, Alternative y, MutableGraph<Alternative> pref) {
+	private static int[] getWorstRanks(Alternative x, Alternative y, VoterPartialPreference voterPartialPreference) {
 		int rankx = 0;
 		int ranky = 0;
-		MutableGraph<Alternative> trans = Graphs.copyOf(Graphs.transitiveClosure(pref));
-		trans.nodes().forEach(n -> trans.removeEdge(n, n));
-		HashSet<Alternative> A = new HashSet<Alternative>(pref.nodes());
+		Graph<Alternative> trans = voterPartialPreference.asTransitiveGraph();
+		HashSet<Alternative> A = new HashSet<Alternative>(voterPartialPreference.asGraph().nodes());
 		A.remove(x);
 		A.remove(y);
 		/**
@@ -82,7 +78,7 @@ public class Regret {
 		 * x (in >^p). W2: worst than y. W3: better than y. A: the whole set of
 		 * alternatives. Then the better ones are B: A \ W1 \ W2. The middle ones are M:
 		 * W1 intersection W3.
-		 * 
+		 *
 		 * NOTE: W2 ⊆ W1 always => B: A \ W1
 		 **/
 		if (trans.hasEdgeConnecting(x, y)) {

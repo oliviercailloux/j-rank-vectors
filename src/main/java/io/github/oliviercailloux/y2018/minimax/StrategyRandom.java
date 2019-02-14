@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apfloat.Apint;
 import org.apfloat.Aprational;
@@ -66,47 +68,53 @@ public class StrategyRandom implements Strategy {
 
 		final ImmutableSet.Builder<Voter> questionableVotersBuilder = ImmutableSet.builder();
 		for (Voter voter : knowledge.getVoters()) {
-			/** TODO this should be the transitive closure. */
-			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asGraph();
+			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asTransitiveGraph();
 			if (graph.edges().size() != m * (m - 1) / 2) {
 				questionableVotersBuilder.add(voter);
 			}
 		}
 		final ImmutableSet<Voter> questionableVoters = questionableVotersBuilder.build();
 
-		final boolean aboutWeight;
-		if (m == 2) {
-			checkArgument(!questionableVoters.isEmpty(),
-					"No question to ask about weights, and everything is known about the voters.");
-			aboutWeight = false;
-		} else {
-			if (questionableVoters.isEmpty()) {
-				aboutWeight = true;
-			} else {
-				aboutWeight = random.nextBoolean();
+		final ArrayList<Integer> candidateRanks = IntStream.rangeClosed(1, m - 2).boxed()
+				.collect(Collectors.toCollection(ArrayList::new));
+		Collections.shuffle(candidateRanks, random);
+		QuestionCommittee qc = null;
+		for (int rank : candidateRanks) {
+			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(rank);
+			LOGGER.info("Range: {}.", lambdaRange);
+			if (!lambdaRange.lowerEndpoint().equals(lambdaRange.upperEndpoint())) {
+				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
+						.divide(new Apint(2));
+				qc = new QuestionCommittee(avg, rank);
 			}
+		}
+		final boolean existsQuestionWeight = qc != null;
+		final boolean existsQuestionVoters = !questionableVoters.isEmpty();
+
+		checkArgument(existsQuestionWeight || existsQuestionVoters, "No question to ask about weights or voters.");
+
+		final boolean aboutWeight;
+		if (!existsQuestionWeight) {
+			aboutWeight = false;
+		} else if (!existsQuestionVoters) {
+			aboutWeight = true;
+		} else {
+			aboutWeight = random.nextBoolean();
 		}
 
 		final Question q;
 
 		if (aboutWeight) {
 			assert m >= 3;
-			final int rank = random.nextInt(m - 2) + 1;
-			assert rank >= 1;
-			assert rank <= m - 2;
-
-			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(rank);
-			final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
-					.divide(new Apint(2));
-			q = new Question(new QuestionCommittee(avg, rank));
+			assert qc != null;
+			q = new Question(qc);
 		} else {
 			assert !questionableVoters.isEmpty();
 			final int idx = random.nextInt(questionableVoters.size());
 			final Voter voter = questionableVoters.asList().get(idx);
 			final ArrayList<Alternative> altsRandomOrder = new ArrayList<>(knowledge.getAlternatives());
 			Collections.shuffle(altsRandomOrder, random);
-			/** TODO this should be the transitive closure. */
-			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asGraph();
+			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asTransitiveGraph();
 			final Optional<Alternative> withIncomparabilities = altsRandomOrder.stream()
 					.filter((a1) -> graph.adjacentNodes(a1).size() != m - 1).findAny();
 			assert withIncomparabilities.isPresent();

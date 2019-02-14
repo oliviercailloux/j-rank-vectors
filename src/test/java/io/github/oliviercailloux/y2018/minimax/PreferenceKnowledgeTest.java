@@ -16,7 +16,7 @@ class PreferenceKnowledgeTest {
 
 	@Test
 	void testLambdaRange() throws Exception {
-		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(5), Generator.getVoters(1));
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(5), Generator.getVoters(10));
 		final Range<Aprational> startRange = k.getLambdaRange(1);
 		assertEquals(1d, startRange.lowerEndpoint().doubleValue());
 		final Aprational startUpper = startRange.upperEndpoint();

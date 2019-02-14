@@ -51,8 +51,14 @@ public class PrefKnowledge {
 			lambdaRanges = new LinkedHashMap<>(m - 2);
 			for (int rank = 1; rank <= m - 2; ++rank) {
 				assert m - 2 >= 1;
-				/** TODO check default upper bound. */
-				lambdaRanges.put(rank, Range.closed(new Apint(1), new Apint(n * (m - 2))));
+				/**
+				 * When d_i/d_{i+1} > n−1, the rule is plurality-i-PD, meaning that when two
+				 * alternatives share the same number of times they reach rank j, for all j < i,
+				 * then what counts is the number of times the alternative reaches the rank i,
+				 * and if ex-æquo, they are resolved using the further weight constraints for
+				 * lower ranks. Thus, it is unnecessary to distinguish weights greater than n−1.
+				 */
+				lambdaRanges.put(rank, Range.closed(new Apint(1), new Apint(n)));
 			}
 		}
 	}
@@ -71,6 +77,13 @@ public class PrefKnowledge {
 		return partialProfile.keySet();
 	}
 
+	/**
+	 * Adds the constraint: (w_i − w_{i+1}) OP λ (w_{i+1} − w_{i+2}).
+	 *
+	 * @param rank   1 ≤ rank ≤ m-2.
+	 * @param op     the operator.
+	 * @param lambda a finite value.
+	 */
 	public void addConstraint(int rank, ComparisonOperator op, Aprational lambda) {
 		checkArgument(rank >= 1);
 		checkArgument(rank <= alternatives.size() - 2);
