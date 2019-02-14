@@ -7,18 +7,16 @@ import org.apfloat.Apint;
 import org.apfloat.Aprational;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
-import io.github.oliviercailloux.y2018.j_voting.Alternative;
-import io.github.oliviercailloux.y2018.j_voting.Voter;
+import io.github.oliviercailloux.y2018.j_voting.Generator;
 
 class PreferenceKnowledgeTest {
 
 	@Test
 	void testLambdaRange() throws Exception {
-		final PrefKnowledge k = PrefKnowledge.given(getAlternatives(5), getVoters(1));
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(5), Generator.getVoters(1));
 		final Range<Aprational> startRange = k.getLambdaRange(1);
 		assertEquals(1d, startRange.lowerEndpoint().doubleValue());
 		final Aprational startUpper = startRange.upperEndpoint();
@@ -34,22 +32,6 @@ class PreferenceKnowledgeTest {
 		k.addConstraint(1, ComparisonOperator.LE, ap3);
 		assertEquals(Range.closed(ap2, ap2), k.getLambdaRange(1));
 		assertThrows(IllegalArgumentException.class, () -> k.addConstraint(1, ComparisonOperator.LE, ap1));
-	}
-
-	private ImmutableSet<Alternative> getAlternatives(int m) {
-		final ImmutableSet.Builder<Alternative> builder = ImmutableSet.builder();
-		for (int i = 1; i <= m; ++i) {
-			builder.add(new Alternative(i));
-		}
-		return builder.build();
-	}
-
-	private ImmutableSet<Voter> getVoters(int n) {
-		final ImmutableSet.Builder<Voter> builder = ImmutableSet.builder();
-		for (int i = 1; i <= n; ++i) {
-			builder.add(new Voter(i));
-		}
-		return builder.build();
 	}
 
 }
