@@ -41,19 +41,22 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class StrategyRandom implements Strategy {
 
+	PrefKnowledge knowledge;
+
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyRandom.class);
 
-	public static StrategyRandom build() {
-		return new StrategyRandom();
+	public static StrategyRandom build(PrefKnowledge knowledge) {
+		return new StrategyRandom(knowledge);
 	}
 
 	private Random random;
 
-	private StrategyRandom() {
+	private StrategyRandom(PrefKnowledge knowledge) {
 		final long seed = ThreadLocalRandom.current().nextLong();
 		LOGGER.info("Using seed: {}.", seed);
 		random = new Random(seed);
+		this.knowledge = knowledge;
 	}
 
 	void setRandom(Random random) {
@@ -61,7 +64,7 @@ public class StrategyRandom implements Strategy {
 	}
 
 	@Override
-	public Question getQuestion(PrefKnowledge knowledge) {
+	public Question nextQuestion() {
 		final int m = knowledge.getAlternatives().size();
 
 		checkArgument(m >= 2, "Questions can be asked only if there are at least two alternatives.");

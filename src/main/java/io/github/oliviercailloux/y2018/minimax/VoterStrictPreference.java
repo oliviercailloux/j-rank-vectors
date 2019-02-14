@@ -8,7 +8,7 @@ public class VoterStrictPreference {
 
 	private Voter voter;
 	private StrictPreference pref;
-	
+
 	public VoterStrictPreference(Voter voter, List<Alternative> preferences) {
 		this.voter = voter;
 		this.pref = new StrictPreference(preferences);
@@ -23,10 +23,18 @@ public class VoterStrictPreference {
 	}
 
 	/**
-	 * @return the result of the query a > b
+	 * Given a query a > b
+	 * 
+	 * @return if a is greater or lower than b
 	 */
-	public boolean askQuestion(QuestionVoter qv) {
-		return pref.getAlternativeRank(qv.getFirstAlternative()) > pref.getAlternativeRank(qv.getSecondAlternative());
+	public Answer askQuestion(QuestionVoter qv) {
+		if (pref.getAlternativeRank(qv.getFirstAlternative()) > pref.getAlternativeRank(qv.getSecondAlternative()))
+			return Answer.GREATER;
+		return Answer.LOWER;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Voter: " + voter + " " + pref.toString();
+	}
 }

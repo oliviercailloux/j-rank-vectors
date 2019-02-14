@@ -5,24 +5,24 @@ import com.google.common.collect.ImmutableMap;
 import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class Oracle {
-	
-	private ImmutableMap<Voter,VoterStrictPreference> profile;
+
+	private ImmutableMap<Voter, VoterStrictPreference> profile;
 	private PSRWeights weights;
-	
-	public Oracle(ImmutableMap<Voter,VoterStrictPreference> pref, PSRWeights w) {
-		this.profile= ImmutableMap.copyOf(pref);
+
+	public Oracle(ImmutableMap<Voter, VoterStrictPreference> pref, PSRWeights w) {
+		this.profile = ImmutableMap.copyOf(pref);
 		this.weights = new PSRWeights(w.getWeights());
 	}
-	
-	public boolean isYes(Question q) {
+
+	public Answer getAnswer(Question q) {
 		switch (q.getType()) {
-		case VOTER_QUESTION:{
-				QuestionVoter qv= q.getQuestionVoter();
-				Voter v=qv.getVoter();
-				VoterStrictPreference vsp= profile.get(v);
-				return vsp.askQuestion(qv);
-			}
-		case COMMITTEE_QUESTION:{
+		case VOTER_QUESTION: {
+			QuestionVoter qv = q.getQuestionVoter();
+			Voter v = qv.getVoter();
+			VoterStrictPreference vsp = profile.get(v);
+			return vsp.askQuestion(qv);
+		}
+		case COMMITTEE_QUESTION: {
 			QuestionCommittee qc = q.getQuestionCommittee();
 			return weights.askQuestion(qc);
 		}
@@ -30,5 +30,5 @@ public class Oracle {
 			throw new IllegalStateException();
 		}
 	}
-	
+
 }

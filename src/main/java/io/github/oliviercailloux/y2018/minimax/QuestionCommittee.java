@@ -8,18 +8,12 @@ import com.google.common.base.MoreObjects;
 
 public class QuestionCommittee {
 
-	private QuestionType qt;
 	private Aprational lambda;
 	private int rank;
 
 	public QuestionCommittee(Aprational lambda, int rank) {
-		this.qt = QuestionType.COMMITTEE_QUESTION;
 		this.lambda = lambda;
 		this.rank = rank;
-	}
-
-	public QuestionType type() {
-		return qt;
 	}
 
 	/**

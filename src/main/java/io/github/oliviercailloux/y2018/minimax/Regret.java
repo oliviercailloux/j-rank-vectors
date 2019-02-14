@@ -75,22 +75,19 @@ public class Regret {
 		A.remove(y);
 		/**
 		 * Case1 x >^p y : place as much alternatives as possible above x W1: worst than
-		 * x (in >^p). W2: worst than y. W3: better than y. A: the whole set of
-		 * alternatives. Then the better ones are B: A \ W1 \ W2. The middle ones are M:
-		 * W1 intersection W3.
-		 *
-		 * NOTE: W2 ⊆ W1 always => B: A \ W1
+		 * x (in >^p). W3: better than y. A: the whole set of alternatives. Then the
+		 * better ones are B: A \ W1. The middle ones are M: W1 intersection W3.
 		 **/
 		if (trans.hasEdgeConnecting(x, y)) {
-			HashSet<Alternative> W1 = new HashSet<Alternative>(trans.successors(x));
+			HashSet<Alternative> W1 = new HashSet<>(trans.successors(x));
 			W1.remove(y);
-			HashSet<Alternative> W3 = new HashSet<Alternative>(trans.predecessors(y));
+			HashSet<Alternative> W3 = new HashSet<>(trans.predecessors(y));
 			W3.remove(x);
-			HashSet<Alternative> B = new HashSet<Alternative>(A);
+			HashSet<Alternative> B = new HashSet<>(A);
 			B.removeAll(W1);
 			rankx = B.size() + 1;
 
-			HashSet<Alternative> M = new HashSet<Alternative>(W1);
+			HashSet<Alternative> M = new HashSet<>(W1);
 			M.retainAll(W3);
 			ranky = rankx + M.size() + 1;
 		} else {
@@ -100,10 +97,10 @@ public class Regret {
 			 * of alternatives. Then the better ones are W1. The middle ones are M: A \ W1 \
 			 * W2. So the rank of x is |A \ W2|+1.
 			 **/
-			HashSet<Alternative> W1 = new HashSet<Alternative>(trans.predecessors(y));
+			HashSet<Alternative> W1 = new HashSet<>(trans.predecessors(y));
 			ranky = W1.size() + 1;
 
-			HashSet<Alternative> W2 = new HashSet<Alternative>(trans.successors(x));
+			HashSet<Alternative> W2 = new HashSet<>(trans.successors(x));
 			A.removeAll(W2);
 			rankx = A.size() + 2;
 		}

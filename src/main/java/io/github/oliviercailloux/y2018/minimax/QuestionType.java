@@ -15,5 +15,5 @@ public enum QuestionType {
 			throw new IllegalStateException();
 		}
 	}
-	
+
 }
