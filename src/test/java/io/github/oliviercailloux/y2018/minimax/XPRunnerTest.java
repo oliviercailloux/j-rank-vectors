@@ -17,8 +17,8 @@ public class XPRunnerTest {
 	public void testGenWeights() {
 		int m = 4;
 
-		final PSRWeights weights = XPRunner.genWeights(m);
-		System.out.println(weights);
+		//final PSRWeights weights = XPRunner.genWeights(m);
+		//System.out.println(weights);
 	}
 	
 	

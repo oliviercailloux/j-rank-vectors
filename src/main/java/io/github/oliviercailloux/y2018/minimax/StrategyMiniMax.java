@@ -7,7 +7,7 @@ public class StrategyMiniMax implements Strategy {
 	PrefKnowledge knowledge;
 
 	@Override
-	public Question getQuestion() {
+	public Question nextQuestion() {
 		// TODO Auto-generated method stub
 		return null;
 	}

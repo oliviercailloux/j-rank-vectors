@@ -62,7 +62,7 @@ public class StrategyRandom implements Strategy {
 	}
 
 	@Override
-	public Question getQuestion() {
+	public Question nextQuestion() {
 		final int m = knowledge.getAlternatives().size();
 
 		checkArgument(m >= 2, "Questions can be asked only if there are at least two alternatives.");
