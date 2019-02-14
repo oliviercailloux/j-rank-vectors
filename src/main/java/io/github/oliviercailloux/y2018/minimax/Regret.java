@@ -15,30 +15,30 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 public class Regret {
 
 	public static Alternative getMMRAlternative(PrefKnowledge knowledge) {
-		List<Alternative> alt=knowledge.getAlternatives().asList();
-		ListIterator<Alternative> i= alt.listIterator();
+		List<Alternative> alt = knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i = alt.listIterator();
 		Alternative minAlt = i.next();
-		double minMR = getMR(minAlt,knowledge);
+		double minMR = getMR(minAlt, knowledge);
 		double MR;
 		while (i.hasNext()) {
-			Alternative x= i.next();
+			Alternative x = i.next();
 			MR = getMR(x, knowledge);
 			if (MR < minMR) {
 				minMR = MR;
-				minAlt=x;
+				minAlt = x;
 			}
 		}
 		return minAlt;
 	}
 
 	private static double getMR(Alternative x, PrefKnowledge knowledge) {
-		List<Alternative> alt=knowledge.getAlternatives().asList();
-		ListIterator<Alternative> i= alt.listIterator();
+		List<Alternative> alt = knowledge.getAlternatives().asList();
+		ListIterator<Alternative> i = alt.listIterator();
 		double maxPMR = Double.MIN_VALUE;
 		double PMR;
-		while(i.hasNext()) {
+		while (i.hasNext()) {
 			Alternative y = i.next();
-			if(!x.equals(y)) {
+			if (!x.equals(y)) {
 				PMR = getPMR(x, y, knowledge);
 				if (PMR > maxPMR) {
 					maxPMR = PMR;
@@ -79,11 +79,8 @@ public class Regret {
 		A.remove(y);
 		/**
 		 * Case1 x >^p y : place as much alternatives as possible above x W1: worst than
-		 * x (in >^p). W2: worst than y. W3: better than y. A: the whole set of
-		 * alternatives. Then the better ones are B: A \ W1 \ W2. The middle ones are M:
-		 * W1 intersection W3.
-		 * 
-		 * NOTE: W2 ⊆ W1 always => B: A \ W1
+		 * x (in >^p). W3: better than y. A: the whole set of alternatives. Then the
+		 * better ones are B: A \ W1. The middle ones are M: W1 intersection W3.
 		 **/
 		if (trans.hasEdgeConnecting(x, y)) {
 			HashSet<Alternative> W1 = new HashSet<Alternative>(trans.successors(x));

@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
@@ -9,19 +11,14 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class QuestionVoter {
 
-	private QuestionType qt;
 	private Voter voter;
 	private Alternative a, b;
 
 	public QuestionVoter(Voter voter, Alternative a, Alternative b) {
-		this.qt = QuestionType.VOTER_QUESTION;
+		checkArgument(!a.equals(b));
 		this.voter = voter;
 		this.a = a;
 		this.b = b;
-	}
-
-	public QuestionType type() {
-		return qt;
 	}
 
 	public Voter getVoter() {
