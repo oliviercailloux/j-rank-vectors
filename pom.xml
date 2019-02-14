@@ -40,9 +40,8 @@
 				<version>2.22.1</version>
 				<configuration>
 					<argLine>
-						-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+						-Djava.library.path=lib -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
 					</argLine>
-					<argLine>-Djava.library.path=lib</argLine>
 				</configuration>
 			</plugin>
 		</plugins>
