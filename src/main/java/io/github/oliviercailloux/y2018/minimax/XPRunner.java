@@ -20,9 +20,9 @@ public class XPRunner {
 	public static Map<Voter, VoterStrictPreference> genProfile(int nbVoters, int nbAlternatives) {
 		checkArgument(nbVoters >= 1);
 		checkArgument(nbAlternatives >= 1);
-		Map<Voter, VoterStrictPreference> profile = new HashMap<Voter, VoterStrictPreference>();
+		Map<Voter, VoterStrictPreference> profile = new HashMap<>();
 
-		List<Alternative> availableRanks = new LinkedList<Alternative>();
+		List<Alternative> availableRanks = new LinkedList<>();
 		for (int i = 1; i <= nbAlternatives; i++) {
 			availableRanks.add(new Alternative(i));
 		}
