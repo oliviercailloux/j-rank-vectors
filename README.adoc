@@ -1,8 +1,10 @@
 = J-rank-vectors
+:groupId: io.github.oliviercailloux
+:artifactId: j-rank-vectors
+:repository: {artifactId}
 
-image:https://travis-ci.com/oliviercailloux/j-rank-vectors.svg?branch=master["Build Status", link="https://travis-ci.com/oliviercailloux/j-rank-vectors"]
-//image:https://maven-badges.herokuapp.com/maven-central/io.github.oliviercailloux/j-rank-vectors/badge.svg["Artifact on Maven Central", link="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.github.oliviercailloux%22%20a%3A%22j-rank-vectors%22"]
-//image:http://www.javadoc.io/badge/io.github.oliviercailloux/jlp.svg["Javadocs", link="http://www.javadoc.io/doc/io.github.oliviercailloux/jlp"]
+image:https://travis-ci.com/oliviercailloux/{repository}.svg?branch=master["Build Status", link="https://travis-ci.com/oliviercailloux/{repository}"]
+//image:https://maven-badges.herokuapp.com/maven-central/{groupId}/{artifactId}/badge.svg["Artifact on Maven Central", link="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22{groupId}%22%20a%3A%22{artifactId}%22"]
+//image:http://www.javadoc.io/badge/{groupId}/{artifactId}.svg["Javadocs", link="http://www.javadoc.io/doc/{groupId}/{artifactId}"]
 
 A software that accompanies the http://www.lamsade.dauphine.fr/~ocailloux/#publications[article]: Cailloux, Olivier and Ulle Endriss. 2014. “Eliciting a Suitable Voting Rule via Examples”.
-
