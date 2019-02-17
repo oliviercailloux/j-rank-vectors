@@ -6,12 +6,16 @@ import io.github.oliviercailloux.y2018.j_voting.*;
 
 public class Oracle {
 
+	public static Oracle build(ImmutableMap<Voter, VoterStrictPreference> pref, PSRWeights w) {
+		return new Oracle(pref,w);
+	}
+	
 	private ImmutableMap<Voter, VoterStrictPreference> profile;
 	private PSRWeights weights;
 
-	public Oracle(ImmutableMap<Voter, VoterStrictPreference> pref, PSRWeights w) {
+	private Oracle(ImmutableMap<Voter, VoterStrictPreference> pref, PSRWeights w) {
 		this.profile = ImmutableMap.copyOf(pref);
-		this.weights = new PSRWeights(w.getWeights());
+		this.weights = PSRWeights.given(w.getWeights());
 	}
 
 	public Answer getAnswer(Question q) {
@@ -30,5 +34,13 @@ public class Oracle {
 			throw new IllegalStateException();
 		}
 	}
+	
+	public ImmutableMap<Voter, VoterStrictPreference> getProfile (){
+		return profile;
+	}
 
+	public PSRWeights getWeights() {
+		return weights;
+	}
+	
 }

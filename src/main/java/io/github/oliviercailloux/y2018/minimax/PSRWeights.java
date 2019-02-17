@@ -15,7 +15,11 @@ public class PSRWeights {
 	private final double upperBound = 1;
 	private final double lowerBound = 0;
 
-	public PSRWeights(List<Double> weights) {
+	public static PSRWeights given(List<Double> weights) {
+		return new PSRWeights(weights);
+	}
+	
+	private PSRWeights(List<Double> weights) {
 		Preconditions.checkNotNull(weights);
 		if (weights.size() > 1) {
 			if (weights.get(0) != upperBound || weights.get(weights.size() - 1) != lowerBound
@@ -28,8 +32,8 @@ public class PSRWeights {
 	}
 
 	@SuppressWarnings("unused")
-	private boolean checkMonotonicity(List<Double> weights) {
-		Iterator<Double> ls = weights.iterator();
+	private boolean checkMonotonicity(List<Double> weight) {
+		Iterator<Double> ls = weight.iterator();
 		double curr;
 		double prev = ls.next();
 		while (ls.hasNext()) {
@@ -42,12 +46,12 @@ public class PSRWeights {
 		return true;
 	}
 
-	private boolean checkConvexity(List<Double> weights) {
+	private boolean checkConvexity(List<Double> weight) {
 		double wi1, wi2, wi3;
-		for (int i = 0; i < weights.size() - 2; i++) {
-			wi1 = weights.get(i);
-			wi2 = weights.get(i + 1);
-			wi3 = weights.get(i + 2);
+		for (int i = 0; i < weight.size() - 2; i++) {
+			wi1 = weight.get(i);
+			wi2 = weight.get(i + 1);
+			wi3 = weight.get(i + 2);
 			if ((wi1 - wi2) < (wi2 - wi3)) {
 				return false;
 			}
@@ -70,15 +74,15 @@ public class PSRWeights {
 	}
 
 	/**
-	 * Given a query (w_i − w_{i+1}) >= λ (w_{i+1} − w_{i+2})
-	 * 
+	 * Given a query d * (w_i − w_{i+1}) >= n * (w_{i+1} − w_{i+2})
+	 *  where n/d = λ
 	 * @return if the term on the left is GREATER, EQUAL or LOWER than the right one
 	 */
 	public Answer askQuestion(QuestionCommittee qc) {
 		int i = qc.getRank();
 		Aprational lambda = qc.getLambda();
-		double left = weights.get(i - 1) - weights.get(i);
-		double right = lambda.doubleValue() * (weights.get(i) - weights.get(i + 1));
+		double left = lambda.denominator().intValue()*(weights.get(i - 1) - weights.get(i));
+		double right = lambda.numerator().intValue() * (weights.get(i) - weights.get(i + 1));
 		if (left > right)
 			return Answer.GREATER;
 		else if (left == right)

@@ -28,12 +28,12 @@ public class Question {
 	}
 
 	public QuestionVoter getQuestionVoter() {
-		Preconditions.checkState(qv == null);
+		Preconditions.checkState(qc == null);
 		return qv;
 	}
 
 	public QuestionCommittee getQuestionCommittee() {
-		Preconditions.checkState(qc == null);
+		Preconditions.checkState(qv == null);
 		return qc;
 	}
 

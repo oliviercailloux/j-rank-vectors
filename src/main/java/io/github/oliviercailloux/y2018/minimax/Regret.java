@@ -70,7 +70,7 @@ public class Regret {
 		int rankx = 0;
 		int ranky = 0;
 		Graph<Alternative> trans = voterPartialPreference.asTransitiveGraph();
-		HashSet<Alternative> A = new HashSet<Alternative>(voterPartialPreference.asGraph().nodes());
+		HashSet<Alternative> A = new HashSet<>(voterPartialPreference.asGraph().nodes());
 		A.remove(x);
 		A.remove(y);
 		/**

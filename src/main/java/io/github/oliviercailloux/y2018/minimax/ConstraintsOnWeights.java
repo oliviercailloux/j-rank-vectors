@@ -156,4 +156,14 @@ public class ConstraintsOnWeights {
 
 		return RangeOfDouble.using(lBound, uBound);
 	}
+
+	public String rangesAsString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i <= builder.getVariables().size(); i++) {
+			sb.append("Rank "+ i+ " ");
+			sb.append(getWeightRange(i).toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }

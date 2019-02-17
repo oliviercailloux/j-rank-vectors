@@ -54,7 +54,7 @@ public class StrategyRandom implements Strategy {
 
 	private StrategyRandom(PrefKnowledge knowledge) {
 		final long seed = ThreadLocalRandom.current().nextLong();
-		LOGGER.info("Using seed: {}.", seed);
+		//LOGGER.info("Using seed: {}.", seed);
 		random = new Random(seed);
 		this.knowledge = knowledge;
 	}

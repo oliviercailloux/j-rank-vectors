@@ -28,13 +28,13 @@ public class VoterStrictPreference {
 	 * @return if a is greater or lower than b
 	 */
 	public Answer askQuestion(QuestionVoter qv) {
-		if (pref.getAlternativeRank(qv.getFirstAlternative()) > pref.getAlternativeRank(qv.getSecondAlternative()))
+		if (pref.getAlternativeRank(qv.getFirstAlternative()) < pref.getAlternativeRank(qv.getSecondAlternative()))
 			return Answer.GREATER;
 		return Answer.LOWER;
 	}
 
 	@Override
 	public String toString() {
-		return "Voter: " + voter + " " + pref.toString();
+		return "Voter: " + voter + " Pref: [" + pref.toString()+"]";
 	}
 }

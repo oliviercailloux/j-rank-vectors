@@ -64,9 +64,18 @@ public class VoterPartialPreference {
 		return Objects.hashCode(this.voter, this.pref);
 	}
 
+//	@Override
+//	public String toString() {
+//		return MoreObjects.toStringHelper(this).add("voter", voter).add("pref", pref).toString();
+//	}
+
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("voter", voter).add("pref", pref).toString();
+		return "Voter: " + voter + " Pref: " + pref.edges();
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(voter + " ");
+//		sb.append(pref.edges());
+//		return sb.toString();
 	}
 
 	void setGraphChanged() {
