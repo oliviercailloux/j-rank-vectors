@@ -2,7 +2,9 @@ package io.github.oliviercailloux.y2018.minimax;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,37 +16,34 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 public class XPRunnerTest {
 
 	@Test
-	public void testGenWeights() {
-		int m = 4;
-
-		//final PSRWeights weights = XPRunner.genWeights(m);
-		//System.out.println(weights);
+	public void testOracle() {
+		//final Oracle oracle = XPRunner.genContext(); 
 	}
 	
-	
+	@Test
+	public void testGenWeights() {
+		int m = 9;
+		final PSRWeights weights = XPRunner.genWeights(m);
+		assertEquals(m,weights.getWeights().size());
+	}
+
 	@Test
 	public void testGenProfile() {
 		int m = 3;
 		int n = 2;
-
 		final Map<Voter, VoterStrictPreference> rv = XPRunner.genProfile(n, m);
-		for (int i = 1; i <= n; i++) {
-			Voter v = new Voter(i);
-			System.out.println(rv.get(v));
+
+		final List<Alternative> alt = new LinkedList<>();
+		for (int i = 1; i <= m; i++) {
+			alt.add(new Alternative(i));
 		}
 
-//		final AllRankVectors all = new AllRankVectors(m, n);
-//		final Set<List<Integer>> rvs = all.getRankVectors();
-//		assertEquals(210, rvs.size());
-//		final List<Integer> ones = Collections.nCopies(n, 1);
-//		assertEquals(ones, rvs.iterator().next());
-//		final ImmutableList<Integer> start = ImmutableList.of(1, 2, 3, 3, 4, 5);
-//		final ImmutableSortedSet<List<Integer>> gr = all.getGr(start);
-//		assertFalse(gr.contains(start));
-//
-//		final ImmutableSet<ImmutableList<Integer>> following = ImmutableSet.of(ImmutableList.of(1, 2, 3, 3, 5, 5),
-//				ImmutableList.of(1, 2, 3, 4, 4, 4), ImmutableList.of(1, 2, 3, 4, 4, 5));
-//		assertEquals(following, ImmutableSet.copyOf(Iterables.limit(gr, 3)));
+		assertEquals(n, rv.size());
+		for (VoterStrictPreference vpref : rv.values()) {
+			assertEquals(m, vpref.getPref().getAlternatives().size());
+			assertTrue(vpref.getPref().getAlternatives().containsAll(alt));
+		}
+
 	}
 
 }
