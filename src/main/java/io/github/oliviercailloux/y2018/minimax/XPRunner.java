@@ -41,8 +41,8 @@ public class XPRunner {
 	static int k_vot;
 
 	public static void main(String[] args) {
-		int m = 7;
-		int n = 15;
+		int m = 3;
+		int n = 7;
 		alternatives = new HashSet<>();
 		for (int i = 1; i <= m; i++) {
 			alternatives.add(new Alternative(i));
@@ -53,12 +53,12 @@ public class XPRunner {
 		}
 		sumOfRanks = new double[m];
 		context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
-		knowledge = PrefKnowledge.given(alternatives, voters);
-		strategy = StrategyRandom.build(knowledge);
-
+		
 		writeContext();
 		for (k = 20; k <= 100; k += 10) {
 			k_vot=0;
+			knowledge = PrefKnowledge.given(alternatives, voters);
+			strategy = StrategyRandom.build(knowledge);
 			for (int i = 0; i < k; i++) {
 				Question q = strategy.nextQuestion();
 				Answer a = context.getAnswer(q);
