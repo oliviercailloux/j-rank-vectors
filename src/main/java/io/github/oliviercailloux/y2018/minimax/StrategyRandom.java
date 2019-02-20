@@ -41,6 +41,8 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class StrategyRandom implements Strategy {
 
+	public boolean profileCompleted;
+	
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyRandom.class);
 
@@ -57,6 +59,7 @@ public class StrategyRandom implements Strategy {
 		//LOGGER.info("Using seed: {}.", seed);
 		random = new Random(seed);
 		this.knowledge = knowledge;
+		profileCompleted=false;
 	}
 
 	void setRandom(Random random) {
@@ -128,7 +131,11 @@ public class StrategyRandom implements Strategy {
 			final Alternative a2 = incomparable.get();
 			q = new Question(new QuestionVoter(voter, a1, a2));
 		}
-
+		
+		if(!existsQuestionVoters) {
+			profileCompleted=true;
+		}
+		
 		return q;
 	}
 }

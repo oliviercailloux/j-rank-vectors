@@ -34,41 +34,54 @@ public class XPRunner {
 	static Set<Voter> voters;
 	static Oracle context;
 	static PrefKnowledge knowledge;
-	static Strategy strategy;
+	static StrategyRandom strategy;
 	static double[] sumOfRanks;
 	private static BufferedWriter bw;
 	static int k; // number of questions
 	static int k_vot;
+	static int exp;
+	static int n, m;
+	static Alternative winner;
 
-	public static void main(String[] args) {
-		int m = 3;
-		int n = 7;
-		alternatives = new HashSet<>();
-		for (int i = 1; i <= m; i++) {
-			alternatives.add(new Alternative(i));
-		}
-		voters = new HashSet<>();
-		for (int i = 1; i <= n; i++) {
-			voters.add(new Voter(i));
-		}
-		sumOfRanks = new double[m];
-		context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
-		
-		writeContext();
-		for (k = 20; k <= 100; k += 10) {
-			k_vot=0;
-			knowledge = PrefKnowledge.given(alternatives, voters);
-			strategy = StrategyRandom.build(knowledge);
-			for (int i = 0; i < k; i++) {
-				Question q = strategy.nextQuestion();
-				Answer a = context.getAnswer(q);
-				updateKnowledge(q, a);
-				if (q.getType().equals(QuestionType.VOTER_QUESTION))
-					k_vot++;
+	public static void main(String[] args) throws IOException {
+		exp = 0;
+		initFile();
+		for (n = 3; n < 8; n++) {
+			for (m = 3; m < 8; m++) {
+				exp++;
+				bw.write("Experiment number " + exp + " : " + n + " voters, " + m + " alternatives \n");
+				bw.flush();
+				
+				alternatives = new HashSet<>();
+				for (int i = 1; i <= m; i++) {
+					alternatives.add(new Alternative(i));
+				}
+				voters = new HashSet<>();
+				for (int i = 1; i <= n; i++) {
+					voters.add(new Voter(i));
+				}
+				sumOfRanks = new double[m];
+				context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
+				writeContext();
+				
+				for (k = 15; k <= 40; k += 5) {
+					k_vot = 0;
+					knowledge = PrefKnowledge.given(alternatives, voters);
+					strategy = StrategyRandom.build(knowledge);
+					winner=null;
+					for (int i = 0; i < k; i++) {
+						Question q = strategy.nextQuestion();
+						Answer a = context.getAnswer(q);
+						updateKnowledge(q, a);
+						if (q.getType().equals(QuestionType.VOTER_QUESTION))
+							k_vot++;
+					}
+					winner = Regret.getMMRAlternative(knowledge);
+					writeShortStats();
+				}
+				bw.write("\n");
 			}
-			writeStats();
 		}
-
 		try {
 			bw.close();
 		} catch (IOException e) {
@@ -76,7 +89,7 @@ public class XPRunner {
 		}
 	}
 
-	private static void writeContext() {
+	private static void initFile() {
 		try {
 			File file = new File("./stats.txt");
 			if (file.exists()) {
@@ -84,6 +97,13 @@ public class XPRunner {
 			}
 			file.createNewFile();
 			bw = new BufferedWriter(new FileWriter(file));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void writeContext() {
+		try {
 			bw.write("True preferences: \n");
 			bw.write("Profile: " + context.getProfile().values().toString() + "\n");
 			bw.write("Weights: " + context.getWeights().toString() + " \n");
@@ -99,10 +119,23 @@ public class XPRunner {
 		}
 	}
 
+	private static void writeShortStats() {
+		try {
+			if (strategy.profileCompleted) {
+				bw.write("Profile completed after " + k_vot + " questions: \n");
+			}
+			bw.write(k_vot + " questions to the voters, " + (k - k_vot) + " questions to the committee \n");
+			bw.write("Approximate winner: " + winner + "\n \n");
+			bw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void writeStats() {
 		try {
 			bw.write("Deducted preferences after " + k + " questions: \n");
-			bw.write(k_vot+" questions to the voters, "+ (k-k_vot)+" questions to the committee \n");
+			bw.write(k_vot + " questions to the voters, " + (k - k_vot) + " questions to the committee \n");
 			bw.write("Partial Profile: " + knowledge.getProfile().values().toString() + "\n");
 			bw.write("Weights Ranges: \n" + knowledge.getConstraintsOnWeights().rangesAsString() + "\n \n");
 			bw.flush();
@@ -219,6 +252,43 @@ public class XPRunner {
 		}
 
 		return profile;
+	}
+
+	@SuppressWarnings("unused")
+	private static void firstTest() {
+		int m1 = 3;
+		int n1 = 7;
+		alternatives = new HashSet<>();
+		for (int i = 1; i <= m1; i++) {
+			alternatives.add(new Alternative(i));
+		}
+		voters = new HashSet<>();
+		for (int i = 1; i <= n1; i++) {
+			voters.add(new Voter(i));
+		}
+		sumOfRanks = new double[m1];
+		context = Oracle.build(ImmutableMap.copyOf(genProfile(n1, m1)), genWeights(m1));
+
+		writeContext();
+		for (k = 20; k <= 100; k += 10) {
+			k_vot = 0;
+			knowledge = PrefKnowledge.given(alternatives, voters);
+			strategy = StrategyRandom.build(knowledge);
+			for (int i = 0; i < k; i++) {
+				Question q = strategy.nextQuestion();
+				Answer a = context.getAnswer(q);
+				updateKnowledge(q, a);
+				if (q.getType().equals(QuestionType.VOTER_QUESTION))
+					k_vot++;
+			}
+			writeStats();
+		}
+
+		try {
+			bw.close();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 }

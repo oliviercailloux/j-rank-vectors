@@ -1,0 +1,90 @@
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,3,1], Voter: Voter{2} Pref: [2,3,1], Voter: Voter{3} Pref: [2,3,1], Voter: Voter{4} Pref: [1,2,3], Voter: Voter{5} Pref: [1,2,3], Voter: Voter{6} Pref: [3,2,1], Voter: Voter{7} Pref: [2,1,3]]
+Weights: [1.0, 0.3287714391038846, 0.0] 
+Scores: 
+1: 2.3287714391038845
+2: 4.9863143173116535
+3: 1.986314317311654
+True winner: 2
+ 
+Deducted preferences after 20 questions: 
+14 questions to the voters, 6 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<3 -> 1>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.32..0.32989690721649484]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 30 questions: 
+15 questions to the voters, 15 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <3 -> 1>], Voter: Voter{2} Pref: [], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.32876492425002507..0.32878471664793707]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 40 questions: 
+17 questions to the voters, 23 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.32877141836791324..0.3287714956803858]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 50 questions: 
+19 questions to the voters, 31 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.328771439206037]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 60 questions: 
+17 questions to the voters, 43 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.3287714389041089]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 70 questions: 
+20 questions to the voters, 50 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.3287714389040357]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 80 questions: 
+17 questions to the voters, 63 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.3287714389040352]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 90 questions: 
+19 questions to the voters, 71 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.3287714389040352]
+Rank 3 [0.0..0.0]
+
+ 
+Deducted preferences after 100 questions: 
+16 questions to the voters, 84 questions to the committee 
+Partial Profile: [Voter: Voter{1} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
+Weights Ranges: 
+Rank 1 [1.0..1.0]
+Rank 2 [0.3287714389040352..0.3287714389040352]
+Rank 3 [0.0..0.0]
+
+ 

@@ -1,90 +1,793 @@
+Experiment number 1 : 3 voters, 3 alternatives 
 True preferences: 
-Profile: [Voter: Voter{1} Pref: [2,3,1], Voter: Voter{2} Pref: [2,3,1], Voter: Voter{3} Pref: [2,3,1], Voter: Voter{4} Pref: [1,2,3], Voter: Voter{5} Pref: [1,2,3], Voter: Voter{6} Pref: [3,2,1], Voter: Voter{7} Pref: [2,1,3]]
-Weights: [1.0, 0.3287714391038846, 0.0] 
+Profile: [Voter: Voter{1} Pref: [1,3,2], Voter: Voter{2} Pref: [2,3,1], Voter: Voter{3} Pref: [3,1,2]]
+Weights: [1.0, 0.4330341532853269, 0.0] 
 Scores: 
-1: 2.3287714391038845
-2: 4.9863143173116535
-3: 1.986314317311654
+1: 1.4330341532853268
+2: 1.0
+3: 1.8660683065706538
+True winner: 3
+ 
+7 questions to the voters, 8 questions to the committee 
+Approximate winner: 1
+ 
+Profile completed after 7 questions: 
+7 questions to the voters, 13 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 9 questions: 
+9 questions to the voters, 16 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 9 questions: 
+9 questions to the voters, 21 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 9 questions: 
+9 questions to the voters, 26 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 9 questions: 
+9 questions to the voters, 31 questions to the committee 
+Approximate winner: 3
+ 
+
+Experiment number 2 : 3 voters, 4 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [3,2,4,1], Voter: Voter{2} Pref: [2,1,3,4], Voter: Voter{3} Pref: [2,3,4,1]]
+Weights: [1.0, 0.44901416241800474, 0.19763619568226076, 0.0] 
+Scores: 
+1: 0.44901416241800474
+2: 2.449014162418005
+3: 1.6466503581002656
+4: 0.3952723913645215
 True winner: 2
  
-Deducted preferences after 20 questions: 
-14 questions to the voters, 6 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<3 -> 1>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.32..0.32989690721649484]
-Rank 3 [0.0..0.0]
-
+6 questions to the voters, 9 questions to the committee 
+Approximate winner: 2
  
-Deducted preferences after 30 questions: 
+12 questions to the voters, 8 questions to the committee 
+Approximate winner: 2
+ 
+12 questions to the voters, 13 questions to the committee 
+Approximate winner: 2
+ 
+Profile completed after 12 questions: 
+12 questions to the voters, 18 questions to the committee 
+Approximate winner: 2
+ 
+Profile completed after 16 questions: 
+16 questions to the voters, 19 questions to the committee 
+Approximate winner: 2
+ 
+Profile completed after 16 questions: 
+16 questions to the voters, 24 questions to the committee 
+Approximate winner: 2
+ 
+
+Experiment number 3 : 3 voters, 5 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [3,2,1,5,4], Voter: Voter{2} Pref: [4,3,5,2,1], Voter: Voter{3} Pref: [5,3,1,2,4]]
+Weights: [1.0, 0.5423295380510098, 0.32846061092670176, 0.15137783515322856, 0.0] 
+Scores: 
+1: 0.6569212218534035
+2: 0.8450852083574669
+3: 2.0846590761020196
+4: 1.0
+5: 1.4798384460799303
+True winner: 3
+ 
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 3
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 3
+ 
+7 questions to the voters, 18 questions to the committee 
+Approximate winner: 3
+ 
+18 questions to the voters, 12 questions to the committee 
+Approximate winner: 5
+ 
+19 questions to the voters, 16 questions to the committee 
+Approximate winner: 3
+ 
+21 questions to the voters, 19 questions to the committee 
+Approximate winner: 3
+ 
+
+Experiment number 4 : 3 voters, 6 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [1,2,4,6,3,5], Voter: Voter{2} Pref: [4,5,3,2,6,1], Voter: Voter{3} Pref: [1,4,3,5,2,6]]
+Weights: [1.0, 0.6376868836756558, 0.40614459970851113, 0.23624357819041364, 0.11220023226211469, 0.0] 
+Scores: 
+1: 2.0
+2: 0.9861306941281842
+3: 0.924489431679137
+4: 2.043831483384167
+5: 0.8739304618660695
+6: 0.3484438104525283
+True winner: 4
+ 
+7 questions to the voters, 8 questions to the committee 
+Approximate winner: 2
+ 
+12 questions to the voters, 8 questions to the committee 
+Approximate winner: 4
+ 
+12 questions to the voters, 13 questions to the committee 
+Approximate winner: 4
+ 
+16 questions to the voters, 14 questions to the committee 
+Approximate winner: 1
+ 
+18 questions to the voters, 17 questions to the committee 
+Approximate winner: 1
+ 
+19 questions to the voters, 21 questions to the committee 
+Approximate winner: 1
+ 
+
+Experiment number 5 : 3 voters, 7 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [7,2,3,1,5,6,4], Voter: Voter{2} Pref: [2,3,5,6,1,7,4], Voter: Voter{3} Pref: [1,5,4,7,6,2,3]]
+Weights: [1.0, 0.7455133332850583, 0.5250175034681916, 0.3671049755800745, 0.22982000969646776, 0.09585348996850943, 0.0] 
+Scores: 
+1: 1.5969249852765421
+2: 1.8413668232535678
+3: 1.27053083675325
+4: 0.5250175034681916
+5: 1.5003508464497177
+6: 0.6927784752450517
+7: 1.462958465548584
+True winner: 2
+ 
+7 questions to the voters, 8 questions to the committee 
+Approximate winner: 2
+ 
+11 questions to the voters, 9 questions to the committee 
+Approximate winner: 1
+ 
+10 questions to the voters, 15 questions to the committee 
+Approximate winner: 5
+ 
+14 questions to the voters, 16 questions to the committee 
+Approximate winner: 2
+ 
+15 questions to the voters, 20 questions to the committee 
+Approximate winner: 7
+ 
+21 questions to the voters, 19 questions to the committee 
+Approximate winner: 1
+ 
+
+Experiment number 6 : 4 voters, 3 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [1,3,2], Voter: Voter{2} Pref: [2,3,1], Voter: Voter{3} Pref: [1,3,2], Voter: Voter{4} Pref: [3,2,1]]
+Weights: [1.0, 0.10732171765986565, 0.0] 
+Scores: 
+1: 2.0
+2: 1.1073217176598655
+3: 1.321965152979597
+True winner: 1
+ 
+6 questions to the voters, 9 questions to the committee 
+Approximate winner: 1
+ 
+12 questions to the voters, 8 questions to the committee 
+Approximate winner: 1
+ 
+Profile completed after 11 questions: 
+11 questions to the voters, 14 questions to the committee 
+Approximate winner: 1
+ 
+Profile completed after 10 questions: 
+10 questions to the voters, 20 questions to the committee 
+Approximate winner: 1
+ 
+Profile completed after 10 questions: 
+10 questions to the voters, 25 questions to the committee 
+Approximate winner: 1
+ 
+Profile completed after 10 questions: 
+10 questions to the voters, 30 questions to the committee 
+Approximate winner: 1
+ 
+
+Experiment number 7 : 4 voters, 4 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,1,2,3], Voter: Voter{2} Pref: [4,3,1,2], Voter: Voter{3} Pref: [4,2,3,1], Voter: Voter{4} Pref: [2,4,1,3]]
+Weights: [1.0, 0.6083391855116549, 0.2892470262405216, 0.0] 
+Scores: 
+1: 1.186833237992698
+2: 1.8975862117521765
+3: 0.8975862117521765
+4: 3.608339185511655
+True winner: 4
+ 
+8 questions to the voters, 7 questions to the committee 
+Approximate winner: 4
+ 
+11 questions to the voters, 9 questions to the committee 
+Approximate winner: 4
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 4
+ 
 15 questions to the voters, 15 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <3 -> 1>], Voter: Voter{2} Pref: [], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.32876492425002507..0.32878471664793707]
-Rank 3 [0.0..0.0]
-
+Approximate winner: 4
  
-Deducted preferences after 40 questions: 
+19 questions to the voters, 16 questions to the committee 
+Approximate winner: 4
+ 
+21 questions to the voters, 19 questions to the committee 
+Approximate winner: 4
+ 
+
+Experiment number 8 : 4 voters, 5 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,1,5,3,2], Voter: Voter{2} Pref: [5,2,4,3,1], Voter: Voter{3} Pref: [4,2,1,3,5], Voter: Voter{4} Pref: [5,2,4,3,1]]
+Weights: [1.0, 0.5893864575058837, 0.2677985570104053, 0.10478334276721538, 0.0] 
+Scores: 
+1: 0.8571850145162889
+2: 1.7681593725176512
+3: 0.4191333710688615
+4: 2.5355971140208107
+5: 2.2677985570104053
+True winner: 4
+ 
+5 questions to the voters, 10 questions to the committee 
+Approximate winner: 5
+ 
+13 questions to the voters, 7 questions to the committee 
+Approximate winner: 5
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 5
+ 
+13 questions to the voters, 17 questions to the committee 
+Approximate winner: 5
+ 
+14 questions to the voters, 21 questions to the committee 
+Approximate winner: 4
+ 
+23 questions to the voters, 17 questions to the committee 
+Approximate winner: 4
+ 
+
+Experiment number 9 : 4 voters, 6 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,1,3,6,2,5], Voter: Voter{2} Pref: [2,3,4,1,6,5], Voter: Voter{3} Pref: [4,3,1,2,5,6], Voter: Voter{4} Pref: [2,5,1,4,3,6]]
+Weights: [1.0, 0.6434003295071986, 0.35953795546292294, 0.20604657585869118, 0.08257196551203207, 0.0] 
+Scores: 
+1: 1.5685228162917357
+2: 2.288618541370723
+3: 1.7289105799893523
+4: 2.565584531321614
+5: 0.7259722950192307
+6: 0.28861854137072324
+True winner: 4
+ 
+7 questions to the voters, 8 questions to the committee 
+Approximate winner: 2
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 2
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 3
+ 
+16 questions to the voters, 14 questions to the committee 
+Approximate winner: 2
+ 
+16 questions to the voters, 19 questions to the committee 
+Approximate winner: 3
+ 
 17 questions to the voters, 23 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.32877141836791324..0.3287714956803858]
-Rank 3 [0.0..0.0]
-
+Approximate winner: 3
  
-Deducted preferences after 50 questions: 
-19 questions to the voters, 31 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.328771439206037]
-Rank 3 [0.0..0.0]
 
+Experiment number 10 : 4 voters, 7 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [6,5,4,1,7,2,3], Voter: Voter{2} Pref: [3,7,6,2,5,4,1], Voter: Voter{3} Pref: [2,3,6,5,1,7,4], Voter: Voter{4} Pref: [3,7,1,5,4,2,6]]
+Weights: [1.0, 0.6231222059808075, 0.29687213768155185, 0.16641369494911232, 0.08795599186063284, 0.035417549810149, 0.0] 
+Scores: 
+1: 0.551241824491297
+2: 1.2372487945694104
+3: 2.6231222059808075
+4: 0.4202456793523337
+5: 1.043905587739665
+6: 1.593744275363104
+7: 1.369617953632397
+True winner: 3
  
-Deducted preferences after 60 questions: 
-17 questions to the voters, 43 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.3287714389041089]
-Rank 3 [0.0..0.0]
+8 questions to the voters, 7 questions to the committee 
+Approximate winner: 1
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 7
+ 
+13 questions to the voters, 12 questions to the committee 
+Approximate winner: 1
+ 
+15 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+19 questions to the voters, 16 questions to the committee 
+Approximate winner: 3
+ 
+25 questions to the voters, 15 questions to the committee 
+Approximate winner: 3
+ 
 
+Experiment number 11 : 5 voters, 3 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [1,3,2], Voter: Voter{2} Pref: [2,3,1], Voter: Voter{3} Pref: [2,3,1], Voter: Voter{4} Pref: [3,2,1], Voter: Voter{5} Pref: [3,2,1]]
+Weights: [1.0, 0.4908918396066846, 0.0] 
+Scores: 
+1: 1.0
+2: 2.981783679213369
+3: 3.4726755188200538
+True winner: 3
  
-Deducted preferences after 70 questions: 
-20 questions to the voters, 50 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.3287714389040357]
-Rank 3 [0.0..0.0]
+8 questions to the voters, 7 questions to the committee 
+Approximate winner: 3
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 14 questions: 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 14 questions: 
+14 questions to the voters, 16 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 14 questions: 
+14 questions to the voters, 21 questions to the committee 
+Approximate winner: 3
+ 
+Profile completed after 13 questions: 
+13 questions to the voters, 27 questions to the committee 
+Approximate winner: 3
+ 
 
+Experiment number 12 : 5 voters, 4 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,3,4,1], Voter: Voter{2} Pref: [3,2,1,4], Voter: Voter{3} Pref: [3,2,1,4], Voter: Voter{4} Pref: [2,3,1,4], Voter: Voter{5} Pref: [1,2,4,3]]
+Weights: [1.0, 0.6134829549699451, 0.24796921175821357, 0.0] 
+Scores: 
+1: 1.7439076352746408
+2: 3.8404488649098356
+3: 3.2269659099398904
+4: 0.49593842351642714
+True winner: 2
  
-Deducted preferences after 80 questions: 
-17 questions to the voters, 63 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.3287714389040352]
-Rank 3 [0.0..0.0]
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 2
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 2
+ 
+6 questions to the voters, 19 questions to the committee 
+Approximate winner: 2
+ 
+11 questions to the voters, 19 questions to the committee 
+Approximate winner: 2
+ 
+21 questions to the voters, 14 questions to the committee 
+Approximate winner: 2
+ 
+25 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
 
+Experiment number 13 : 5 voters, 5 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,4,5,1,3], Voter: Voter{2} Pref: [2,4,5,1,3], Voter: Voter{3} Pref: [2,5,4,1,3], Voter: Voter{4} Pref: [2,3,5,4,1], Voter: Voter{5} Pref: [1,2,4,3,5]]
+Weights: [1.0, 0.5930451458115753, 0.24916909774910573, 0.1045049131202273, 0.0] 
+Scores: 
+1: 1.3135147393606819
+2: 4.593045145811575
+3: 0.6975500589318027
+4: 1.7889334002415893
+5: 1.3405524390588923
+True winner: 2
  
-Deducted preferences after 90 questions: 
-19 questions to the voters, 71 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 1>, <2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.3287714389040352]
-Rank 3 [0.0..0.0]
+5 questions to the voters, 10 questions to the committee 
+Approximate winner: 1
+ 
+15 questions to the voters, 5 questions to the committee 
+Approximate winner: 1
+ 
+11 questions to the voters, 14 questions to the committee 
+Approximate winner: 2
+ 
+14 questions to the voters, 16 questions to the committee 
+Approximate winner: 5
+ 
+20 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+21 questions to the voters, 19 questions to the committee 
+Approximate winner: 2
+ 
 
+Experiment number 14 : 5 voters, 6 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [3,5,2,1,6,4], Voter: Voter{2} Pref: [5,1,6,2,3,4], Voter: Voter{3} Pref: [6,1,5,3,4,2], Voter: Voter{4} Pref: [4,2,3,6,1,5], Voter: Voter{5} Pref: [5,2,6,3,4,1]]
+Weights: [1.0, 0.591081596347825, 0.3768684025773935, 0.1971564344875717, 0.060259644037323534, 0.0] 
+Scores: 
+1: 1.439579271220545
+2: 1.7561880297606152
+3: 1.8314409155898606
+4: 1.120519288074647
+5: 2.9679499989252185
+6: 2.0111528836796824
+True winner: 5
  
-Deducted preferences after 100 questions: 
-16 questions to the voters, 84 questions to the committee 
-Partial Profile: [Voter: Voter{1} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{2} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{3} Pref: [<2 -> 3>, <3 -> 1>], Voter: Voter{4} Pref: [<1 -> 2>, <1 -> 3>, <2 -> 3>], Voter: Voter{5} Pref: [<1 -> 2>, <2 -> 3>], Voter: Voter{6} Pref: [<2 -> 1>, <3 -> 2>], Voter: Voter{7} Pref: [<1 -> 3>, <2 -> 1>, <2 -> 3>]]
-Weights Ranges: 
-Rank 1 [1.0..1.0]
-Rank 2 [0.3287714389040352..0.3287714389040352]
-Rank 3 [0.0..0.0]
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 5
+ 
+8 questions to the voters, 12 questions to the committee 
+Approximate winner: 3
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 3
+ 
+13 questions to the voters, 17 questions to the committee 
+Approximate winner: 5
+ 
+18 questions to the voters, 17 questions to the committee 
+Approximate winner: 5
+ 
+22 questions to the voters, 18 questions to the committee 
+Approximate winner: 5
+ 
 
+Experiment number 15 : 5 voters, 7 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,7,6,2,1,3,5], Voter: Voter{2} Pref: [6,7,1,2,4,3,5], Voter: Voter{3} Pref: [7,3,2,5,4,1,6], Voter: Voter{4} Pref: [5,1,2,3,7,6,4], Voter: Voter{5} Pref: [2,7,1,6,3,4,5]]
+Weights: [1.0, 0.7118389964541146, 0.4478125401373702, 0.2734075821398423, 0.11908095067659022, 0.0018909488406052832, 0.0] 
+Scores: 
+1: 1.7284359762460506
+2: 2.442440244554425
+3: 1.1081094269517577
+4: 1.2400528501937857
+5: 1.2734075821398423
+6: 1.723111071117818
+7: 3.2545979400389338
+True winner: 7
  
+10 questions to the voters, 5 questions to the committee 
+Approximate winner: 1
+ 
+8 questions to the voters, 12 questions to the committee 
+Approximate winner: 5
+ 
+10 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+18 questions to the voters, 12 questions to the committee 
+Approximate winner: 4
+ 
+14 questions to the voters, 21 questions to the committee 
+Approximate winner: 2
+ 
+23 questions to the voters, 17 questions to the committee 
+Approximate winner: 1
+ 
+
+Experiment number 16 : 6 voters, 3 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [1,2,3], Voter: Voter{2} Pref: [3,2,1], Voter: Voter{3} Pref: [2,1,3], Voter: Voter{4} Pref: [1,2,3], Voter: Voter{5} Pref: [2,3,1], Voter: Voter{6} Pref: [2,3,1]]
+Weights: [1.0, 0.446567702752544, 0.0] 
+Scores: 
+1: 2.446567702752544
+2: 4.339703108257632
+3: 1.8931354055050882
+True winner: 2
+ 
+10 questions to the voters, 5 questions to the committee 
+Approximate winner: 2
+ 
+11 questions to the voters, 9 questions to the committee 
+Approximate winner: 2
+ 
+10 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+Profile completed after 16 questions: 
+16 questions to the voters, 14 questions to the committee 
+Approximate winner: 2
+ 
+Profile completed after 15 questions: 
+15 questions to the voters, 20 questions to the committee 
+Approximate winner: 2
+ 
+17 questions to the voters, 23 questions to the committee 
+Approximate winner: 2
+ 
+
+Experiment number 17 : 6 voters, 4 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,1,4,3], Voter: Voter{2} Pref: [2,3,1,4], Voter: Voter{3} Pref: [3,2,4,1], Voter: Voter{4} Pref: [2,1,4,3], Voter: Voter{5} Pref: [3,1,4,2], Voter: Voter{6} Pref: [2,4,1,3]]
+Weights: [1.0, 0.4765952068332703, 0.15335027725795758, 0.0] 
+Scores: 
+1: 1.736486175015726
+2: 4.47659520683327
+3: 2.47659520683327
+4: 1.0899963158651005
+True winner: 2
+ 
+11 questions to the voters, 4 questions to the committee 
+Approximate winner: 2
+ 
+13 questions to the voters, 7 questions to the committee 
+Approximate winner: 2
+ 
+13 questions to the voters, 12 questions to the committee 
+Approximate winner: 3
+ 
+15 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+20 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+14 questions to the voters, 26 questions to the committee 
+Approximate winner: 2
+ 
+
+Experiment number 18 : 6 voters, 5 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [5,2,3,1,4], Voter: Voter{2} Pref: [2,4,3,1,5], Voter: Voter{3} Pref: [5,2,4,3,1], Voter: Voter{4} Pref: [2,1,4,5,3], Voter: Voter{5} Pref: [5,3,1,4,2], Voter: Voter{6} Pref: [5,2,1,4,3]]
+Weights: [1.0, 0.6243800346406867, 0.3070360643611772, 0.12651056263887706, 0.0] 
+Scores: 
+1: 1.491473288640795
+2: 3.87314010392206
+3: 1.3649627260019181
+4: 1.4914732886407949
+5: 4.126510562638877
+True winner: 5
+ 
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 5
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 5
+ 
+10 questions to the voters, 15 questions to the committee 
+Approximate winner: 1
+ 
+15 questions to the voters, 15 questions to the committee 
+Approximate winner: 5
+ 
+14 questions to the voters, 21 questions to the committee 
+Approximate winner: 2
+ 
+19 questions to the voters, 21 questions to the committee 
+Approximate winner: 5
+ 
+
+Experiment number 19 : 6 voters, 6 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,3,6,5,1,4], Voter: Voter{2} Pref: [1,4,5,2,3,6], Voter: Voter{3} Pref: [1,6,2,5,4,3], Voter: Voter{4} Pref: [6,3,2,5,1,4], Voter: Voter{5} Pref: [6,5,1,4,3,2], Voter: Voter{6} Pref: [4,5,2,3,6,1]]
+Weights: [1.0, 0.5429206417475467, 0.18618098700730012, 0.09591013383196403, 0.02051036848258468, 0.0] 
+Scores: 
+1: 2.2272017239724695
+2: 1.6544530948538645
+3: 1.222772154292227
+4: 1.6593411440620955
+5: 1.5597526719982855
+6: 2.7496119972374315
+True winner: 6
+ 
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 1
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 5
+ 
+17 questions to the voters, 8 questions to the committee 
+Approximate winner: 6
+ 
+22 questions to the voters, 8 questions to the committee 
+Approximate winner: 3
+ 
+20 questions to the voters, 15 questions to the committee 
+Approximate winner: 1
+ 
+15 questions to the voters, 25 questions to the committee 
+Approximate winner: 2
+ 
+
+Experiment number 20 : 6 voters, 7 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [3,1,5,4,6,7,2], Voter: Voter{2} Pref: [2,4,1,7,3,5,6], Voter: Voter{3} Pref: [2,7,1,6,3,5,4], Voter: Voter{4} Pref: [4,6,2,3,1,5,7], Voter: Voter{5} Pref: [2,4,5,6,3,7,1], Voter: Voter{6} Pref: [2,7,3,5,1,6,4]]
+Weights: [1.0, 0.7393823431491302, 0.48727016928206507, 0.25489312666386965, 0.0986298073363846, 0.00868589181861086, 0.0] 
+Scores: 
+1: 1.9111822963860297
+2: 4.4872701692820645
+3: 2.0380527179550887
+4: 2.73365781296213
+5: 1.2554911406838325
+6: 1.3564842956318648
+7: 1.7510295965993516
+True winner: 2
+ 
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 2
+ 
+10 questions to the voters, 10 questions to the committee 
+Approximate winner: 1
+ 
+13 questions to the voters, 12 questions to the committee 
+Approximate winner: 2
+ 
+11 questions to the voters, 19 questions to the committee 
+Approximate winner: 4
+ 
+19 questions to the voters, 16 questions to the committee 
+Approximate winner: 3
+ 
+18 questions to the voters, 22 questions to the committee 
+Approximate winner: 5
+ 
+
+Experiment number 21 : 7 voters, 3 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [2,1,3], Voter: Voter{2} Pref: [1,2,3], Voter: Voter{3} Pref: [1,3,2], Voter: Voter{4} Pref: [1,2,3], Voter: Voter{5} Pref: [1,3,2], Voter: Voter{6} Pref: [3,1,2], Voter: Voter{7} Pref: [3,2,1]]
+Weights: [1.0, 0.4028787254504116, 0.0] 
+Scores: 
+1: 4.805757450900824
+2: 2.2086361763512348
+3: 2.805757450900823
+True winner: 1
+ 
+5 questions to the voters, 10 questions to the committee 
+Approximate winner: 1
+ 
+13 questions to the voters, 7 questions to the committee 
+Approximate winner: 1
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 1
+ 
+17 questions to the voters, 13 questions to the committee 
+Approximate winner: 1
+ 
+17 questions to the voters, 18 questions to the committee 
+Approximate winner: 1
+ 
+19 questions to the voters, 21 questions to the committee 
+Approximate winner: 1
+ 
+
+Experiment number 22 : 7 voters, 4 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,3,1,2], Voter: Voter{2} Pref: [4,3,1,2], Voter: Voter{3} Pref: [4,3,2,1], Voter: Voter{4} Pref: [1,2,3,4], Voter: Voter{5} Pref: [4,1,3,2], Voter: Voter{6} Pref: [1,2,4,3], Voter: Voter{7} Pref: [3,2,4,1]]
+Weights: [1.0, 0.5204317716272017, 0.09106768030388851, 0.0] 
+Scores: 
+1: 2.7025671322349787
+2: 1.6523629951854932
+3: 2.7434306754893822
+4: 4.182135360607777
+True winner: 4
+ 
+9 questions to the voters, 6 questions to the committee 
+Approximate winner: 4
+ 
+8 questions to the voters, 12 questions to the committee 
+Approximate winner: 3
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 4
+ 
+16 questions to the voters, 14 questions to the committee 
+Approximate winner: 4
+ 
+20 questions to the voters, 15 questions to the committee 
+Approximate winner: 4
+ 
+17 questions to the voters, 23 questions to the committee 
+Approximate winner: 4
+ 
+
+Experiment number 23 : 7 voters, 5 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [4,2,3,5,1], Voter: Voter{2} Pref: [1,4,2,5,3], Voter: Voter{3} Pref: [5,2,1,3,4], Voter: Voter{4} Pref: [5,3,4,2,1], Voter: Voter{5} Pref: [4,5,1,2,3], Voter: Voter{6} Pref: [1,2,3,5,4], Voter: Voter{7} Pref: [5,1,3,4,2]]
+Weights: [1.0, 0.573282753927361, 0.29628891547624736, 0.08515100676950027, 0.0] 
+Scores: 
+1: 3.165860584879856
+2: 2.186439190797331
+3: 1.5473005071256034
+4: 2.954722676173109
+5: 3.828735774235862
+True winner: 5
+ 
+3 questions to the voters, 12 questions to the committee 
+Approximate winner: 5
+ 
+13 questions to the voters, 7 questions to the committee 
+Approximate winner: 4
+ 
+14 questions to the voters, 11 questions to the committee 
+Approximate winner: 4
+ 
+17 questions to the voters, 13 questions to the committee 
+Approximate winner: 4
+ 
+21 questions to the voters, 14 questions to the committee 
+Approximate winner: 5
+ 
+23 questions to the voters, 17 questions to the committee 
+Approximate winner: 2
+ 
+
+Experiment number 24 : 7 voters, 6 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [6,2,5,3,1,4], Voter: Voter{2} Pref: [5,4,2,1,6,3], Voter: Voter{3} Pref: [3,5,6,4,1,2], Voter: Voter{4} Pref: [6,4,2,5,1,3], Voter: Voter{5} Pref: [3,5,6,1,4,2], Voter: Voter{6} Pref: [2,1,6,4,5,3], Voter: Voter{7} Pref: [2,4,3,5,6,1]]
+Weights: [1.0, 0.6832176645738243, 0.41500162270618823, 0.25937951499446626, 0.12745406910759288, 0.0] 
+Scores: 
+1: 1.5843389018855354
+2: 3.5132209099862006
+3: 2.6743811377006543
+4: 2.6958660928179987
+5: 3.427650050950362
+6: 3.4999130063337502
+True winner: 2
+ 
+10 questions to the voters, 5 questions to the committee 
+Approximate winner: 4
+ 
+9 questions to the voters, 11 questions to the committee 
+Approximate winner: 4
+ 
+12 questions to the voters, 13 questions to the committee 
+Approximate winner: 5
+ 
+16 questions to the voters, 14 questions to the committee 
+Approximate winner: 5
+ 
+20 questions to the voters, 15 questions to the committee 
+Approximate winner: 2
+ 
+22 questions to the voters, 18 questions to the committee 
+Approximate winner: 3
+ 
+
+Experiment number 25 : 7 voters, 7 alternatives 
+True preferences: 
+Profile: [Voter: Voter{1} Pref: [7,4,3,5,2,1,6], Voter: Voter{2} Pref: [3,2,7,6,1,5,4], Voter: Voter{3} Pref: [1,5,2,6,4,3,7], Voter: Voter{4} Pref: [6,2,4,5,3,7,1], Voter: Voter{5} Pref: [2,5,1,4,3,6,7], Voter: Voter{6} Pref: [2,7,5,6,4,1,3], Voter: Voter{7} Pref: [4,7,2,6,5,1,3]]
+Weights: [1.0, 0.7317194339861526, 0.46480503045623933, 0.2030120487643845, 0.0653607086928713, 0.002629181033739769, 0.0] 
+Scores: 
+1: 1.53805328225033
+2: 4.458409637577655
+3: 1.598155628875722
+4: 2.5302579305925192
+5: 2.4022578856839245
+6: 1.8146773760912778
+7: 2.930873079462285
+True winner: 2
+ 
+8 questions to the voters, 7 questions to the committee 
+Approximate winner: 1
+ 
+11 questions to the voters, 9 questions to the committee 
+Approximate winner: 2
+ 
+9 questions to the voters, 16 questions to the committee 
+Approximate winner: 1
+ 
+15 questions to the voters, 15 questions to the committee 
+Approximate winner: 7
+ 
+22 questions to the voters, 13 questions to the committee 
+Approximate winner: 2
+ 
+21 questions to the voters, 19 questions to the committee 
+Approximate winner: 5
+ 
+
