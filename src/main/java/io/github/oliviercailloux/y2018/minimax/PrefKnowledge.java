@@ -21,7 +21,11 @@ public class PrefKnowledge {
 	public static PrefKnowledge given(Set<Alternative> alternatives, Set<Voter> voters) {
 		return new PrefKnowledge(alternatives, voters);
 	}
-
+	
+	public static PrefKnowledge copyOf(PrefKnowledge knowledge) {
+		return new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
+	}
+	
 	private final ImmutableSet<Alternative> alternatives;
 	private final ImmutableMap<Voter, VoterPartialPreference> partialProfile;
 	private final ConstraintsOnWeights cow;

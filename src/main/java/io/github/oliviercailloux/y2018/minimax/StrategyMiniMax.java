@@ -20,9 +20,12 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
+import com.google.common.graph.MutableGraph;
 
+import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
+import io.github.oliviercailloux.y2018.minimax.utils.AggregationOperator;
 
 /** Uses the Regret to get the next question. **/
 
@@ -46,9 +49,8 @@ public class StrategyMiniMax implements Strategy {
 
 		checkArgument(m >= 2, "Questions can be asked only if there are at least two alternatives.");
 
-		final HashMap <Question, Double> questions = new HashMap<>();
-				
-		final ArrayList<QuestionVoter> votersQuestions = new ArrayList<>();
+		final HashMap<Question, Double> questions = new HashMap<>();
+
 		for (Voter voter : knowledge.getVoters()) {
 			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asTransitiveGraph();
 
@@ -56,15 +58,15 @@ public class StrategyMiniMax implements Strategy {
 				if (graph.adjacentNodes(a1).size() != m - 1) {
 					for (Alternative a2 : knowledge.getAlternatives()) {
 						if (!a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)) {
-							votersQuestions.add(new QuestionVoter(voter, a1, a2));
-							
+							Question q = new Question(new QuestionVoter(voter, a1, a2));
+							double score = getScore(q,AggregationOperator.MAX);
+							questions.put(q, score);
 						}
 					}
 				}
 			}
 		}
 
-		final ArrayList<QuestionCommittee> committeeQuestions = new ArrayList<>();
 		final ArrayList<Integer> candidateRanks = IntStream.rangeClosed(1, m - 2).boxed()
 				.collect(Collectors.toCollection(ArrayList::new));
 		for (int rank : candidateRanks) {
@@ -73,22 +75,85 @@ public class StrategyMiniMax implements Strategy {
 			if (diff > 0.1) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
-				committeeQuestions.add(new QuestionCommittee(avg, rank));
+				Question q = new Question(new QuestionCommittee(avg, rank));
+				double score = getScore(q,AggregationOperator.MAX);
+				questions.put(q, score);
 			}
 		}
 
-		final boolean existsQuestionWeight = !committeeQuestions.isEmpty();
-		final boolean existsQuestionVoters = !votersQuestions.isEmpty();
+		checkArgument(!questions.isEmpty(), "No question to ask about weights or voters.");
 
-		checkArgument(existsQuestionWeight || existsQuestionVoters, "No question to ask about weights or voters.");
+		Question nextQ = questions.keySet().iterator().next();
+		double minScore = questions.get(nextQ);
 
-		final Question q = null;
-
-		if (!existsQuestionVoters) {
-			profileCompleted = true;
+		for (Question q : questions.keySet()) {
+			double score = questions.get(q);
+			if (score < minScore) {
+				nextQ = q;
+				minScore = score;
+			}
 		}
 
-		return q;
+		return nextQ;
+	}
+
+	private double getScore(Question q, AggregationOperator agg) {
+		PrefKnowledge yesKnowledge = PrefKnowledge.copyOf(knowledge);
+		PrefKnowledge noKnowledge = PrefKnowledge.copyOf(knowledge);
+		double yesMMR;
+		double noMMR;
+		switch (q.getType()) {
+		case VOTER_QUESTION:
+			QuestionVoter qv = q.getQuestionVoter();
+			Alternative a = qv.getFirstAlternative();
+			Alternative b = qv.getSecondAlternative();
+
+			MutableGraph<Alternative> yesGraph = yesKnowledge.getProfile().get(qv.getVoter()).asGraph();
+			yesGraph.putEdge(a, b);
+			yesKnowledge.getProfile().get(qv.getVoter()).setGraphChanged();
+
+			MutableGraph<Alternative> noGraph = noKnowledge.getProfile().get(qv.getVoter()).asGraph();
+			noGraph.putEdge(b, a);
+			noKnowledge.getProfile().get(qv.getVoter()).setGraphChanged();
+
+			Regret.getMMRAlternatives(yesKnowledge);
+			yesMMR = Regret.getMMR();
+
+			Regret.getMMRAlternatives(noKnowledge);
+			noMMR = Regret.getMMR();
+			switch (agg) {
+			case MAX:
+				return Math.max(yesMMR, noMMR);
+			case AVG:
+				return (yesMMR + noMMR) / 2;
+			default:
+				throw new IllegalStateException();
+			}
+
+		case COMMITTEE_QUESTION:
+			QuestionCommittee qc = q.getQuestionCommittee();
+			Aprational lambda = qc.getLambda();
+			int rank = qc.getRank();
+
+			yesKnowledge.addConstraint(rank, ComparisonOperator.GE, lambda);
+			noKnowledge.addConstraint(rank, ComparisonOperator.LE, lambda);
+
+			Regret.getMMRAlternatives(yesKnowledge);
+			yesMMR = Regret.getMMR();
+
+			Regret.getMMRAlternatives(noKnowledge);
+			noMMR = Regret.getMMR();
+			switch (agg) {
+			case MAX:
+				return Math.max(yesMMR, noMMR);
+			case AVG:
+				return (yesMMR + noMMR) / 2;
+			default:
+				throw new IllegalStateException();
+			}
+		default:
+			throw new IllegalStateException();
+		}
 	}
 
 }

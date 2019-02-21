@@ -1,0 +1,920 @@
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [6,2,3,1,4,5], Voter: Voter{2} Pref: [1,4,6,2,5,3], Voter: Voter{3} Pref: [2,6,1,3,4,5], Voter: Voter{4} Pref: [5,4,6,3,2,1], Voter: Voter{5} Pref: [4,5,6,3,1,2], Voter: Voter{6} Pref: [2,1,5,6,3,4]]
+Weights: [1.0, 0.6356698630731017, 0.274342622660566, 0.11056345682449234, 0.025040266219757856, 0.0] 
+Scores: 
+1: 2.0456162087779184
+2: 2.771273586117352
+3: 0.6310732593538009
+4: 2.321420258585719
+5: 1.9350527519534257
+6: 2.569261187879292
+True winners: [2] True score: 2.771273586117352
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7256573773394338
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7256573773394338
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7256573773394338
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7256573773394338
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7256573773394338
+ 
+After 6 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.20201239823805972
+ 
+After 7 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.20201239823805972
+ 
+After 8 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.20201239823805972
+ 
+After 9 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 2.140200326763551
+ 
+After 10 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 2.140200326763551
+ 
+After 11 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 2.140200326763551
+ 
+After 12 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 2.140200326763551
+ 
+After 13 questions Approximate winners: [2, 4, 5] Regret: 5.5 Average Loss: 0.428691387231853
+ 
+After 14 questions Approximate winners: [2, 4, 5] Regret: 5.5 Average Loss: 0.428691387231853
+ 
+After 15 questions Approximate winners: [2, 4, 5] Regret: 5.5 Average Loss: 0.428691387231853
+ 
+After 16 questions Approximate winners: [2, 4, 5] Regret: 5.5 Average Loss: 0.428691387231853
+ 
+After 17 questions Approximate winners: [5] Regret: 5.333333333333333 Average Loss: 0.8362208341639261
+ 
+After 18 questions Approximate winners: [5] Regret: 5.333333333333333 Average Loss: 0.8362208341639261
+ 
+After 19 questions Approximate winners: [5] Regret: 5.333333333333333 Average Loss: 0.8362208341639261
+ 
+After 20 questions Approximate winners: [5] Regret: 5.333333333333333 Average Loss: 0.8362208341639261
+ 
+After 21 questions Approximate winners: [5] Regret: 5.333333333333333 Average Loss: 0.8362208341639261
+ 
+After 22 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.449853327531633
+ 
+After 23 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.449853327531633
+ 
+After 24 questions Approximate winners: [2, 4] Regret: 5.0 Average Loss: 0.2249266637658165
+ 
+After 25 questions Approximate winners: [2, 4, 5] Regret: 5.0 Average Loss: 0.428691387231853
+ 
+After 26 questions Approximate winners: [5] Regret: 4.75 Average Loss: 0.8362208341639261
+ 
+After 27 questions Approximate winners: [5] Regret: 4.75 Average Loss: 0.8362208341639261
+ 
+After 28 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.8362208341639261
+ 
+After 29 questions Approximate winners: [2, 6] Regret: 4.5 Average Loss: 0.10100619911902986
+ 
+After 30 questions Approximate winners: [1, 4] Regret: 4.0 Average Loss: 0.5877553524355332
+ 
+After 31 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [2] Regret: 2.0 Average Loss: 0.0
+ 
+After 38 questions Approximate winners: [2] Regret: 1.5 Average Loss: 0.0
+ 
+After 39 questions Approximate winners: [2] Regret: 1.5 Average Loss: 0.0
+ 
+After 40 questions Approximate winners: [2] Regret: 1.2000000000000002 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [6,2,3,5,1,4], Voter: Voter{2} Pref: [6,2,1,5,3,4], Voter: Voter{3} Pref: [4,1,2,6,3,5], Voter: Voter{4} Pref: [2,5,3,4,1,6], Voter: Voter{5} Pref: [3,6,1,2,5,4], Voter: Voter{6} Pref: [2,1,5,3,4,6]]
+Weights: [1.0, 0.6219059053665523, 0.3410279138246028, 0.12864137369870207, 0.0624684537592851, 0.0] 
+Scores: 
+1: 2.0508045459008803
+2: 3.71348109825641
+3: 1.9356341088664777
+4: 1.191109827457987
+5: 1.2826850203478444
+6: 2.7505472790652545
+True winners: [2] True score: 3.71348109825641
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5594374516072678
+ 
+After 8 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 9 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 10 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 11 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 12 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 13 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 14 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 1.7778469893899322
+ 
+After 15 questions Approximate winners: [1, 3] Regret: 5.666666666666667 Average Loss: 1.7202617708727308
+ 
+After 16 questions Approximate winners: [2, 5] Regret: 5.5 Average Loss: 1.2153980389542829
+ 
+After 17 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 18 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 19 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 20 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 21 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 22 questions Approximate winners: [1] Regret: 4.5 Average Loss: 1.6626765523555296
+ 
+After 23 questions Approximate winners: [3] Regret: 4.0 Average Loss: 1.7778469893899322
+ 
+After 24 questions Approximate winners: [3] Regret: 4.0 Average Loss: 1.7778469893899322
+ 
+After 25 questions Approximate winners: [2, 3] Regret: 4.0 Average Loss: 0.8889234946949661
+ 
+After 26 questions Approximate winners: [2, 3] Regret: 4.0 Average Loss: 0.8889234946949661
+ 
+After 27 questions Approximate winners: [2, 3] Regret: 4.0 Average Loss: 0.8889234946949661
+ 
+After 28 questions Approximate winners: [2, 3] Regret: 4.0 Average Loss: 0.8889234946949661
+ 
+After 29 questions Approximate winners: [2, 3] Regret: 4.0 Average Loss: 0.8889234946949661
+ 
+After 30 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 31 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [2] Regret: 3.5 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [2] Regret: 2.333333333333333 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [2] Regret: 2.333333333333333 Average Loss: 0.0
+ 
+After 38 questions Approximate winners: [2] Regret: 2.0 Average Loss: 0.0
+ 
+After 39 questions Approximate winners: [2] Regret: 2.0 Average Loss: 0.0
+ 
+After 40 questions Approximate winners: [2] Regret: 2.0 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [6,4,1,5,2,3], Voter: Voter{2} Pref: [6,1,4,3,5,2], Voter: Voter{3} Pref: [6,3,2,4,1,5], Voter: Voter{4} Pref: [1,4,6,2,5,3], Voter: Voter{5} Pref: [4,1,6,5,2,3], Voter: Voter{6} Pref: [1,5,2,3,4,6]]
+Weights: [1.0, 0.6721886369345473, 0.39031933106759203, 0.11147561682790419, 0.019804080995352705, 0.0] 
+Scores: 
+1: 3.7545006859320393
+2: 0.9317224409537936
+3: 0.8951398705903557
+4: 2.8659763027599436
+5: 0.9347480325810611
+6: 3.7806386621351837
+True winners: [6] True score: 3.7806386621351837
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 8 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 9 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 10 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 11 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 12 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.5868509963097874
+ 
+After 13 questions Approximate winners: [5] Regret: 5.75 Average Loss: 2.8458906295541224
+ 
+After 14 questions Approximate winners: [5] Regret: 5.75 Average Loss: 2.8458906295541224
+ 
+After 15 questions Approximate winners: [5] Regret: 5.75 Average Loss: 2.8458906295541224
+ 
+After 16 questions Approximate winners: [5] Regret: 5.75 Average Loss: 2.8458906295541224
+ 
+After 17 questions Approximate winners: [4] Regret: 5.5 Average Loss: 0.9146623593752401
+ 
+After 18 questions Approximate winners: [4] Regret: 5.5 Average Loss: 0.9146623593752401
+ 
+After 19 questions Approximate winners: [4] Regret: 5.5 Average Loss: 0.9146623593752401
+ 
+After 20 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.9146623593752401
+ 
+After 21 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.9146623593752401
+ 
+After 22 questions Approximate winners: [1, 4, 5] Regret: 5.0 Average Loss: 1.2622303217108357
+ 
+After 23 questions Approximate winners: [1] Regret: 4.75 Average Loss: 0.026137976203144397
+ 
+After 24 questions Approximate winners: [1] Regret: 4.5 Average Loss: 0.026137976203144397
+ 
+After 25 questions Approximate winners: [1] Regret: 4.5 Average Loss: 0.026137976203144397
+ 
+After 26 questions Approximate winners: [1] Regret: 4.5 Average Loss: 0.026137976203144397
+ 
+After 27 questions Approximate winners: [1] Regret: 4.5 Average Loss: 0.026137976203144397
+ 
+After 28 questions Approximate winners: [1] Regret: 4.0 Average Loss: 0.026137976203144397
+ 
+After 29 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 30 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 31 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 32 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 33 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 34 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 35 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 36 questions Approximate winners: [1, 6] Regret: 4.0 Average Loss: 0.013068988101572199
+ 
+After 37 questions Approximate winners: [1, 4, 6] Regret: 4.0 Average Loss: 0.3136001118594615
+ 
+After 38 questions Approximate winners: [1, 4, 6] Regret: 4.0 Average Loss: 0.3136001118594615
+ 
+After 39 questions Approximate winners: [1, 4, 6] Regret: 4.0 Average Loss: 0.3136001118594615
+ 
+After 40 questions Approximate winners: [1, 4, 5, 6] Regret: 4.0 Average Loss: 0.9466727412831267
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [2,3,4,6,1,5], Voter: Voter{2} Pref: [2,4,5,1,3,6], Voter: Voter{3} Pref: [3,1,2,5,6,4], Voter: Voter{4} Pref: [2,5,6,3,1,4], Voter: Voter{5} Pref: [3,6,5,4,1,2], Voter: Voter{6} Pref: [6,5,2,4,1,3]]
+Weights: [1.0, 0.6681808484688488, 0.3524998418245008, 0.18731751068837596, 0.08091076122794401, 0.0] 
+Scores: 
+1: 1.179141404069001
+2: 3.7049996836490013
+3: 2.9364091203851688
+4: 1.3953157116701016
+5: 2.2286788912750755
+6: 2.2889089622096694
+True winners: [2] True score: 3.7049996836490013
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.416090721439332
+ 
+After 8 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 0.7685905632638326
+ 
+After 9 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 0.7685905632638326
+ 
+After 10 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 0.7685905632638326
+ 
+After 11 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 0.7685905632638326
+ 
+After 12 questions Approximate winners: [3] Regret: 5.666666666666667 Average Loss: 0.7685905632638326
+ 
+After 13 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 14 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 15 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 16 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 17 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 18 questions Approximate winners: [3] Regret: 5.5 Average Loss: 0.7685905632638326
+ 
+After 19 questions Approximate winners: [1, 3] Regret: 5.5 Average Loss: 1.6472244214219165
+ 
+After 20 questions Approximate winners: [1, 3] Regret: 5.5 Average Loss: 1.6472244214219165
+ 
+After 21 questions Approximate winners: [1, 3] Regret: 5.5 Average Loss: 1.6472244214219165
+ 
+After 22 questions Approximate winners: [3] Regret: 5.0 Average Loss: 0.7685905632638326
+ 
+After 23 questions Approximate winners: [3, 5] Regret: 5.0 Average Loss: 1.1224556778188792
+ 
+After 24 questions Approximate winners: [2, 3, 5] Regret: 5.0 Average Loss: 0.7483037852125861
+ 
+After 25 questions Approximate winners: [2, 3, 5] Regret: 5.0 Average Loss: 0.7483037852125861
+ 
+After 26 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 1.4763207923739259
+ 
+After 27 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 1.4763207923739259
+ 
+After 28 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 1.4763207923739259
+ 
+After 29 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 30 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 31 questions Approximate winners: [2, 6] Regret: 4.5 Average Loss: 0.708045360719666
+ 
+After 32 questions Approximate winners: [5] Regret: 3.3333333333333335 Average Loss: 1.4763207923739259
+ 
+After 33 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [2] Regret: 2.5 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [6] Regret: 2.3333333333333335 Average Loss: 1.416090721439332
+ 
+After 38 questions Approximate winners: [3, 6] Regret: 2.3333333333333335 Average Loss: 1.0923406423515822
+ 
+After 39 questions Approximate winners: [3] Regret: 2.0 Average Loss: 0.7685905632638326
+ 
+After 40 questions Approximate winners: [3] Regret: 2.0 Average Loss: 0.7685905632638326
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [2,1,6,4,5,3], Voter: Voter{2} Pref: [3,2,6,4,1,5], Voter: Voter{3} Pref: [2,4,5,6,1,3], Voter: Voter{4} Pref: [5,3,4,2,6,1], Voter: Voter{5} Pref: [2,6,5,1,4,3], Voter: Voter{6} Pref: [4,2,3,6,1,5]]
+Weights: [1.0, 0.4792218652129423, 0.23063431889985891, 0.09639182521353354, 0.007571729056285836, 0.0] 
+Scores: 
+1: 0.5983288775953333
+2: 4.054835555639418
+3: 1.7098561841128013
+4: 1.910211563596154
+5: 1.4688403668560037
+6: 1.140845882496013
+True winners: [2] True score: 4.054835555639418
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 8 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 9 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 10 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 11 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 2.2410158172567973
+ 
+After 12 questions Approximate winners: [6] Regret: 5.75 Average Loss: 2.913989673143405
+ 
+After 13 questions Approximate winners: [6] Regret: 5.666666666666667 Average Loss: 2.913989673143405
+ 
+After 14 questions Approximate winners: [6] Regret: 5.333333333333333 Average Loss: 2.913989673143405
+ 
+After 15 questions Approximate winners: [6] Regret: 5.333333333333333 Average Loss: 2.913989673143405
+ 
+After 16 questions Approximate winners: [6] Regret: 5.333333333333333 Average Loss: 2.913989673143405
+ 
+After 17 questions Approximate winners: [6] Regret: 5.333333333333333 Average Loss: 2.913989673143405
+ 
+After 18 questions Approximate winners: [1, 6] Regret: 5.333333333333333 Average Loss: 3.1852481755937445
+ 
+After 19 questions Approximate winners: [4] Regret: 5.0 Average Loss: 2.1446239920432637
+ 
+After 20 questions Approximate winners: [4] Regret: 5.0 Average Loss: 2.1446239920432637
+ 
+After 21 questions Approximate winners: [2, 4] Regret: 5.0 Average Loss: 1.0723119960216319
+ 
+After 22 questions Approximate winners: [2] Regret: 4.75 Average Loss: 0.0
+ 
+After 23 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 24 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 25 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 26 questions Approximate winners: [2] Regret: 4.5 Average Loss: 0.0
+ 
+After 27 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 28 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 29 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 30 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 31 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [2] Regret: 4.0 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [2] Regret: 3.75 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [2] Regret: 3.75 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [2] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [2] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 38 questions Approximate winners: [2] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 39 questions Approximate winners: [2] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 40 questions Approximate winners: [2] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [5,4,1,3,6,2], Voter: Voter{2} Pref: [1,5,6,4,3,2], Voter: Voter{3} Pref: [6,4,3,1,2,5], Voter: Voter{4} Pref: [2,1,6,4,5,3], Voter: Voter{5} Pref: [2,1,5,6,3,4], Voter: Voter{6} Pref: [6,2,3,5,4,1]]
+Weights: [1.0, 0.7267934424464424, 0.48265062915334467, 0.28136273603146394, 0.08190881498959918, 0.0] 
+Scores: 
+1: 3.2176002500776932
+2: 2.8087022574360416
+3: 1.4104816243173515
+4: 2.098221171945412
+5: 2.57271562262085
+6: 3.3285728093277522
+True winners: [6] True score: 3.3285728093277522
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 8 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 9 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 10 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 11 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 12 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 13 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 14 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 15 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 16 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.7558571867069022
+ 
+After 17 questions Approximate winners: [6] Regret: 5.333333333333333 Average Loss: 0.0
+ 
+After 18 questions Approximate winners: [1] Regret: 5.0 Average Loss: 0.110972559250059
+ 
+After 19 questions Approximate winners: [1, 6] Regret: 5.0 Average Loss: 0.0554862796250295
+ 
+After 20 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 21 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 22 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 23 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 24 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 25 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 26 questions Approximate winners: [6] Regret: 4.333333333333333 Average Loss: 0.0
+ 
+After 27 questions Approximate winners: [6] Regret: 4.0 Average Loss: 0.0
+ 
+After 28 questions Approximate winners: [6] Regret: 4.0 Average Loss: 0.0
+ 
+After 29 questions Approximate winners: [6] Regret: 4.0 Average Loss: 0.0
+ 
+After 30 questions Approximate winners: [2] Regret: 3.75 Average Loss: 0.5198705518917106
+ 
+After 31 questions Approximate winners: [1, 2] Regret: 3.0 Average Loss: 0.3154215555708848
+ 
+After 32 questions Approximate winners: [1, 2] Regret: 3.0 Average Loss: 0.3154215555708848
+ 
+After 33 questions Approximate winners: [1, 2] Regret: 3.0 Average Loss: 0.3154215555708848
+ 
+After 34 questions Approximate winners: [2] Regret: 2.8 Average Loss: 0.5198705518917106
+ 
+After 35 questions Approximate winners: [2] Regret: 2.6 Average Loss: 0.5198705518917106
+ 
+After 36 questions Approximate winners: [2] Regret: 2.6 Average Loss: 0.5198705518917106
+ 
+After 37 questions Approximate winners: [2] Regret: 2.6 Average Loss: 0.5198705518917106
+ 
+After 38 questions Approximate winners: [2] Regret: 2.5999999999999996 Average Loss: 0.5198705518917106
+ 
+After 39 questions Approximate winners: [2] Regret: 2.5999999999999996 Average Loss: 0.5198705518917106
+ 
+After 40 questions Approximate winners: [6] Regret: 2.333333333333333 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [5,4,2,1,6,3], Voter: Voter{2} Pref: [3,2,1,6,5,4], Voter: Voter{3} Pref: [5,6,4,3,2,1], Voter: Voter{4} Pref: [6,1,4,5,3,2], Voter: Voter{5} Pref: [4,6,3,2,5,1], Voter: Voter{6} Pref: [1,6,5,4,2,3]]
+Weights: [1.0, 0.7218075592284816, 0.47077793613008706, 0.2947810967546825, 0.13504251524911054, 0.0] 
+Scores: 
+1: 2.487366592113251
+2: 1.7574516226114723
+3: 1.90060154813388
+4: 2.9581445282433383
+5: 3.0356440633829904
+6: 3.5952462896892374
+True winners: [6] True score: 3.5952462896892374
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.9728371823268759
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.9728371823268759
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.9728371823268759
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.9728371823268759
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.9728371823268759
+ 
+After 6 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 7 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 8 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 9 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 10 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 11 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 12 questions Approximate winners: [6] Regret: 5.75 Average Loss: 0.0
+ 
+After 13 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 14 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 15 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 16 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 17 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 18 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 19 questions Approximate winners: [4] Regret: 5.0 Average Loss: 0.6371017614458991
+ 
+After 20 questions Approximate winners: [4] Regret: 4.666666666666667 Average Loss: 0.6371017614458991
+ 
+After 21 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 22 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 23 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 24 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 25 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 26 questions Approximate winners: [4] Regret: 4.333333333333333 Average Loss: 0.6371017614458991
+ 
+After 27 questions Approximate winners: [6] Regret: 4.0 Average Loss: 0.0
+ 
+After 28 questions Approximate winners: [6] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 29 questions Approximate winners: [6] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 30 questions Approximate winners: [6] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 31 questions Approximate winners: [6] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [6] Regret: 3.333333333333333 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [6] Regret: 3.333333333333333 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [6] Regret: 3.333333333333333 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+After 38 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+After 39 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+After 40 questions Approximate winners: [6] Regret: 3.0 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [4,6,1,3,5,2], Voter: Voter{2} Pref: [1,3,6,2,5,4], Voter: Voter{3} Pref: [2,5,1,6,3,4], Voter: Voter{4} Pref: [2,6,4,5,3,1], Voter: Voter{5} Pref: [2,5,6,4,3,1], Voter: Voter{6} Pref: [3,6,2,1,5,4]]
+Weights: [1.0, 0.7538467634462013, 0.5303008903421582, 0.32357087568446685, 0.15210196716068228, 0.0] 
+Scores: 
+1: 2.3841726563687833
+2: 3.853871766026625
+3: 2.5337235406127148
+4: 1.853871766026625
+5: 2.2875703040589164
+6: 3.6457129467073868
+True winners: [2] True score: 3.853871766026625
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 1.0940512693931164
+ 
+After 7 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 8 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 9 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 10 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 11 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 12 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 13 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 14 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 15 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 16 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 17 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 18 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 19 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 20 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 21 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 22 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 23 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 24 questions Approximate winners: [2] Regret: 5.0 Average Loss: 0.0
+ 
+After 25 questions Approximate winners: [2, 6] Regret: 5.0 Average Loss: 0.10407940965961915
+ 
+After 26 questions Approximate winners: [2, 6] Regret: 5.0 Average Loss: 0.10407940965961915
+ 
+After 27 questions Approximate winners: [1, 2, 6] Regret: 5.0 Average Loss: 0.5592859763256933
+ 
+After 28 questions Approximate winners: [1, 2, 6] Regret: 5.0 Average Loss: 0.5592859763256933
+ 
+After 29 questions Approximate winners: [1, 2, 6] Regret: 5.0 Average Loss: 0.5592859763256933
+ 
+After 30 questions Approximate winners: [1, 2, 6] Regret: 5.0 Average Loss: 0.5592859763256933
+ 
+After 31 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 35 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 36 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 37 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 38 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 39 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+After 40 questions Approximate winners: [2] Regret: 3.0 Average Loss: 0.0
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [2,5,6,1,4,3], Voter: Voter{2} Pref: [6,2,3,1,4,5], Voter: Voter{3} Pref: [4,2,1,3,6,5], Voter: Voter{4} Pref: [6,5,3,4,1,2], Voter: Voter{5} Pref: [5,1,3,6,4,2], Voter: Voter{6} Pref: [1,3,2,4,5,6]]
+Weights: [1.0, 0.6890989875895597, 0.42544050545347156, 0.21143951810971226, 0.034839314507390196, 0.0] 
+Scores: 
+1: 2.572257843769846
+2: 2.803638480632591
+3: 2.176860022059687
+4: 1.527396979741595
+5: 2.4130372896865095
+6: 2.671719338070574
+True winners: [2] True score: 2.803638480632591
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 8 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.44282015497245714
+ 
+After 9 questions Approximate winners: [1] Regret: 5.75 Average Loss: 0.2313806368627449
+ 
+After 10 questions Approximate winners: [1] Regret: 5.75 Average Loss: 0.2313806368627449
+ 
+After 11 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 12 questions Approximate winners: [2] Regret: 5.666666666666667 Average Loss: 0.0
+ 
+After 13 questions Approximate winners: [2] Regret: 5.333333333333333 Average Loss: 0.0
+ 
+After 14 questions Approximate winners: [2] Regret: 5.333333333333333 Average Loss: 0.0
+ 
+After 15 questions Approximate winners: [3] Regret: 5.0 Average Loss: 0.6267784585729039
+ 
+After 16 questions Approximate winners: [2, 3] Regret: 5.0 Average Loss: 0.31338922928645196
+ 
+After 17 questions Approximate winners: [2, 3, 5] Regret: 5.0 Average Loss: 0.3391265498396618
+ 
+After 18 questions Approximate winners: [2] Regret: 4.75 Average Loss: 0.0
+ 
+After 19 questions Approximate winners: [2, 4] Regret: 4.75 Average Loss: 0.638120750445498
+ 
+After 20 questions Approximate winners: [4] Regret: 4.666666666666667 Average Loss: 1.276241500890996
+ 
+After 21 questions Approximate winners: [4] Regret: 4.666666666666667 Average Loss: 1.276241500890996
+ 
+After 22 questions Approximate winners: [5] Regret: 3.5999999999999996 Average Loss: 0.39060119094608137
+ 
+After 23 questions Approximate winners: [5] Regret: 3.5999999999999996 Average Loss: 0.39060119094608137
+ 
+After 24 questions Approximate winners: [5] Regret: 3.4 Average Loss: 0.39060119094608137
+ 
+After 25 questions Approximate winners: [5] Regret: 3.4 Average Loss: 0.39060119094608137
+ 
+After 26 questions Approximate winners: [5] Regret: 3.4 Average Loss: 0.39060119094608137
+ 
+After 27 questions Approximate winners: [5] Regret: 3.4 Average Loss: 0.39060119094608137
+ 
+After 28 questions Approximate winners: [1] Regret: 3.3333333333333335 Average Loss: 0.2313806368627449
+ 
+After 29 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 30 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 31 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 32 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 33 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 34 questions Approximate winners: [1] Regret: 2.5 Average Loss: 0.2313806368627449
+ 
+After 35 questions Approximate winners: [1] Regret: 2.3333333333333335 Average Loss: 0.2313806368627449
+ 
+After 36 questions Approximate winners: [1] Regret: 2.3333333333333335 Average Loss: 0.2313806368627449
+ 
+After 37 questions Approximate winners: [1] Regret: 2.3333333333333335 Average Loss: 0.2313806368627449
+ 
+After 38 questions Approximate winners: [1] Regret: 2.0 Average Loss: 0.2313806368627449
+ 
+After 39 questions Approximate winners: [1] Regret: 2.0 Average Loss: 0.2313806368627449
+ 
+After 40 questions Approximate winners: [1, 6] Regret: 2.0 Average Loss: 0.18164988971238083
+ 
+True preferences: 6 alternatives 6 voters 
+Profile: [Voter: Voter{1} Pref: [6,3,2,5,1,4], Voter: Voter{2} Pref: [5,2,4,1,6,3], Voter: Voter{3} Pref: [1,6,4,5,2,3], Voter: Voter{4} Pref: [4,1,5,2,3,6], Voter: Voter{5} Pref: [3,4,5,2,6,1], Voter: Voter{6} Pref: [5,1,6,4,3,2]]
+Weights: [1.0, 0.6770776318231049, 0.3737437240916887, 0.18786441430853085, 0.08132046639777148, 0.0] 
+Scores: 
+1: 2.623340144352512
+2: 1.507870650929627
+3: 1.839718564618648
+4: 2.6124294943150135
+5: 3.1232162768004392
+6: 2.213462288710337
+True winners: [5] True score: 3.1232162768004392
+ 
+After 1 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 2 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 3 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 4 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 5 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 6 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 7 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 8 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 9 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 10 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 11 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 12 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 13 questions Approximate winners: [1, 2, 3, 4, 5, 6] Regret: 6.0 Average Loss: 0.803210040179343
+ 
+After 14 questions Approximate winners: [5] Regret: 5.75 Average Loss: 0.0
+ 
+After 15 questions Approximate winners: [5] Regret: 5.5 Average Loss: 0.0
+ 
+After 16 questions Approximate winners: [5] Regret: 5.25 Average Loss: 0.0
+ 
+After 17 questions Approximate winners: [5] Regret: 5.25 Average Loss: 0.0
+ 
+After 18 questions Approximate winners: [5] Regret: 5.25 Average Loss: 0.0
+ 
+After 19 questions Approximate winners: [5] Regret: 5.0 Average Loss: 0.0
+ 
+After 20 questions Approximate winners: [1, 5] Regret: 5.0 Average Loss: 0.24993806622396364
+ 
+After 21 questions Approximate winners: [5] Regret: 4.75 Average Loss: 0.0
+ 
+After 22 questions Approximate winners: [5] Regret: 4.75 Average Loss: 0.0
+ 
+After 23 questions Approximate winners: [5] Regret: 4.75 Average Loss: 0.0
+ 
+After 24 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.0
+ 
+After 25 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.0
+ 
+After 26 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.0
+ 
+After 27 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.0
+ 
+After 28 questions Approximate winners: [5] Regret: 4.666666666666667 Average Loss: 0.0
+ 
+After 29 questions Approximate winners: [5] Regret: 4.0 Average Loss: 0.0
+ 
+After 30 questions Approximate winners: [1, 5] Regret: 4.0 Average Loss: 0.24993806622396364
+ 
+After 31 questions Approximate winners: [5] Regret: 3.6666666666666665 Average Loss: 0.0
+ 
+After 32 questions Approximate winners: [5] Regret: 3.5 Average Loss: 0.0
+ 
+After 33 questions Approximate winners: [5] Regret: 3.5 Average Loss: 0.0
+ 
+After 34 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 35 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 36 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 37 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 38 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 39 questions Approximate winners: [1, 5] Regret: 3.5 Average Loss: 0.24993806622396364
+ 
+After 40 questions Approximate winners: [5] Regret: 3.0 Average Loss: 0.0
+ 

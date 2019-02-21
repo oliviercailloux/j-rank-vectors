@@ -83,13 +83,16 @@ public class XPRunner {
 		}
 		b.close();
 	//	bw.close();
+		
+//		run(6,6);
+//		bw.close();
 	}
 
 	private static void run(int m, int n) {
-		//bw = initFile("./stats.txt");
+	//	bw = initFile("./mmstats.txt");
 		avglosses = new LinkedList<>();
 		regrets = new LinkedList<>();
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < 100; j++) {
 			XYSeries regretSeries = new XYSeries("Regret");
 			XYSeries avgLossSeries = new XYSeries("Average Loss");
 			alternatives = new HashSet<>();
@@ -102,14 +105,20 @@ public class XPRunner {
 			}
 			context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
 			knowledge = PrefKnowledge.given(alternatives, voters);
+	//		Strategy strategy = StrategyMiniMax.build(knowledge);
 			Strategy strategy = StrategyRandom.build(knowledge);
 			sumOfRanks = new double[m];
 			trueWinners = computeTrueWinners();
-		//	writeContext();
+	//		writeContext();
 
 			int maxQuestions = 40;
 			for (k = 1; k <= maxQuestions; k++) {
-				Question q = strategy.nextQuestion();
+				Question q;
+				try {
+					q = strategy.nextQuestion();
+				}catch(IllegalArgumentException e) {
+					break;
+				}
 				Answer a = context.getAnswer(q);
 				updateKnowledge(q, a);
 				winners = Regret.getMMRAlternatives(knowledge);
@@ -132,7 +141,7 @@ public class XPRunner {
 				avgloss = avgloss / losses.size();
 				avglosses.add(avgloss);
 				avgLossSeries.add(k, avgloss);
-			//	writeShortStats();
+	//			writeShortStats();
 			}
 			if(j<1) {
 				plot(regretSeries, avgLossSeries,m,n);
