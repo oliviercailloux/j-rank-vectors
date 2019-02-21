@@ -57,7 +57,7 @@ public class RegretTest {
 		pref3.putEdge(a, b);
 		pref3.putEdge(b, d);
 			
-		assertEquals(a,Regret.getMMRAlternative(knowledge));	
+		assertEquals(a,Regret.getMMRAlternatives(knowledge));	
 	}
 	
 	@Test

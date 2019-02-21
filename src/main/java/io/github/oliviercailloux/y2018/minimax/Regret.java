@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,20 +14,28 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class Regret {
 
-	public static Alternative getMMRAlternative(PrefKnowledge knowledge) {
+	private static double MMR;
+	
+	public static List<Alternative> getMMRAlternatives(PrefKnowledge knowledge) {
 		List<Alternative> alt = knowledge.getAlternatives().asList();
 		ListIterator<Alternative> i = alt.listIterator();
-		Alternative minAlt = i.next();
-		double minMR = getMR(minAlt, knowledge);
+		List<Alternative> minAlt = new LinkedList<>();
+		minAlt.add(i.next());
+		double minMR = getMR(minAlt.get(0), knowledge);
 		double MR;
 		while (i.hasNext()) {
 			Alternative x = i.next();
 			MR = getMR(x, knowledge);
+			if (MR == minMR) {
+				minAlt.add(x);
+			}
 			if (MR < minMR) {
 				minMR = MR;
-				minAlt = x;
+				minAlt.clear();
+				minAlt.add(x);
 			}
 		}
+		MMR=minMR;
 		return minAlt;
 	}
 
@@ -106,6 +115,10 @@ public class Regret {
 		}
 		int[] r = { rankx, ranky };
 		return r;
+	}
+
+	public static double getMMR() {
+		return MMR;
 	}
 
 }
