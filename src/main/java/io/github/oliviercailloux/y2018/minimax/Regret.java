@@ -79,15 +79,16 @@ public class Regret {
 		int rankx = 0;
 		int ranky = 0;
 		Graph<Alternative> trans = voterPartialPreference.asTransitiveGraph();
-		HashSet<Alternative> A = new HashSet<>(voterPartialPreference.asGraph().nodes());
-		A.remove(x);
-		A.remove(y);
 		/**
 		 * Case1 x >^p y : place as much alternatives as possible above x W1: worst than
 		 * x (in >^p). W3: better than y. A: the whole set of alternatives. Then the
 		 * better ones are B: A \ W1. The middle ones are M: W1 intersection W3.
 		 **/
 		if (trans.hasEdgeConnecting(x, y)) {
+			HashSet<Alternative> A = new HashSet<>(voterPartialPreference.asGraph().nodes());
+			A.remove(x);
+			A.remove(y);
+			
 			HashSet<Alternative> W1 = new HashSet<>(trans.successors(x));
 			W1.remove(y);
 			HashSet<Alternative> W3 = new HashSet<>(trans.predecessors(y));
@@ -106,12 +107,9 @@ public class Regret {
 			 * of alternatives. Then the better ones are W1. The middle ones are M: A \ W1 \
 			 * W2. So the rank of x is |A \ W2|+1.
 			 **/
-			HashSet<Alternative> W1 = new HashSet<>(trans.predecessors(y));
-			ranky = W1.size() + 1;
+			ranky = trans.predecessors(y).size() + 1;
 
-			HashSet<Alternative> W2 = new HashSet<>(trans.successors(x));
-			A.removeAll(W2);
-			rankx = A.size() + 2;
+			rankx = voterPartialPreference.asGraph().nodes().size()-trans.successors(x).size();
 		}
 		int[] r = { rankx, ranky };
 		return r;

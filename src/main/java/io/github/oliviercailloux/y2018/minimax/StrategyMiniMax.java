@@ -26,6 +26,7 @@ import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 import io.github.oliviercailloux.y2018.minimax.utils.AggregationOperator;
+import io.github.oliviercailloux.y2018.minimax.utils.AggregationOperator.AggOps;
 
 /** Uses the Regret to get the next question. **/
 
@@ -33,8 +34,29 @@ public class StrategyMiniMax implements Strategy {
 
 	private PrefKnowledge knowledge;
 	public boolean profileCompleted;
+	private static AggOps op;
+	private static double w1;
+	private static double w2;
+
+	@SuppressWarnings("unused")
+	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
 
 	public static StrategyMiniMax build(PrefKnowledge knowledge) {
+		return new StrategyMiniMax(knowledge);
+	}
+
+	public static StrategyMiniMax build(PrefKnowledge knowledge, AggOps operator) {
+		op = operator;
+		return new StrategyMiniMax(knowledge);
+	}
+
+	public static StrategyMiniMax build(PrefKnowledge knowledge, AggOps operator, double w_1, double w_2) {
+		checkArgument(operator.equals(AggOps.WEIGHTED_AVERAGE));
+		checkArgument(w_1 > 0);
+		checkArgument(w_2 > 0);
+		op = operator;
+		w1 = w_1;
+		w2 = w_2;
 		return new StrategyMiniMax(knowledge);
 	}
 
@@ -59,7 +81,7 @@ public class StrategyMiniMax implements Strategy {
 					for (Alternative a2 : knowledge.getAlternatives()) {
 						if (!a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)) {
 							Question q = new Question(new QuestionVoter(voter, a1, a2));
-							double score = getScore(q,AggregationOperator.MAX);
+							double score = getScore(q);
 							questions.put(q, score);
 						}
 					}
@@ -71,12 +93,12 @@ public class StrategyMiniMax implements Strategy {
 				.collect(Collectors.toCollection(ArrayList::new));
 		for (int rank : candidateRanks) {
 			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(rank);
-			double diff = (lambdaRange.lowerEndpoint().subtract(lambdaRange.upperEndpoint())).doubleValue();
+			double diff = (lambdaRange.upperEndpoint().subtract(lambdaRange.lowerEndpoint())).doubleValue();
 			if (diff > 0.1) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
 				Question q = new Question(new QuestionCommittee(avg, rank));
-				double score = getScore(q,AggregationOperator.MAX);
+				double score = getScore(q);
 				questions.put(q, score);
 			}
 		}
@@ -97,13 +119,12 @@ public class StrategyMiniMax implements Strategy {
 		return nextQ;
 	}
 
-	private double getScore(Question q, AggregationOperator agg) {
+	private double getScore(Question q) {
 		PrefKnowledge yesKnowledge = PrefKnowledge.copyOf(knowledge);
 		PrefKnowledge noKnowledge = PrefKnowledge.copyOf(knowledge);
-		double yesMMR;
-		double noMMR;
-		switch (q.getType()) {
-		case VOTER_QUESTION:
+		double yesMMR = 0;
+		double noMMR = 0;
+		if (q.getType().equals(QuestionType.VOTER_QUESTION)) {
 			QuestionVoter qv = q.getQuestionVoter();
 			Alternative a = qv.getFirstAlternative();
 			Alternative b = qv.getSecondAlternative();
@@ -121,16 +142,8 @@ public class StrategyMiniMax implements Strategy {
 
 			Regret.getMMRAlternatives(noKnowledge);
 			noMMR = Regret.getMMR();
-			switch (agg) {
-			case MAX:
-				return Math.max(yesMMR, noMMR);
-			case AVG:
-				return (yesMMR + noMMR) / 2;
-			default:
-				throw new IllegalStateException();
-			}
+		} else if (q.getType().equals(QuestionType.COMMITTEE_QUESTION)) {
 
-		case COMMITTEE_QUESTION:
 			QuestionCommittee qc = q.getQuestionCommittee();
 			Aprational lambda = qc.getLambda();
 			int rank = qc.getRank();
@@ -143,14 +156,17 @@ public class StrategyMiniMax implements Strategy {
 
 			Regret.getMMRAlternatives(noKnowledge);
 			noMMR = Regret.getMMR();
-			switch (agg) {
-			case MAX:
-				return Math.max(yesMMR, noMMR);
-			case AVG:
-				return (yesMMR + noMMR) / 2;
-			default:
-				throw new IllegalStateException();
-			}
+		}
+
+		switch (op) {
+		case MAX:
+			return AggregationOperator.getMax(yesMMR, noMMR);
+		case MIN:
+			return AggregationOperator.getMin(yesMMR, noMMR);
+		case WEIGHTED_AVERAGE:
+			return AggregationOperator.weightedAvg(yesMMR, noMMR, w1, w2);
+		case AVG:
+			return AggregationOperator.getAvg(yesMMR, noMMR);
 		default:
 			throw new IllegalStateException();
 		}

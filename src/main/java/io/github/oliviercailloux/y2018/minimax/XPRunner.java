@@ -6,6 +6,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,6 +46,7 @@ import com.google.common.math.Stats;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
+import io.github.oliviercailloux.y2018.minimax.utils.AggregationOperator.AggOps;
 
 public class XPRunner {
 
@@ -61,70 +66,135 @@ public class XPRunner {
 	static List<Double> regrets;
 
 	public static void main(String[] args) throws IOException {
-		BufferedWriter b = initFile("./experiments.txt");
-		for (int n = 3; n < 8; n++) {
-			for (int m = 3; m < 8; m++) {
-				run(m, n);
-				Stats regretStats = Stats.of(regrets);
-				double regretMean = regretStats.mean();
-				double regretSD = regretStats.populationStandardDeviation();
-				Stats lossStats = Stats.of(avglosses);
-				double lossMean = lossStats.mean();
-				double lossSD = lossStats.populationStandardDeviation();
+		int n, m;
+		String title;
+		String root = Paths.get("").toAbsolutePath() + "/experiments/";
 
-				b.write(n + " Voters, " + m + " Alternatives \n");
-				b.write("Mean of the Regrets: " + regretMean + " Standard Deviation of the Regrets: " + regretSD
-						+ "\n");
-				b.write("Mean of the Average Losses: " + lossMean + " Standard Deviation of the Average Losses: "
-						+ lossSD + "\n\n");
-				b.flush();
+		n = 4;
+		m = 4;
+		title = root + "m" + m + "n" + n + "MiniMax_Min";
+		run(m, n, title, StrategyType.MINIMAX_MIN);
+		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+		run(m, n, title, StrategyType.MINIMAX_AVG);
+		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+		title = root + "m" + m + "n" + n + "Random";
+		run(m, n, title, StrategyType.RANDOM);
 
-			}
-		}
-		b.close();
-	//	bw.close();
+		n = 4;
+		m = 8;
+		title = root + "m" + m + "n" + n + "MiniMax_Min";
+		run(m, n, title, StrategyType.MINIMAX_MIN);
+		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+		run(m, n, title, StrategyType.MINIMAX_AVG);
+		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+		title = root + "m" + m + "n" + n + "Random";
+		run(m, n, title, StrategyType.RANDOM);
+				
+		n = 8;
+		m = 4;
+		title = root + "m" + m + "n" + n + "MiniMax_Min";
+		run(m, n, title, StrategyType.MINIMAX_MIN);
+		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+		run(m, n, title, StrategyType.MINIMAX_AVG);
+		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+		title = root + "m" + m + "n" + n + "Random";
+		run(m, n, title, StrategyType.RANDOM);
 		
-//		run(6,6);
-//		bw.close();
+		n = 6;
+		m = 6;
+		title = root + "m" + m + "n" + n + "MiniMax_Min";
+		run(m, n, title, StrategyType.MINIMAX_MIN);
+		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+		run(m, n, title, StrategyType.MINIMAX_AVG);
+		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+		title = root + "m" + m + "n" + n + "Random";
+		run(m, n, title, StrategyType.RANDOM);
+		
+		n = 8;
+		m = 8;
+		title = root + "m" + m + "n" + n + "MiniMax_Min";
+		run(m, n, title, StrategyType.MINIMAX_MIN);
+		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+		run(m, n, title, StrategyType.MINIMAX_AVG);
+		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+		title = root + "m" + m + "n" + n + "Random";
+		run(m, n, title, StrategyType.RANDOM);
+
 	}
 
-	private static void run(int m, int n) {
-	//	bw = initFile("./mmstats.txt");
-		avglosses = new LinkedList<>();
-		regrets = new LinkedList<>();
-		for (int j = 0; j < 100; j++) {
-			XYSeries regretSeries = new XYSeries("Regret");
-			XYSeries avgLossSeries = new XYSeries("Average Loss");
-			alternatives = new HashSet<>();
-			for (int i = 1; i <= m; i++) {
-				alternatives.add(new Alternative(i));
-			}
-			voters = new HashSet<>();
-			for (int i = 1; i <= n; i++) {
-				voters.add(new Voter(i));
-			}
-			context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
-			knowledge = PrefKnowledge.given(alternatives, voters);
-	//		Strategy strategy = StrategyMiniMax.build(knowledge);
-			Strategy strategy = StrategyRandom.build(knowledge);
-			sumOfRanks = new double[m];
-			trueWinners = computeTrueWinners();
-	//		writeContext();
-
-			int maxQuestions = 40;
-			for (k = 1; k <= maxQuestions; k++) {
-				Question q;
-				try {
-					q = strategy.nextQuestion();
-				}catch(IllegalArgumentException e) {
-					break;
+	private static void run(int m, int n, String file, StrategyType st) throws IOException {
+		final long startTime = System.nanoTime();
+		BufferedWriter b = initFile(file);
+		b.write(n + " Voters " + m + " Alternatives \n");
+		b.flush();
+		// bw = initFile("./mmstats.txt");
+		int maxQuestions = 40;
+//		XYSeriesCollection dataset = new XYSeriesCollection();
+//		XYSeries regretSeries = new XYSeries("Mean Regret");
+//		XYSeries avgLossSeries = new XYSeries("Mean Average Loss");
+		ArrayList<Double> regretSeriesMean = new ArrayList<>();
+		ArrayList<Double> avgLossSeriesMean = new ArrayList<>();
+		ArrayList<Double> regretSeriesSD = new ArrayList<>();
+		ArrayList<Double> avgLossSeriesSD = new ArrayList<>();
+		int regret2 = -1, regret4 = -1, regret8 = -1;
+		int avgLoss2 = -1, avgLoss4 = -1, avgLoss8 = -1;
+		double initialRegret = 1;
+		double initialAvgLoss = 1;
+		for (int nbquest = 1; nbquest <= maxQuestions; nbquest++) {
+			avglosses = new LinkedList<>();
+			regrets = new LinkedList<>();
+			for (int j = 0; j < 10; j++) {
+				alternatives = new HashSet<>();
+				for (int i = 1; i <= m; i++) {
+					alternatives.add(new Alternative(i));
 				}
-				Answer a = context.getAnswer(q);
-				updateKnowledge(q, a);
+				voters = new HashSet<>();
+				for (int i = 1; i <= n; i++) {
+					voters.add(new Voter(i));
+				}
+				context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
+				knowledge = PrefKnowledge.given(alternatives, voters);
+				Strategy strategy = null;
+				switch (st) {
+				case MINIMAX_MIN:
+					strategy = StrategyMiniMax.build(knowledge, AggOps.MIN);
+					break;
+				case MINIMAX_AVG:
+					strategy = StrategyMiniMax.build(knowledge, AggOps.AVG);
+					break;
+				case MINIMAX_WEIGHTED_AVG:
+					strategy = StrategyMiniMax.build(knowledge, AggOps.WEIGHTED_AVERAGE, 1d,
+							context.getWeights().getWeightAtRank(m - 1) / 2 * n);
+					break;
+				case RANDOM:
+					strategy = StrategyRandom.build(knowledge);
+				}
+				sumOfRanks = new double[m];
+				trueWinners = computeTrueWinners();
+				// writeContext();
+
+				for (k = 1; k <= nbquest; k++) {
+					Question q;
+					try {
+						q = strategy.nextQuestion();
+					} catch (IllegalArgumentException e) {
+						break;
+					}
+					Answer a = context.getAnswer(q);
+					updateKnowledge(q, a);
+					// avgLossSeries.add(k, avgloss);
+					// writeShortStats();
+				}
+
 				winners = Regret.getMMRAlternatives(knowledge);
 				regret = Regret.getMMR();
 				regrets.add(regret);
-				regretSeries.add(k, regret);
+				// regretSeries.add(k, regret);
 				List<Double> losses = new LinkedList<>();
 				for (Alternative alt : winners) {
 					double approxTrueScore = 0;
@@ -140,20 +210,88 @@ public class XPRunner {
 				}
 				avgloss = avgloss / losses.size();
 				avglosses.add(avgloss);
-				avgLossSeries.add(k, avgloss);
-	//			writeShortStats();
 			}
-			if(j<1) {
-				plot(regretSeries, avgLossSeries,m,n);
+			Stats regretStats = Stats.of(regrets);
+			double regretMean = regretStats.mean();
+			double regretSD = regretStats.populationStandardDeviation();
+			Stats lossStats = Stats.of(avglosses);
+			double lossMean = lossStats.mean();
+			double lossSD = lossStats.populationStandardDeviation();
+			regretSeriesMean.add(regretMean);
+			avgLossSeriesMean.add(lossMean);
+			regretSeriesSD.add(regretSD);
+			avgLossSeriesSD.add(lossSD);
+		
+			if (nbquest == 1) {
+				initialRegret = regretMean;
+				initialAvgLoss = lossMean;
 			}
+			if (regretMean <= (initialRegret / 2) && regret2 < 0) {
+				regret2 = nbquest;
+			}
+			if (regretMean <= (initialRegret / 4) && regret4 < 0) {
+				regret4 = nbquest;
+			}
+			if (regretMean <= (initialRegret / 8) && regret8 < 0) {
+				regret8 = nbquest;
+			}
+			if (lossMean <= (initialAvgLoss / 2) && avgLoss2 < 0) {
+				avgLoss2 = nbquest;
+			}
+			if (lossMean <= (initialAvgLoss / 4) && avgLoss4 < 0) {
+				avgLoss4 = nbquest;
+			}
+			if (lossMean <= (initialAvgLoss / 8) && avgLoss8 < 0) {
+				avgLoss8 = nbquest;
+			}
+//			regretSeries.add(nbquest, regretMean);
+//			avgLossSeries.add(nbquest, lossMean);
 		}
+		b.write("Mean of Regret reduced by half in " + regret2 + " questions \n");
+		b.write("Mean of Regret reduced by four in " + regret4 + " questions \n");
+		b.write("Mean of Regret reduced by eight in " + regret8 + " questions \n");
+		b.write("Mean of Average Loss reduced by half in " + avgLoss2 + " questions \n");
+		b.write("Mean of Average Loss reduced by four in " + avgLoss4 + " questions \n");
+		b.write("Mean of Average Loss reduced by eight in " + avgLoss8 + " questions \n");
+		b.flush();
+
+		b.write("k \t Mean of Regrets \n");
+		b.write("0 \t" + initialRegret + "\n");
+		for (int i = 1; i <= maxQuestions; i++) {
+			b.write(i + "\t" + regretSeriesMean.get(i - 1) + "\n");
+		}
+		b.flush();
+
+		b.write("k \t Mean of Average Losses \n");
+		b.write("0 \t" + initialAvgLoss + "\n");
+		for (int i = 1; i <= maxQuestions; i++) {
+			b.write(i + "\t" + avgLossSeriesMean.get(i - 1) + "\n");
+		}
+		b.flush();
+
+		b.write("k \t Standard Deviations of Regrets \n");
+		for (int i = 1; i <= maxQuestions; i++) {
+			b.write(i + "\t" + regretSeriesSD.get(i - 1) + "\n");
+		}
+		b.flush();
+
+		b.write("k \t Standard Deviations of Average Losses \n");
+		for (int i = 1; i <= maxQuestions; i++) {
+			b.write(i + "\t" + regretSeriesSD.get(i - 1) + "\n");
+		}
+		long duration=System.nanoTime()-startTime;
+		NumberFormat formatter = new DecimalFormat("#0.00000");
+		b.write("Duration "+formatter.format((System.nanoTime()-startTime) / 1000d)+" seconds");
+		b.flush();
+		b.close();
+//		plot(regretSeries, avgLossSeries, m, n);
 	}
 
-	private static void plot(XYSeries regretSeries, XYSeries avgLossSeries,int m, int n) {
+	private static void plot(XYSeries regretSeries, XYSeries avgLossSeries, int m, int n) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		dataset.addSeries(regretSeries);
 		dataset.addSeries(avgLossSeries);
-		JFreeChart chart = ChartFactory.createXYLineChart(n+" Voters "+m+" Alternatives", "k", "", dataset,
+		JFreeChart chart = ChartFactory.createXYLineChart(n + " Voters " + m + " Alternatives", "k", "", dataset,
 				PlotOrientation.VERTICAL, true, true, false);
 //		NumberAxis xAxis = new NumberAxis();
 //		xAxis.setTickUnit(new NumberTickUnit(1));
@@ -168,7 +306,7 @@ public class XPRunner {
 		RefineryUtilities.centerFrameOnScreen(jf);
 		jf.setVisible(true);
 	}
-	
+
 	private static BufferedWriter initFile(String tfile) {
 		BufferedWriter b = null;
 		try {
