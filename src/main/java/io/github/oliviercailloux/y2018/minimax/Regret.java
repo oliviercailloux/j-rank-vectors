@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.minimax;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,10 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 public class Regret {
 
 	private static double MMR;
+	private static Alternative xOpt;
+	private static Alternative yAdv;
+	private static PrefKnowledge knowAdv;
+	private static HashMap<Alternative,Alternative> h= new HashMap<>();
 	
 	public static List<Alternative> getMMRAlternatives(PrefKnowledge knowledge) {
 		List<Alternative> alt = knowledge.getAlternatives().asList();
@@ -25,6 +30,7 @@ public class Regret {
 		double MR;
 		while (i.hasNext()) {
 			Alternative x = i.next();
+			h.put(x, null);
 			MR = getMR(x, knowledge);
 			if (MR == minMR) {
 				minAlt.add(x);
@@ -36,6 +42,10 @@ public class Regret {
 			}
 		}
 		MMR=minMR;
+		
+		xOpt= minAlt.get(0);
+		yAdv= h.get(minAlt.get(0));
+		
 		return minAlt;
 	}
 
@@ -50,6 +60,7 @@ public class Regret {
 				PMR = getPMR(x, y, knowledge);
 				if (PMR > maxPMR) {
 					maxPMR = PMR;
+					h.replace(x, y);
 				}
 			}
 		}
@@ -119,4 +130,46 @@ public class Regret {
 		return MMR;
 	}
 
+	private static double getTau1(Alternative x, Alternative y, PrefKnowledge knowledge) {
+		int nbAlt = knowledge.getAlternatives().size();
+		int[] xrank = new int[nbAlt + 1];
+		int[] yrank = new int[nbAlt + 1];
+		int[] r;
+		for (Voter v : knowledge.getProfile().keySet()) {
+			r = getWorstRanks(x, y, knowledge.getProfile().get(v));
+			xrank[r[0]]++;
+			yrank[r[1]]++;
+		}
+		ConstraintsOnWeights cow = knowledge.getConstraintsOnWeights();
+		SumTermsBuilder sb = SumTerms.builder();
+		for (int i = 1; i <= nbAlt; i++) {
+			sb.add(cow.getTerm(yrank[i] - xrank[i], i));
+		}
+		SumTerms objective = sb.build();
+		return cow.minimize(objective);
+	}
+	
+	private static double getTau2(Alternative x, Alternative y, PrefKnowledge knowledge) {
+		int nbAlt = knowledge.getAlternatives().size();
+		int[] xrank = new int[nbAlt + 1];
+		int[] yrank = new int[nbAlt + 1];
+		int[] r;
+		ConstraintsOnWeights cow = knowledge.getConstraintsOnWeights();
+		SumTermsBuilder sb = SumTerms.builder();
+		for (int i = 1; i <= nbAlt; i++) {
+			sb.add(cow.getTerm(yrank[i] - xrank[i], i));
+		}
+		SumTerms objective = sb.build();
+		cow.maximize(objective);
+		
+		//come minimizzare il profilo?
+		for (Voter v : knowledge.getProfile().keySet()) {
+			r = getWorstRanks(x, y, knowledge.getProfile().get(v));
+			xrank[r[0]]++;
+			yrank[r[1]]++;
+		}
+		
+		return cow.minimize(objective);
+	}
+	
 }

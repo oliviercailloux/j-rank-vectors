@@ -111,6 +111,11 @@ public class ConstraintsOnWeights {
 		builder.setObjective(Objective.max(sum));
 		return solver.solve(builder).getSolution().get().getObjectiveValue();
 	}
+	
+	public double minimize(SumTerms sum) {
+		builder.setObjective(Objective.min(sum));
+		return solver.solve(builder).getSolution().get().getObjectiveValue();
+	}
 
 	private Variable getVariable(int rank) {
 		checkArgument(rank >= 1);

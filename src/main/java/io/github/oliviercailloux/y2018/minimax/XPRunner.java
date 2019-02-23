@@ -70,70 +70,27 @@ public class XPRunner {
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
 
-		n = 4;
-		m = 4;
-		title = root + "m" + m + "n" + n + "MiniMax_Min";
-		run(m, n, title, StrategyType.MINIMAX_MIN);
-		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-		run(m, n, title, StrategyType.MINIMAX_AVG);
-		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-		title = root + "m" + m + "n" + n + "Random";
-		run(m, n, title, StrategyType.RANDOM);
-
-		n = 4;
-		m = 8;
-		title = root + "m" + m + "n" + n + "MiniMax_Min";
-		run(m, n, title, StrategyType.MINIMAX_MIN);
-		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-		run(m, n, title, StrategyType.MINIMAX_AVG);
-		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-		title = root + "m" + m + "n" + n + "Random";
-		run(m, n, title, StrategyType.RANDOM);
-				
-		n = 8;
-		m = 4;
-		title = root + "m" + m + "n" + n + "MiniMax_Min";
-		run(m, n, title, StrategyType.MINIMAX_MIN);
-		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-		run(m, n, title, StrategyType.MINIMAX_AVG);
-		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-		title = root + "m" + m + "n" + n + "Random";
-		run(m, n, title, StrategyType.RANDOM);
-		
-		n = 6;
-		m = 6;
-		title = root + "m" + m + "n" + n + "MiniMax_Min";
-		run(m, n, title, StrategyType.MINIMAX_MIN);
-		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-		run(m, n, title, StrategyType.MINIMAX_AVG);
-		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-		title = root + "m" + m + "n" + n + "Random";
-		run(m, n, title, StrategyType.RANDOM);
-		
-		n = 8;
-		m = 8;
-		title = root + "m" + m + "n" + n + "MiniMax_Min";
-		run(m, n, title, StrategyType.MINIMAX_MIN);
-		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-		run(m, n, title, StrategyType.MINIMAX_AVG);
-		title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-		run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-		title = root + "m" + m + "n" + n + "Random";
-		run(m, n, title, StrategyType.RANDOM);
-
+		for (m = 3; m < 7; m++) {
+			for (n = 3; n < 7; n++) {
+//		title = root + "m" + m + "n" + n + "MiniMax_Min";
+//		run(m, n, title, StrategyType.MINIMAX_MIN);			
+//		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+//		run(m, n, title, StrategyType.MINIMAX_AVG);
+				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+				title = root + "m" + m + "n" + n + "Random";
+				run(m, n, title, StrategyType.RANDOM);
+			}
+		}
 	}
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
-		final long startTime = System.nanoTime();
+		final long startTime = System.currentTimeMillis();
 		BufferedWriter b = initFile(file);
 		b.write(n + " Voters " + m + " Alternatives \n");
 		b.flush();
 		// bw = initFile("./mmstats.txt");
-		int maxQuestions = 40;
+		int maxQuestions = 30;
 //		XYSeriesCollection dataset = new XYSeriesCollection();
 //		XYSeries regretSeries = new XYSeries("Mean Regret");
 //		XYSeries avgLossSeries = new XYSeries("Mean Average Loss");
@@ -148,7 +105,7 @@ public class XPRunner {
 		for (int nbquest = 1; nbquest <= maxQuestions; nbquest++) {
 			avglosses = new LinkedList<>();
 			regrets = new LinkedList<>();
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 20; j++) {
 				alternatives = new HashSet<>();
 				for (int i = 1; i <= m; i++) {
 					alternatives.add(new Alternative(i));
@@ -221,7 +178,7 @@ public class XPRunner {
 			avgLossSeriesMean.add(lossMean);
 			regretSeriesSD.add(regretSD);
 			avgLossSeriesSD.add(lossSD);
-		
+
 			if (nbquest == 1) {
 				initialRegret = regretMean;
 				initialAvgLoss = lossMean;
@@ -279,9 +236,8 @@ public class XPRunner {
 		for (int i = 1; i <= maxQuestions; i++) {
 			b.write(i + "\t" + regretSeriesSD.get(i - 1) + "\n");
 		}
-		long duration=System.nanoTime()-startTime;
 		NumberFormat formatter = new DecimalFormat("#0.00000");
-		b.write("Duration "+formatter.format((System.nanoTime()-startTime) / 1000d)+" seconds");
+		b.write("Duration " + formatter.format((System.currentTimeMillis() - startTime) / 1000d) + " seconds");
 		b.flush();
 		b.close();
 //		plot(regretSeries, avgLossSeries, m, n);
