@@ -1,19 +1,29 @@
 package io.github.oliviercailloux.y2018.minimax;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.List;
 import java.util.Objects;
 
 import org.apfloat.Aprational;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 
+/**
+ *
+ * Immutable. May represent an empty vector.
+ *
+ * @author xoxor
+ * @author Olivier Cailloux
+ *
+ */
 public class PSRWeights {
 
-	private final List<Double> weights;
-	private final double upperBound = 1;
-	private final double lowerBound = 0;
+	private final ImmutableList<Double> weights;
+	private final double upperBound = 1d;
+	private final double lowerBound = 0d;
 
 	public static PSRWeights given(List<Double> weights) {
 		return new PSRWeights(weights);
@@ -21,37 +31,18 @@ public class PSRWeights {
 
 	private PSRWeights(List<Double> weights) {
 		Preconditions.checkNotNull(weights);
-		if (weights.size() > 1) {
-			if (weights.get(0) != upperBound || weights.get(weights.size() - 1) != lowerBound
-					|| !checkConvexity(weights)) {
-				throw new IllegalArgumentException("Sequence not valid");
-			}
-		}
-		this.weights = new LinkedList<>();
-		this.weights.addAll(weights);
+		checkArgument(weights.isEmpty() || weights.get(0) == upperBound);
+		checkArgument(weights.size() <= 1 || weights.get(weights.size() - 1) == lowerBound);
+		this.weights = ImmutableList.copyOf(weights);
+		checkArgument(isConvex());
 	}
 
-	@SuppressWarnings("unused")
-	private boolean checkMonotonicity(List<Double> weight) {
-		Iterator<Double> ls = weight.iterator();
-		double curr;
-		double prev = ls.next();
-		while (ls.hasNext()) {
-			curr = ls.next();
-			if (prev < curr) {
-				return false;
-			}
-			prev = curr;
-		}
-		return true;
-	}
-
-	private boolean checkConvexity(List<Double> weight) {
+	private boolean isConvex() {
 		double wi1, wi2, wi3;
-		for (int i = 0; i < weight.size() - 2; i++) {
-			wi1 = weight.get(i);
-			wi2 = weight.get(i + 1);
-			wi3 = weight.get(i + 2);
+		for (int i = 0; i < weights.size() - 2; i++) {
+			wi1 = weights.get(i);
+			wi2 = weights.get(i + 1);
+			wi3 = weights.get(i + 2);
 			if ((wi1 - wi2) < (wi2 - wi3)) {
 				return false;
 			}
@@ -69,7 +60,7 @@ public class PSRWeights {
 		return this.weights.get(rank - 1);
 	}
 
-	public List<Double> getWeights() {
+	public ImmutableList<Double> getWeights() {
 		return this.weights;
 	}
 
@@ -93,17 +84,11 @@ public class PSRWeights {
 
 	@Override
 	public String toString() {
-		return this.weights.toString();
+		return MoreObjects.toStringHelper(this).addValue(weights).toString();
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (o == null) {
-			return false;
-		}
 		if (!(o instanceof PSRWeights)) {
 			return false;
 		}
