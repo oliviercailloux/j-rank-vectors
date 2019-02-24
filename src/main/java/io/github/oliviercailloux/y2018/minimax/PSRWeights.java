@@ -18,7 +18,7 @@ public class PSRWeights {
 	public static PSRWeights given(List<Double> weights) {
 		return new PSRWeights(weights);
 	}
-	
+
 	private PSRWeights(List<Double> weights) {
 		Preconditions.checkNotNull(weights);
 		if (weights.size() > 1) {
@@ -62,7 +62,7 @@ public class PSRWeights {
 	/**
 	 * Retrieves the weight associated to the given rank. The first position of the
 	 * ranking is 1.
-	 * 
+	 *
 	 * @return the weight of the given rank
 	 */
 	public double getWeightAtRank(int rank) {
@@ -74,19 +74,20 @@ public class PSRWeights {
 	}
 
 	/**
-	 * Given a query d * (w_i − w_{i+1}) >= n * (w_{i+1} − w_{i+2})
-	 *  where n/d = λ
+	 * Given a query d * (w_i − w_{i+1}) >= n * (w_{i+1} − w_{i+2}) where n/d = λ
+	 *
 	 * @return if the term on the left is GREATER, EQUAL or LOWER than the right one
 	 */
 	public Answer askQuestion(QuestionCommittee qc) {
 		int i = qc.getRank();
 		Aprational lambda = qc.getLambda();
-		double left = lambda.denominator().intValue()*(weights.get(i - 1) - weights.get(i));
+		double left = lambda.denominator().intValue() * (weights.get(i - 1) - weights.get(i));
 		double right = lambda.numerator().intValue() * (weights.get(i) - weights.get(i + 1));
-		if (left > right)
+		if (left > right) {
 			return Answer.GREATER;
-		else if (left == right)
+		} else if (left == right) {
 			return Answer.EQUAL;
+		}
 		return Answer.LOWER;
 	}
 
@@ -97,12 +98,15 @@ public class PSRWeights {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == this)
+		if (o == this) {
 			return true;
-		if (o == null)
+		}
+		if (o == null) {
 			return false;
-		if (!(o instanceof PSRWeights))
+		}
+		if (!(o instanceof PSRWeights)) {
 			return false;
+		}
 		PSRWeights w = (PSRWeights) o;
 		return w.weights.equals(this.weights);
 	}
