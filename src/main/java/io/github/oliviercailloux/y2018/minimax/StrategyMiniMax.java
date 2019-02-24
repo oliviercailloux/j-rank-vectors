@@ -3,11 +3,7 @@ package io.github.oliviercailloux.y2018.minimax;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -17,10 +13,8 @@ import org.apfloat.AprationalMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
-import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
@@ -37,11 +31,13 @@ public class StrategyMiniMax implements Strategy {
 	private static AggOps op;
 	private static double w1;
 	private static double w2;
+	private static HashMap<Question, Double> questions;
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
 
 	public static StrategyMiniMax build(PrefKnowledge knowledge) {
+		op = AggOps.WEIGHTED_AVERAGE;
 		return new StrategyMiniMax(knowledge);
 	}
 
@@ -71,7 +67,7 @@ public class StrategyMiniMax implements Strategy {
 
 		checkArgument(m >= 2, "Questions can be asked only if there are at least two alternatives.");
 
-		final HashMap<Question, Double> questions = new HashMap<>();
+		questions = new HashMap<>();
 
 		for (Voter voter : knowledge.getVoters()) {
 			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asTransitiveGraph();
@@ -115,11 +111,10 @@ public class StrategyMiniMax implements Strategy {
 				minScore = score;
 			}
 		}
-
 		return nextQ;
 	}
 
-	private double getScore(Question q) {
+	public double getScore(Question q) {
 		PrefKnowledge yesKnowledge = PrefKnowledge.copyOf(knowledge);
 		PrefKnowledge noKnowledge = PrefKnowledge.copyOf(knowledge);
 		double yesMMR = 0;
@@ -129,17 +124,11 @@ public class StrategyMiniMax implements Strategy {
 			Alternative a = qv.getFirstAlternative();
 			Alternative b = qv.getSecondAlternative();
 
-			MutableGraph<Alternative> yesGraph = yesKnowledge.getProfile().get(qv.getVoter()).asGraph();
-			yesGraph.putEdge(a, b);
-			yesKnowledge.getProfile().get(qv.getVoter()).setGraphChanged();
-
-			MutableGraph<Alternative> noGraph = noKnowledge.getProfile().get(qv.getVoter()).asGraph();
-			noGraph.putEdge(b, a);
-			noKnowledge.getProfile().get(qv.getVoter()).setGraphChanged();
-
+			yesKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(a, b);
 			Regret.getMMRAlternatives(yesKnowledge);
 			yesMMR = Regret.getMMR();
-
+			
+			noKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(b, a);
 			Regret.getMMRAlternatives(noKnowledge);
 			noMMR = Regret.getMMR();
 		} else if (q.getType().equals(QuestionType.COMMITTEE_QUESTION)) {
@@ -170,6 +159,11 @@ public class StrategyMiniMax implements Strategy {
 		default:
 			throw new IllegalStateException();
 		}
+	}
+
+	/** only for testing purposes */
+	public static HashMap<Question, Double> getQuestions() {
+		return questions;
 	}
 
 }

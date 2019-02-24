@@ -49,7 +49,7 @@ public class Regret {
 		return minAlt;
 	}
 
-	private static double getMR(Alternative x, PrefKnowledge knowledge) {
+	public static double getMR(Alternative x, PrefKnowledge knowledge) {
 		List<Alternative> alt = knowledge.getAlternatives().asList();
 		ListIterator<Alternative> i = alt.listIterator();
 		double maxPMR = Double.MIN_VALUE;
@@ -67,7 +67,7 @@ public class Regret {
 		return maxPMR;
 	}
 
-	private static double getPMR(Alternative x, Alternative y, PrefKnowledge knowledge) {
+	public static double getPMR(Alternative x, Alternative y, PrefKnowledge knowledge) {
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];

@@ -2,6 +2,7 @@ package io.github.oliviercailloux.y2018.minimax;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,13 +24,21 @@ public class PrefKnowledge {
 	}
 	
 	public static PrefKnowledge copyOf(PrefKnowledge knowledge) {
-		return new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
+		PrefKnowledge pref=new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
+		Map<Voter, VoterPartialPreference> profile= new HashMap<>();
+		for(Voter v: knowledge.getVoters()) {
+			VoterPartialPreference vp= VoterPartialPreference.copyOf(knowledge.getProfile().get(v));
+			profile.put(v, vp);
+		}
+		pref.partialProfile = ImmutableMap.copyOf(profile);
+		pref.cow=ConstraintsOnWeights.copyOf(knowledge.getConstraintsOnWeights());
+		return pref;
 	}
 	
-	private final ImmutableSet<Alternative> alternatives;
-	private final ImmutableMap<Voter, VoterPartialPreference> partialProfile;
-	private final ConstraintsOnWeights cow;
-	private final Map<Integer, Range<Aprational>> lambdaRanges;
+	private ImmutableSet<Alternative> alternatives;
+	private ImmutableMap<Voter, VoterPartialPreference> partialProfile;
+	private ConstraintsOnWeights cow;
+	private Map<Integer, Range<Aprational>> lambdaRanges;
 
 	private PrefKnowledge(Set<Alternative> alternatives, Set<Voter> voters) {
 		this.alternatives = ImmutableSet.copyOf(alternatives);

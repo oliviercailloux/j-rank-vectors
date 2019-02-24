@@ -42,4 +42,5 @@
 	<logger name="io.github.oliviercailloux.y2018.j_voting.Preference" level="ERROR" />
 	<logger name="io.github.oliviercailloux.y2018.j_voting.StrictPreference" level="ERROR" />
 	<logger name="io.github.oliviercailloux.y2018.j_voting.Voter" level="ERROR" />
+	<logger name="io.github.oliviercailloux.jlp.or_tools.OrToolsSolver" level="ERROR" />
 </configuration>

@@ -69,7 +69,8 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-
+		m=3;n=3;
+		
 		for (m = 3; m < 7; m++) {
 			for (n = 3; n < 7; n++) {
 //		title = root + "m" + m + "n" + n + "MiniMax_Min";
@@ -86,11 +87,14 @@ public class XPRunner {
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
 		final long startTime = System.currentTimeMillis();
+		int maxQuestions = 30;
+		int runs = 50;
 		BufferedWriter b = initFile(file);
+		b.write(st + "\n");
 		b.write(n + " Voters " + m + " Alternatives \n");
+		b.write(maxQuestions + " Questions for" + runs + " runs \n");
 		b.flush();
 		// bw = initFile("./mmstats.txt");
-		int maxQuestions = 30;
 //		XYSeriesCollection dataset = new XYSeriesCollection();
 //		XYSeries regretSeries = new XYSeries("Mean Regret");
 //		XYSeries avgLossSeries = new XYSeries("Mean Average Loss");
@@ -105,7 +109,7 @@ public class XPRunner {
 		for (int nbquest = 1; nbquest <= maxQuestions; nbquest++) {
 			avglosses = new LinkedList<>();
 			regrets = new LinkedList<>();
-			for (int j = 0; j < 20; j++) {
+			for (int j = 0; j < runs; j++) {
 				alternatives = new HashSet<>();
 				for (int i = 1; i <= m; i++) {
 					alternatives.add(new Alternative(i));

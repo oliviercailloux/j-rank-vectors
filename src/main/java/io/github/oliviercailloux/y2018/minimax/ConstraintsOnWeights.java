@@ -31,8 +31,8 @@ import io.github.oliviercailloux.jlp.result.Result;
  *
  */
 public class ConstraintsOnWeights {
-	private final MPBuilder builder;
-	private final OrToolsSolver solver;
+	private MPBuilder builder;
+	private OrToolsSolver solver;
 
 	/**
 	 * @param m at least one: the number of ranks, or equivalently, the number of
@@ -40,6 +40,16 @@ public class ConstraintsOnWeights {
 	 */
 	public static ConstraintsOnWeights withRankNumber(int m) {
 		return new ConstraintsOnWeights(m);
+	}
+	
+	public static ConstraintsOnWeights copyOf(ConstraintsOnWeights cw) {
+		ConstraintsOnWeights c=new ConstraintsOnWeights(cw.getM());
+		c.builder=MPBuilder.copyOf(cw.getBuilder());
+		return c;
+	}
+
+	private MPBuilder getBuilder() {
+		return builder;
 	}
 
 	ConstraintsOnWeights(int m) {
