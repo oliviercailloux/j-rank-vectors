@@ -38,10 +38,13 @@ public class Oracle {
 		this.profile = ImmutableMap.copyOf(profile);
 		this.weights = requireNonNull(weights);
 		checkArgument(profile.entrySet().stream().allMatch((e) -> e.getValue().getVoter().equals(e.getKey())));
-		checkArgument(profile.values().stream().map((vp) -> vp.getAlternatives()).distinct().limit(2).count() <= 1);
-		final List<Alternative> alternativesList = profile.values().stream().findAny().get().getAlternatives();
+
 		final Comparator<Alternative> comparingIds = Comparator.comparingInt(Alternative::getId);
+		final List<Alternative> alternativesList = profile.values().stream().findAny().get().getAlternatives();
 		this.alternatives = ImmutableSortedSet.copyOf(comparingIds, alternativesList);
+
+		checkArgument(profile.values().stream().map(VoterStrictPreference::getAlternatives)
+				.allMatch((l) -> ImmutableSet.copyOf(l).equals(alternatives)));
 		final int nbAlts = alternatives.size();
 		checkArgument(weights.size() == nbAlts);
 	}
