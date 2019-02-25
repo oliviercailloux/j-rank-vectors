@@ -69,26 +69,28 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-		m=3;n=3;
+		m=4;n=3;
+		title = root + "m" + m + "n" + n + "TwoPhases";
+		run(m, n, title, StrategyType.TWO_PHASES);
 		
-		for (m = 3; m < 7; m++) {
-			for (n = 3; n < 7; n++) {
-//		title = root + "m" + m + "n" + n + "MiniMax_Min";
-//		run(m, n, title, StrategyType.MINIMAX_MIN);			
-//		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-//		run(m, n, title, StrategyType.MINIMAX_AVG);
-				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-				title = root + "m" + m + "n" + n + "Random";
-				run(m, n, title, StrategyType.RANDOM);
-			}
-		}
+//		for (m = 3; m < 7; m++) {
+//			for (n = 3; n < 7; n++) {
+////		title = root + "m" + m + "n" + n + "MiniMax_Min";
+////		run(m, n, title, StrategyType.MINIMAX_MIN);			
+////		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+////		run(m, n, title, StrategyType.MINIMAX_AVG);
+//				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+//				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+//				title = root + "m" + m + "n" + n + "Random";
+//				run(m, n, title, StrategyType.RANDOM);
+//			}
+//		}
 	}
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
 		final long startTime = System.currentTimeMillis();
 		int maxQuestions = 30;
-		int runs = 50;
+		int runs = 10;
 		BufferedWriter b = initFile(file);
 		b.write(st + "\n");
 		b.write(n + " Voters " + m + " Alternatives \n");
@@ -134,6 +136,8 @@ public class XPRunner {
 					break;
 				case RANDOM:
 					strategy = StrategyRandom.build(knowledge);
+				case TWO_PHASES:
+					strategy = StrategyTwoPhases.build(knowledge);
 				}
 				sumOfRanks = new double[m];
 				trueWinners = computeTrueWinners();
