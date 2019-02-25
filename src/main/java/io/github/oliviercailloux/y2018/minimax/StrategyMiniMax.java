@@ -76,7 +76,7 @@ public class StrategyMiniMax implements Strategy {
 				if (graph.adjacentNodes(a1).size() != m - 1) {
 					for (Alternative a2 : knowledge.getAlternatives()) {
 						if (!a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)) {
-							Question q = new Question(new QuestionVoter(voter, a1, a2));
+							Question q = Question.toVoter(voter, a1, a2);
 							double score = getScore(q);
 							questions.put(q, score);
 						}
@@ -93,7 +93,7 @@ public class StrategyMiniMax implements Strategy {
 			if (diff > 0.1) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
-				Question q = new Question(new QuestionCommittee(avg, rank));
+				Question q = Question.toCommittee(avg, rank);
 				double score = getScore(q);
 				questions.put(q, score);
 			}
@@ -127,7 +127,7 @@ public class StrategyMiniMax implements Strategy {
 			yesKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(a, b);
 			Regret.getMMRAlternatives(yesKnowledge);
 			yesMMR = Regret.getMMR();
-			
+
 			noKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(b, a);
 			Regret.getMMRAlternatives(noKnowledge);
 			noMMR = Regret.getMMR();

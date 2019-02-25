@@ -48,8 +48,7 @@ class StrategyRandomTest {
 		final StrategyRandom s = StrategyRandom.build(k);
 		final Random notRandom = new Random(0);
 		s.setRandom(notRandom);
-		assertEquals(new Question(new QuestionVoter(new Voter(1), new Alternative(1), new Alternative(2))),
-				s.nextQuestion());
+		assertEquals(Question.toVoter(new Voter(1), new Alternative(1), new Alternative(2)), s.nextQuestion());
 	}
 
 	@Test
@@ -59,8 +58,7 @@ class StrategyRandomTest {
 		final Random notRandom = new Random(0);
 		s.setRandom(notRandom);
 		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(1), new Alternative(2));
-		assertEquals(new Question(new QuestionVoter(new Voter(2), new Alternative(1), new Alternative(2))),
-				s.nextQuestion());
+		assertEquals(Question.toVoter(new Voter(2), new Alternative(1), new Alternative(2)), s.nextQuestion());
 	}
 
 	@Test
@@ -87,8 +85,7 @@ class StrategyRandomTest {
 		final MutableGraph<Alternative> g2 = k.getProfile().get(new Voter(2)).asGraph();
 		g2.putEdge(new Alternative(1), new Alternative(2));
 		g2.putEdge(new Alternative(2), new Alternative(3));
-		assertEquals(new Question(new QuestionCommittee(new Aprational(new Apint(3), new Apint(2)), 1)),
-				s.nextQuestion());
+		assertEquals(Question.toCommittee(new Aprational(new Apint(3), new Apint(2)), 1), s.nextQuestion());
 	}
 
 	@Test

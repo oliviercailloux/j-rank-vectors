@@ -18,9 +18,8 @@ import com.google.common.graph.Graph;
 
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
-import io.github.oliviercailloux.y2018.minimax.utils.AggregationOperator.AggOps;
 
-public class StrategyCurrentSolution implements Strategy{
+public class StrategyCurrentSolution implements Strategy {
 	private PrefKnowledge knowledge;
 
 	@SuppressWarnings("unused")
@@ -29,8 +28,6 @@ public class StrategyCurrentSolution implements Strategy{
 	public static StrategyCurrentSolution build(PrefKnowledge knowledge) {
 		return new StrategyCurrentSolution(knowledge);
 	}
-
-
 
 	private StrategyCurrentSolution(PrefKnowledge knowledge) {
 		this.knowledge = knowledge;
@@ -51,9 +48,9 @@ public class StrategyCurrentSolution implements Strategy{
 				if (graph.adjacentNodes(a1).size() != m - 1) {
 					for (Alternative a2 : knowledge.getAlternatives()) {
 						if (!a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)) {
-							Question q = new Question(new QuestionVoter(voter, a1, a2));
-						//	double score = getScore(q);
-						//	questions.put(q, score);
+							Question q = Question.toVoter(voter, a1, a2);
+							// double score = getScore(q);
+							// questions.put(q, score);
 						}
 					}
 				}
@@ -68,7 +65,7 @@ public class StrategyCurrentSolution implements Strategy{
 			if (diff > 0.1) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
-				Question q = new Question(new QuestionCommittee(avg, rank));
+				Question q = Question.toCommittee(avg, rank);
 //				double score = getScore(q);
 //				questions.put(q, score);
 			}

@@ -38,8 +38,8 @@ public class StrategyMiniMaxTest {
 	void testTwoAltsOneV() {
 		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(2), Generator.getVoters(1));
 		final StrategyMiniMax s = StrategyMiniMax.build(k);
-		final Question q1 = new Question(new QuestionVoter(new Voter(1), new Alternative(1), new Alternative(2)));
-		final Question q2 = new Question(new QuestionVoter(new Voter(1), new Alternative(2), new Alternative(1)));
+		final Question q1 = Question.toVoter(new Voter(1), new Alternative(1), new Alternative(2));
+		final Question q2 = Question.toVoter(new Voter(1), new Alternative(2), new Alternative(1));
 		final Set<Question> q = new HashSet<>();
 		q.add(q1);
 		q.add(q2);
@@ -53,8 +53,8 @@ public class StrategyMiniMaxTest {
 		final StrategyMiniMax s = StrategyMiniMax.build(k);
 		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(1), new Alternative(2));
 		s.nextQuestion();
-		final Question q1 = new Question(new QuestionVoter(new Voter(2), new Alternative(1), new Alternative(2)));
-		final Question q2 = new Question(new QuestionVoter(new Voter(2), new Alternative(2), new Alternative(1)));
+		final Question q1 = Question.toVoter(new Voter(2), new Alternative(1), new Alternative(2));
+		final Question q2 = Question.toVoter(new Voter(2), new Alternative(2), new Alternative(1));
 		final Set<Question> q = new HashSet<>();
 		q.add(q1);
 		q.add(q2);
@@ -66,10 +66,10 @@ public class StrategyMiniMaxTest {
 		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(2), Generator.getVoters(2));
 		final StrategyMiniMax s = StrategyMiniMax.build(k);
 		s.nextQuestion();
-		final Question q1 = new Question(new QuestionVoter(new Voter(1), new Alternative(1), new Alternative(2)));
-		final Question q2 = new Question(new QuestionVoter(new Voter(1), new Alternative(2), new Alternative(1)));
-		final Question q3 = new Question(new QuestionVoter(new Voter(2), new Alternative(1), new Alternative(2)));
-		final Question q4 = new Question(new QuestionVoter(new Voter(2), new Alternative(2), new Alternative(1)));
+		final Question q1 = Question.toVoter(new Voter(1), new Alternative(1), new Alternative(2));
+		final Question q2 = Question.toVoter(new Voter(1), new Alternative(2), new Alternative(1));
+		final Question q3 = Question.toVoter(new Voter(2), new Alternative(1), new Alternative(2));
+		final Question q4 = Question.toVoter(new Voter(2), new Alternative(2), new Alternative(1));
 		final Set<Question> q = new HashSet<>();
 		q.add(q1);
 		q.add(q2);
@@ -90,12 +90,12 @@ public class StrategyMiniMaxTest {
 		k.getProfile().get(new Voter(1)).setGraphChanged();
 		StrategyMiniMax s = StrategyMiniMax.build(k, AggOps.MAX);
 		s.nextQuestion();
-		final Question q1 = new Question(new QuestionVoter(new Voter(2), new Alternative(3), new Alternative(2)));
-		final Question q2 = new Question(new QuestionVoter(new Voter(2), new Alternative(2), new Alternative(3)));
-		final Question q3 = new Question(new QuestionVoter(new Voter(2), new Alternative(1), new Alternative(3)));
-		final Question q4 = new Question(new QuestionVoter(new Voter(2), new Alternative(3), new Alternative(1)));
+		final Question q1 = Question.toVoter(new Voter(2), new Alternative(3), new Alternative(2));
+		final Question q2 = Question.toVoter(new Voter(2), new Alternative(2), new Alternative(3));
+		final Question q3 = Question.toVoter(new Voter(2), new Alternative(1), new Alternative(3));
+		final Question q4 = Question.toVoter(new Voter(2), new Alternative(3), new Alternative(1));
 		final Aprational ap = new Aprational(new Apint(3), new Apint(2));
-		final Question q5 = new Question(new QuestionCommittee(ap, 1));
+		final Question q5 = Question.toCommittee(ap, 1);
 		final Set<Question> q = new HashSet<>();
 		q.add(q1);
 		q.add(q2);
@@ -111,39 +111,41 @@ public class StrategyMiniMaxTest {
 		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(1), new Alternative(2));
 		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(2), new Alternative(3));
 		k.getProfile().get(new Voter(2)).asGraph().putEdge(new Alternative(1), new Alternative(2));
-		StrategyMiniMax s = StrategyMiniMax.build(k, AggOps.MAX);		
+		StrategyMiniMax s = StrategyMiniMax.build(k, AggOps.MAX);
 		s.nextQuestion();
 
 		for (Question qq : StrategyMiniMax.getQuestions().keySet()) {
 			if (qq.getType().equals(QuestionType.VOTER_QUESTION)) {
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).addPartialPreference(qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());				
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).addPartialPreference(
+						qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());
 				Regret.getMMRAlternatives(k);
-				double yesRegret= Regret.getMMR();
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).removePartialPreference(qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());				
-				
+				double yesRegret = Regret.getMMR();
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).removePartialPreference(
+						qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());
+
 				k.getProfile().get(qq.getQuestionVoter().getVoter()).addPartialPreference(
 						qq.getQuestionVoter().getSecondAlternative(), qq.getQuestionVoter().getFirstAlternative());
 				Regret.getMMRAlternatives(k);
-				double noRegret= Regret.getMMR();
+				double noRegret = Regret.getMMR();
 				k.getProfile().get(qq.getQuestionVoter().getVoter()).removePartialPreference(
 						qq.getQuestionVoter().getSecondAlternative(), qq.getQuestionVoter().getFirstAlternative());
-				assertEquals(Math.max(yesRegret, noRegret),s.getScore(qq),0.001);
+				assertEquals(Math.max(yesRegret, noRegret), s.getScore(qq), 0.001);
 			}
 		}
 	}
-	
+
 	@Test
 	void testFourAltsFourVs() {
 		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(4), Generator.getVoters(4));
 		k.addConstraint(1, ComparisonOperator.EQ, new Apint(1));
-		StrategyMiniMax s = StrategyMiniMax.build(k, AggOps.MAX);		
+		StrategyMiniMax s = StrategyMiniMax.build(k, AggOps.MAX);
 		s.nextQuestion();
 		for (Question qq : StrategyMiniMax.getQuestions().keySet()) {
 			if (!qq.getType().equals(QuestionType.VOTER_QUESTION)) {
 				System.out.println(qq);
 			}
 		}
-		
+
 	}
 
 }
