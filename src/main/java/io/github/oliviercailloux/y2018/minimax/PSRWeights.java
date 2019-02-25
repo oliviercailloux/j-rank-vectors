@@ -64,6 +64,10 @@ public class PSRWeights {
 		return this.weights;
 	}
 
+	public int size() {
+		return weights.size();
+	}
+
 	/**
 	 * Given a query d * (w_i − w_{i+1}) >= n * (w_{i+1} − w_{i+2}) where n/d = λ
 	 *
