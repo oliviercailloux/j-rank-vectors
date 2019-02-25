@@ -34,7 +34,7 @@ public class PSRWeights {
 		checkArgument(weights.isEmpty() || weights.get(0) == upperBound);
 		checkArgument(weights.size() <= 1 || weights.get(weights.size() - 1) == lowerBound);
 		this.weights = ImmutableList.copyOf(weights);
-		checkArgument(isConvex());
+		checkArgument(isConvex(), weights);
 	}
 
 	private boolean isConvex() {

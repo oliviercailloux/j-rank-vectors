@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.Range;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
-import io.github.oliviercailloux.jlp.elements.RangeOfDouble;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
 import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
 
@@ -32,9 +31,17 @@ public class ConstraintsOnWeightsTest {
 		sb.add(cow.getTerm(-2d, 3));
 		sb.add(cow.getTerm(1d, 5));
 		final SumTerms objective = sb.build();
+
 		assertEquals(2d, cow.maximize(objective));
+//		assertEquals(1d, cow.getLastSolution().getWeightAtRank(1));
+//		assertEquals(0d, cow.getLastSolution().getWeightAtRank(3));
+//		assertEquals(1d, cow.getLastSolution().getWeightAtRank(5));
+
 		cow.setConvexityConstraint();
 		assertEquals(1d, cow.maximize(objective));
+		assertEquals(1d, cow.getLastSolution().getWeightAtRank(1));
+		assertEquals(0d, cow.getLastSolution().getWeightAtRank(3));
+		assertEquals(0d, cow.getLastSolution().getWeightAtRank(5));
 	}
 
 	@Test

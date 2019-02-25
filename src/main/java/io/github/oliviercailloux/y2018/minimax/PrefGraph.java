@@ -19,25 +19,37 @@ class PrefGraph extends ForwardingMutableGraph<Alternative> implements MutableGr
 
 	@Override
 	public boolean addNode(Alternative node) {
-		v.setGraphChanged();
-		return super.addNode(node);
+		final boolean added = super.addNode(node);
+		if (added) {
+			v.setGraphChanged();
+		}
+		return added;
 	}
 
 	@Override
 	public boolean putEdge(Alternative nodeU, Alternative nodeV) {
-		v.setGraphChanged();
-		return super.putEdge(nodeU, nodeV);
+		final boolean put = super.putEdge(nodeU, nodeV);
+		if (put) {
+			v.setGraphChanged();
+		}
+		return put;
 	}
 
 	@Override
 	public boolean removeEdge(Alternative nodeU, Alternative nodeV) {
-		v.setGraphChanged();
-		return super.removeEdge(nodeU, nodeV);
+		final boolean removed = super.removeEdge(nodeU, nodeV);
+		if (removed) {
+			v.setGraphChanged();
+		}
+		return removed;
 	}
 
 	@Override
 	public boolean removeNode(Alternative node) {
-		v.setGraphChanged();
-		return super.removeNode(node);
+		final boolean removed = super.removeNode(node);
+		if (removed) {
+			v.setGraphChanged();
+		}
+		return removed;
 	}
 }
