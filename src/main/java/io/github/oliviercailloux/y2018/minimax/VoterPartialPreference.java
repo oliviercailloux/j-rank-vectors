@@ -5,6 +5,7 @@ import java.util.Set;
 import com.google.common.base.Objects;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.Graphs;
+import com.google.common.graph.ImmutableGraph;
 import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
@@ -22,20 +23,20 @@ public class VoterPartialPreference {
 		watcher.setCallback(v);
 		return v;
 	}
-	
+
 	public static VoterPartialPreference copyOf(VoterPartialPreference vpp) {
-		VoterPartialPreference vPartPref = VoterPartialPreference.about(vpp.getVoter(), vpp.asGraph().nodes());
-		vPartPref.pref = Graphs.copyOf(vpp.asGraph());
-		vPartPref.setGraphChanged();
-		return vPartPref;
+		final MutableGraph<Alternative> graph = Graphs.copyOf(vpp.asGraph());
+		final PrefGraph watcher = new PrefGraph(graph);
+		final VoterPartialPreference v = new VoterPartialPreference(vpp.getVoter(), watcher);
+		watcher.setCallback(v);
+		return v;
 	}
 
+	private final Voter voter;
+	private final PrefGraph pref;
+	private ImmutableGraph<Alternative> transitiveEquivalent;
 
-	private Voter voter;
-	private MutableGraph<Alternative> pref;
-	private MutableGraph<Alternative> transitiveEquivalent;
-
-	private VoterPartialPreference(Voter voter, MutableGraph<Alternative> pref) {
+	private VoterPartialPreference(Voter voter, PrefGraph pref) {
 		this.voter = voter;
 		this.pref = pref;
 		transitiveEquivalent = null;
@@ -45,31 +46,21 @@ public class VoterPartialPreference {
 		return this.pref;
 	}
 
-	public MutableGraph<Alternative> asTransitiveGraph() {
+	public ImmutableGraph<Alternative> asTransitiveGraph() {
 		if (transitiveEquivalent == null) {
 			final MutableGraph<Alternative> trans = Graphs.copyOf(Graphs.transitiveClosure(pref));
 			for (Alternative a : trans.nodes()) {
 				trans.removeEdge(a, a);
 			}
-			transitiveEquivalent = Graphs.copyOf(trans);
+			transitiveEquivalent = ImmutableGraph.copyOf(trans);
 		}
 		return transitiveEquivalent;
 	}
-	
-	public void addPartialPreference(Alternative a, Alternative b) {
-		if (transitiveEquivalent == null) {
-			asTransitiveGraph();
-		}
-		transitiveEquivalent.putEdge(a, b);
-	}
-	/** only for testing purposes */
-	public void removePartialPreference(Alternative a, Alternative b) {
-		transitiveEquivalent.removeEdge(a, b);
-	}
-	
+
 	public Voter getVoter() {
 		return voter;
 	}
+
 	@Override
 	public boolean equals(Object o2) {
 		if (!(o2 instanceof VoterPartialPreference)) {

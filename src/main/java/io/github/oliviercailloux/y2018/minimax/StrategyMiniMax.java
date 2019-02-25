@@ -124,11 +124,11 @@ public class StrategyMiniMax implements Strategy {
 			Alternative a = qv.getFirstAlternative();
 			Alternative b = qv.getSecondAlternative();
 
-			yesKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(a, b);
+			yesKnowledge.getProfile().get(qv.getVoter()).asGraph().putEdge(a, b);
 			Regret.getMMRAlternatives(yesKnowledge);
 			yesMMR = Regret.getMMR();
 
-			noKnowledge.getProfile().get(qv.getVoter()).addPartialPreference(b, a);
+			noKnowledge.getProfile().get(qv.getVoter()).asGraph().putEdge(b, a);
 			Regret.getMMRAlternatives(noKnowledge);
 			noMMR = Regret.getMMR();
 		} else if (q.getType().equals(QuestionType.COMMITTEE_QUESTION)) {

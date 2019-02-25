@@ -128,11 +128,11 @@ public class StrategyTwoPhases implements Strategy {
 		Alternative a = q.getFirstAlternative();
 		Alternative b = q.getSecondAlternative();
 
-		yesKnowledge.getProfile().get(q.getVoter()).addPartialPreference(a, b);
+		yesKnowledge.getProfile().get(q.getVoter()).asGraph().putEdge(a, b);
 		Regret.getMMRAlternatives(yesKnowledge);
 		yesMMR = Regret.getMMR();
 
-		noKnowledge.getProfile().get(q.getVoter()).addPartialPreference(b, a);
+		noKnowledge.getProfile().get(q.getVoter()).asGraph().putEdge(b, a);
 		Regret.getMMRAlternatives(noKnowledge);
 		noMMR = Regret.getMMR();
 

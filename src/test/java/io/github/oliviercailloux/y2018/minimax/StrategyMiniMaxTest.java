@@ -116,18 +116,18 @@ public class StrategyMiniMaxTest {
 
 		for (Question qq : StrategyMiniMax.getQuestions().keySet()) {
 			if (qq.getType().equals(QuestionType.VOTER_QUESTION)) {
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).addPartialPreference(
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).asGraph().putEdge(
 						qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());
 				Regret.getMMRAlternatives(k);
 				double yesRegret = Regret.getMMR();
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).removePartialPreference(
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).asGraph().removeEdge(
 						qq.getQuestionVoter().getFirstAlternative(), qq.getQuestionVoter().getSecondAlternative());
 
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).addPartialPreference(
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).asGraph().putEdge(
 						qq.getQuestionVoter().getSecondAlternative(), qq.getQuestionVoter().getFirstAlternative());
 				Regret.getMMRAlternatives(k);
 				double noRegret = Regret.getMMR();
-				k.getProfile().get(qq.getQuestionVoter().getVoter()).removePartialPreference(
+				k.getProfile().get(qq.getQuestionVoter().getVoter()).asGraph().removeEdge(
 						qq.getQuestionVoter().getSecondAlternative(), qq.getQuestionVoter().getFirstAlternative());
 				assertEquals(Math.max(yesRegret, noRegret), s.getScore(qq), 0.001);
 			}
