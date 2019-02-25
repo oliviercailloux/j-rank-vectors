@@ -1,7 +1,6 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +9,7 @@ import org.apfloat.Apint;
 import org.apfloat.Aprational;
 import org.junit.jupiter.api.Test;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
@@ -19,7 +19,6 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class RegretTest {
 
-	
 	@Test
 	void testMMR() throws Exception {
 		Voter v1 = new Voter(1);
@@ -29,7 +28,7 @@ public class RegretTest {
 		voters.add(v1);
 		voters.add(v2);
 		voters.add(v3);
-		
+
 		Alternative a = new Alternative(1);
 		Alternative b = new Alternative(2);
 		Alternative c = new Alternative(3);
@@ -39,9 +38,9 @@ public class RegretTest {
 		alt.add(b);
 		alt.add(c);
 		alt.add(d);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
-		
+
 		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
 		pref1.putEdge(a, b);
 		pref1.putEdge(b, c);
@@ -56,13 +55,13 @@ public class RegretTest {
 		pref3.putEdge(c, a);
 		pref3.putEdge(a, b);
 		pref3.putEdge(b, d);
-			
-		assertEquals(a,Regret.getMMRAlternatives(knowledge));	
+
+		assertEquals(ImmutableList.of(a), Regret.getMMRAlternatives(knowledge));
 	}
-	
+
 	@Test
 	void testPMR1() throws Exception {
-		/**Test with complete knowledge about voters' preferences**/
+		/** Test with complete knowledge about voters' preferences **/
 		Voter v1 = new Voter(1);
 		Voter v2 = new Voter(2);
 		Voter v3 = new Voter(3);
@@ -70,7 +69,7 @@ public class RegretTest {
 		voters.add(v1);
 		voters.add(v2);
 		voters.add(v3);
-		
+
 		Alternative a = new Alternative(1);
 		Alternative b = new Alternative(2);
 		Alternative c = new Alternative(3);
@@ -80,9 +79,9 @@ public class RegretTest {
 		alt.add(b);
 		alt.add(c);
 		alt.add(d);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
-		
+
 		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
 		pref1.putEdge(a, b);
 		pref1.putEdge(b, c);
@@ -97,7 +96,7 @@ public class RegretTest {
 		pref3.putEdge(c, a);
 		pref3.putEdge(a, b);
 		pref3.putEdge(b, d);
-		
+
 		/** changed the visibility of the method in class Regret **/
 //		assertEquals(-1d,Regret.getPMR(a, b, knowledge));
 //		assertEquals(0d,Regret.getPMR(a, c, knowledge));
@@ -106,7 +105,7 @@ public class RegretTest {
 
 	@Test
 	void testPMR2() throws Exception {
-		/**Test with zero knowledge**/
+		/** Test with zero knowledge **/
 		Voter v1 = new Voter(1);
 		Voter v2 = new Voter(2);
 		Voter v3 = new Voter(3);
@@ -114,7 +113,7 @@ public class RegretTest {
 		voters.add(v1);
 		voters.add(v2);
 		voters.add(v3);
-		
+
 		Alternative a = new Alternative(1);
 		Alternative b = new Alternative(2);
 		Alternative c = new Alternative(3);
@@ -124,15 +123,15 @@ public class RegretTest {
 		alt.add(b);
 		alt.add(c);
 		alt.add(d);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
-		/** changed the visibility of the method in class Regret **/	
-//		assertEquals(3d,Regret.getPMR(a, b, knowledge));	
+		/** changed the visibility of the method in class Regret **/
+//		assertEquals(3d,Regret.getPMR(a, b, knowledge));
 	}
-	
+
 	@Test
 	void testPMR3() throws Exception {
-		/**Test with knowledge about weights**/
+		/** Test with knowledge about weights **/
 		Voter v1 = new Voter(1);
 		Voter v2 = new Voter(2);
 		Voter v3 = new Voter(3);
@@ -140,7 +139,7 @@ public class RegretTest {
 		voters.add(v1);
 		voters.add(v2);
 		voters.add(v3);
-		
+
 		Alternative a = new Alternative(1);
 		Alternative b = new Alternative(2);
 		Alternative c = new Alternative(3);
@@ -150,14 +149,14 @@ public class RegretTest {
 		alt.add(b);
 		alt.add(c);
 		alt.add(d);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 		Apint ap2 = new Apint(2);
 		Apint ap3 = new Apint(3);
-		Aprational lambda= new Aprational(ap3,ap2);
+		Aprational lambda = new Aprational(ap3, ap2);
 		knowledge.addConstraint(1, ComparisonOperator.GE, lambda);
 		knowledge.addConstraint(2, ComparisonOperator.GE, lambda);
-		
+
 		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
 		pref1.putEdge(c, b);
 
@@ -166,7 +165,7 @@ public class RegretTest {
 
 		MutableGraph<Alternative> pref3 = knowledge.getProfile().get(v3).asGraph();
 		pref3.putEdge(c, b);
-		
+
 		/** changed the visibility of the method in class Regret **/
 //		double PMR = Regret.getPMR(a, b, knowledge);
 //		double w2= PMR/3;
@@ -174,8 +173,7 @@ public class RegretTest {
 //		assertTrue(w2<=0.55);
 //		assertTrue(w2>=0.45);
 	}
-	
-	
+
 	@Test
 	void testRanksCase1() throws Exception {
 		final MutableGraph<Alternative> pref = GraphBuilder.directed().build();
