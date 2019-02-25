@@ -1,15 +1,23 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 
+import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 /**
- * Immutable
+ * Immutable. Contains at least one voter (otherwise it would be impossible to
+ * provide a list of alternatives).
  *
  * @author xoxor
  * @author Olivier Cailloux
@@ -21,19 +29,21 @@ public class Oracle {
 		return new Oracle(profile, weights);
 	}
 
-	private ImmutableMap<Voter, VoterStrictPreference> profile;
-	private PSRWeights weights;
+	private final ImmutableMap<Voter, VoterStrictPreference> profile;
+	private final PSRWeights weights;
+	private final ImmutableSortedSet<Alternative> alternatives;
 
 	private Oracle(Map<Voter, VoterStrictPreference> profile, PSRWeights weights) {
+		checkArgument(profile.size() >= 1);
 		this.profile = ImmutableMap.copyOf(profile);
-		this.weights = weights;
+		this.weights = requireNonNull(weights);
 		checkArgument(profile.entrySet().stream().allMatch((e) -> e.getValue().getVoter().equals(e.getKey())));
-		checkArgument(
-				profile.values().stream().map((vp) -> vp.asStrictPreference().getAlternatives()).distinct().limit(2).count() <= 1);
-		if (profile.size() >= 1) {
-			final int nbAlts = profile.values().stream().findAny().get().asStrictPreference().getAlternatives().size();
-			checkArgument(weights.getWeights().size() == nbAlts);
-		}
+		checkArgument(profile.values().stream().map((vp) -> vp.getAlternatives()).distinct().limit(2).count() <= 1);
+		final List<Alternative> alternativesList = profile.values().stream().findAny().get().getAlternatives();
+		final Comparator<Alternative> comparingIds = Comparator.comparingInt(Alternative::getId);
+		this.alternatives = ImmutableSortedSet.copyOf(comparingIds, alternativesList);
+		final int nbAlts = alternatives.size();
+		checkArgument(weights.size() == nbAlts);
 	}
 
 	public Answer getAnswer(Question q) {
@@ -41,6 +51,7 @@ public class Oracle {
 		case VOTER_QUESTION: {
 			QuestionVoter qv = q.getQuestionVoter();
 			Voter v = qv.getVoter();
+			checkArgument(profile.containsKey(v));
 			VoterStrictPreference vsp = profile.get(v);
 			return vsp.askQuestion(qv);
 		}
@@ -49,7 +60,7 @@ public class Oracle {
 			return weights.askQuestion(qc);
 		}
 		default:
-			throw new IllegalStateException();
+			throw new AssertionError();
 		}
 	}
 
@@ -57,8 +68,30 @@ public class Oracle {
 		return profile;
 	}
 
+	/**
+	 * Returns the alternatives this profile is about. The size of the weights
+	 * vector is also the size of the returned set.
+	 *
+	 * @return the alternatives all voters’ preferences are about.
+	 */
+	public ImmutableSet<Alternative> getAlternatives() {
+		return alternatives;
+	}
+
 	public PSRWeights getWeights() {
 		return weights;
 	}
 
+	public int getM() {
+		return alternatives.size();
+	}
+
+	public int getN() {
+		return profile.size();
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("profile", profile).add("weights", weights).toString();
+	}
 }
