@@ -15,6 +15,10 @@ class VoterPartialPreferenceTest {
 	void test() {
 		final VoterPartialPreference p = VoterPartialPreference.about(new Voter(1),
 				ImmutableSet.of(new Alternative(1), new Alternative(2), new Alternative(3)));
+		testIt(p);
+	}
+
+	private void testIt(final VoterPartialPreference p) {
 		assertEquals(0, p.asGraph().edges().size());
 		assertEquals(0, p.asTransitiveGraph().edges().size());
 		p.asGraph().putEdge(new Alternative(1), new Alternative(2));
@@ -23,6 +27,14 @@ class VoterPartialPreferenceTest {
 		p.asGraph().putEdge(new Alternative(2), new Alternative(3));
 		assertEquals(2, p.asGraph().edges().size());
 		assertEquals(3, p.asTransitiveGraph().edges().size());
+	}
+
+	@Test
+	void testCopy() {
+		final VoterPartialPreference p = VoterPartialPreference.about(new Voter(1),
+				ImmutableSet.of(new Alternative(1), new Alternative(2), new Alternative(3)));
+		final VoterPartialPreference p2 = VoterPartialPreference.copyOf(p);
+		testIt(p2);
 	}
 
 }
