@@ -42,7 +42,7 @@ import io.github.oliviercailloux.y2018.j_voting.Voter;
 public class StrategyRandom implements Strategy {
 
 	public boolean profileCompleted;
-	
+
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyRandom.class);
 
@@ -56,10 +56,10 @@ public class StrategyRandom implements Strategy {
 
 	private StrategyRandom(PrefKnowledge knowledge) {
 		final long seed = ThreadLocalRandom.current().nextLong();
-		//LOGGER.info("Using seed: {}.", seed);
+		// LOGGER.info("Using seed: {}.", seed);
 		random = new Random(seed);
 		this.knowledge = knowledge;
-		profileCompleted=false;
+		profileCompleted = false;
 	}
 
 	void setRandom(Random random) {
@@ -91,7 +91,7 @@ public class StrategyRandom implements Strategy {
 			if (!lambdaRange.lowerEndpoint().equals(lambdaRange.upperEndpoint())) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
-				qc = new QuestionCommittee(avg, rank);
+				qc = QuestionCommittee.given(avg, rank);
 			}
 		}
 		final boolean existsQuestionWeight = qc != null;
@@ -113,7 +113,7 @@ public class StrategyRandom implements Strategy {
 		if (aboutWeight) {
 			assert m >= 3;
 			assert qc != null;
-			q = new Question(qc);
+			q = Question.toCommittee(qc);
 		} else {
 			assert !questionableVoters.isEmpty();
 			final int idx = random.nextInt(questionableVoters.size());
@@ -129,13 +129,13 @@ public class StrategyRandom implements Strategy {
 					.filter((a2) -> !a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)).findAny();
 			assert incomparable.isPresent();
 			final Alternative a2 = incomparable.get();
-			q = new Question(new QuestionVoter(voter, a1, a2));
+			q = Question.toVoter(voter, a1, a2);
 		}
-		
-		if(!existsQuestionVoters) {
-			profileCompleted=true;
+
+		if (!existsQuestionVoters) {
+			profileCompleted = true;
 		}
-		
+
 		return q;
 	}
 }

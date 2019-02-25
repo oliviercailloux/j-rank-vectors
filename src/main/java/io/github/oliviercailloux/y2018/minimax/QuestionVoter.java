@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
@@ -9,36 +10,39 @@ import com.google.common.base.MoreObjects;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
+/**
+ * Immutable. A Question to a voter with the form: is alternative <em>a</em>
+ * weakly preferred to <em>b</em>? The alternatives <em>a</em> and <em>b</em>
+ * are different.
+ *
+ * @author xoxor
+ * @author Olivier Cailloux
+ *
+ */
 public class QuestionVoter {
 
-	private Voter voter;
-	private Alternative a, b;
+	public static QuestionVoter given(Voter voter, Alternative a, Alternative b) {
+		return new QuestionVoter(voter, a, b);
+	}
 
-	public QuestionVoter(Voter voter, Alternative a, Alternative b) {
+	private final Voter voter;
+	private final Alternative a, b;
+
+	private QuestionVoter(Voter voter, Alternative a, Alternative b) {
 		checkArgument(!a.equals(b));
-		this.voter = voter;
-		this.a = a;
-		this.b = b;
+		this.voter = requireNonNull(voter);
+		this.a = requireNonNull(a);
+		this.b = requireNonNull(b);
 	}
 
 	public Voter getVoter() {
 		return this.voter;
 	}
 
-	/**
-	 * A Question to the voter has the form a > b
-	 *
-	 * @return a
-	 */
 	public Alternative getFirstAlternative() {
 		return a;
 	}
 
-	/**
-	 * A Question to the voter has the form a > b
-	 *
-	 * @return a
-	 */
 	public Alternative getSecondAlternative() {
 		return b;
 	}

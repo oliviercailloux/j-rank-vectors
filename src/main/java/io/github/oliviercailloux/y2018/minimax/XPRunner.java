@@ -23,23 +23,17 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.apfloat.Apint;
 import org.apfloat.Aprational;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Range;
 import com.google.common.graph.MutableGraph;
 import com.google.common.math.Stats;
 
@@ -69,22 +63,22 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-		m=4;n=3;
-		title = root + "m" + m + "n" + n + "TwoPhases";
-		run(m, n, title, StrategyType.TWO_PHASES);
-		
-//		for (m = 3; m < 7; m++) {
-//			for (n = 3; n < 7; n++) {
-////		title = root + "m" + m + "n" + n + "MiniMax_Min";
-////		run(m, n, title, StrategyType.MINIMAX_MIN);			
-////		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-////		run(m, n, title, StrategyType.MINIMAX_AVG);
-//				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-//				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-//				title = root + "m" + m + "n" + n + "Random";
-//				run(m, n, title, StrategyType.RANDOM);
-//			}
-//		}
+
+		m = 3;
+		n = 3;
+
+		for (m = 3; m < 7; m++) {
+			for (n = 3; n < 7; n++) {
+//		title = root + "m" + m + "n" + n + "MiniMax_Min";
+//		run(m, n, title, StrategyType.MINIMAX_MIN);
+//		title = root + "m" + m + "n" + n + "MiniMax_Avg";
+//		run(m, n, title, StrategyType.MINIMAX_AVG);
+				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+				title = root + "m" + m + "n" + n + "Random";
+				run(m, n, title, StrategyType.RANDOM);
+			}
+		}
 	}
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
@@ -164,7 +158,7 @@ public class XPRunner {
 				for (Alternative alt : winners) {
 					double approxTrueScore = 0;
 					for (VoterStrictPreference vsp : context.getProfile().values()) {
-						int rank = vsp.getPref().getAlternativeRank(alt);
+						int rank = vsp.asStrictPreference().getAlternativeRank(alt);
 						approxTrueScore += context.getWeights().getWeightAtRank(rank);
 					}
 					losses.add(trueWinScore - approxTrueScore);
@@ -380,7 +374,7 @@ public class XPRunner {
 			Alternative a = new Alternative(i + 1);
 			double sum = 0;
 			for (Voter v : voters) {
-				int rank = context.getProfile().get(v).getPref().getAlternativeRank(a);
+				int rank = context.getProfile().get(v).asStrictPreference().getAlternativeRank(a);
 				sum += context.getWeights().getWeightAtRank(rank);
 			}
 			sumOfRanks[i] = sum;
@@ -440,7 +434,7 @@ public class XPRunner {
 			Voter v = new Voter(i);
 			List<Alternative> linearOrder = Lists.newArrayList(availableRanks);
 			Collections.shuffle(linearOrder);
-			VoterStrictPreference pref = new VoterStrictPreference(v, linearOrder);
+			VoterStrictPreference pref = VoterStrictPreference.given(v, linearOrder);
 			profile.put(v, pref);
 		}
 

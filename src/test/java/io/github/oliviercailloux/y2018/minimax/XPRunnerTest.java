@@ -40,8 +40,8 @@ public class XPRunnerTest {
 
 		assertEquals(n, rv.size());
 		for (VoterStrictPreference vpref : rv.values()) {
-			assertEquals(m, vpref.getPref().getAlternatives().size());
-			assertTrue(vpref.getPref().getAlternatives().containsAll(alt));
+			assertEquals(m, vpref.asStrictPreference().getAlternatives().size());
+			assertTrue(vpref.asStrictPreference().getAlternatives().containsAll(alt));
 		}
 
 	}

@@ -2,27 +2,49 @@ package io.github.oliviercailloux.y2018.minimax;
 
 import java.util.Objects;
 
+import org.apfloat.Aprational;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
 import com.google.common.base.Preconditions;
 
+import io.github.oliviercailloux.y2018.j_voting.Alternative;
+import io.github.oliviercailloux.y2018.j_voting.Voter;
+
 /**
- * TODO consider protecting the sub-objects; not using types; forbidding a > a.
+ * Immutable.
  *
+ * @author xoxor
  * @author Olivier Cailloux
  *
  */
 public class Question {
 
-	private QuestionVoter qv;
-	private QuestionCommittee qc;
+	public static Question toVoter(Voter voter, Alternative a, Alternative b) {
+		return new Question(QuestionVoter.given(voter, a, b));
+	}
 
-	public Question(QuestionVoter qv) {
+	public static Question toVoter(QuestionVoter question) {
+		return new Question(question);
+	}
+
+	public static Question toCommittee(Aprational lambda, int rank) {
+		return new Question(QuestionCommittee.given(lambda, rank));
+	}
+
+	public static Question toCommittee(QuestionCommittee question) {
+		return new Question(question);
+	}
+
+	private final QuestionVoter qv;
+	private final QuestionCommittee qc;
+
+	private Question(QuestionVoter qv) {
 		this.qv = Objects.requireNonNull(qv);
 		this.qc = null;
 	}
 
-	public Question(QuestionCommittee qc) {
+	private Question(QuestionCommittee qc) {
 		this.qc = Objects.requireNonNull(qc);
 		this.qv = null;
 	}

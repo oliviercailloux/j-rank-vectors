@@ -1,34 +1,46 @@
 package io.github.oliviercailloux.y2018.minimax;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
 import java.util.Objects;
 
 import org.apfloat.Aprational;
 
 import com.google.common.base.MoreObjects;
 
+/**
+ * Immutable. A Question to the (chair of the) committee, with the form: is (w_r
+ * − w_{r+1}) ≥ λ (w_{r+1} − w_{r+2})? With the convention that <em>r</em>
+ * equals one for the first rank.
+ *
+ * @author xoxor
+ * @author Olivier Cailloux
+ *
+ */
 public class QuestionCommittee {
 
-	private Aprational lambda;
-	private int rank;
+	public static QuestionCommittee given(Aprational lambda, int rank) {
+		return new QuestionCommittee(lambda, rank);
+	}
 
-	public QuestionCommittee(Aprational lambda, int rank) {
-		this.lambda = lambda;
+	private final Aprational lambda;
+	private final int rank;
+
+	private QuestionCommittee(Aprational lambda, int rank) {
+		this.lambda = requireNonNull(lambda);
+		checkArgument(rank >= 1);
 		this.rank = rank;
 	}
 
-	/**
-	 * Given a query of the type: (w_i − w_{i+1}) >= λ (w_{i+1} − w_{i+2}).
-	 *
-	 * @return λ
-	 */
 	public Aprational getLambda() {
 		return lambda;
 	}
 
 	/**
-	 * Given a query of the type: (w_i − w_{i+1}) >= λ (w_{i+1} − w_{i+2}).
+	 * Returns <em>r</em>.
 	 *
-	 * @return i
+	 * @return ≥ 1.
 	 */
 	public int getRank() {
 		return rank;
@@ -50,7 +62,7 @@ public class QuestionCommittee {
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("lambda", lambda).add("rank", rank).toString();
+		return MoreObjects.toStringHelper(this).add("λ", lambda).add("rank", rank).toString();
 	}
 
 }

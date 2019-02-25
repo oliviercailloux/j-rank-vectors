@@ -70,7 +70,7 @@ public class StrategyTwoPhases implements Strategy {
 			if (diff > 0.1) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));
-				QuestionCommittee q = new QuestionCommittee(avg, rank);
+				QuestionCommittee q = QuestionCommittee.given(avg, rank);
 				committeeQuestions.add(q);
 			}
 		}
@@ -83,7 +83,7 @@ public class StrategyTwoPhases implements Strategy {
 		checkArgument(m >= 2, "Questions can be asked only if there are at least two alternatives.");
 
 		if (i.hasNext()) {
-			return new Question(i.next());
+			return Question.toCommittee(i.next());
 		}
 
 		voterQuestions = new HashMap<>();
@@ -95,7 +95,7 @@ public class StrategyTwoPhases implements Strategy {
 				if (graph.adjacentNodes(a1).size() != m - 1) {
 					for (Alternative a2 : knowledge.getAlternatives()) {
 						if (!a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)) {
-							QuestionVoter q = new QuestionVoter(voter, a1, a2);
+							QuestionVoter q = QuestionVoter.given(voter, a1, a2);
 							double score = getScore(q);
 							voterQuestions.put(q, score);
 						}
@@ -116,7 +116,7 @@ public class StrategyTwoPhases implements Strategy {
 				minScore = score;
 			}
 		}
-		return new Question(nextQ);
+		return Question.toVoter(nextQ);
 	}
 
 	public double getScore(QuestionVoter q) {
