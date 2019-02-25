@@ -18,9 +18,10 @@ public class Regret {
 	private static double MMR;
 	private static Alternative xOpt;
 	private static Alternative yAdv;
-	private static PrefKnowledge knowAdv;
-	private static HashMap<Alternative,Alternative> h= new HashMap<>();
-	
+	private static HashMap<Alternative, Integer> ranks;
+	// private static PrefKnowledge knowAdv;
+	private static HashMap<Alternative, Alternative> worstAdv = new HashMap<>();
+
 	public static List<Alternative> getMMRAlternatives(PrefKnowledge knowledge) {
 		List<Alternative> alt = knowledge.getAlternatives().asList();
 		ListIterator<Alternative> i = alt.listIterator();
@@ -30,7 +31,7 @@ public class Regret {
 		double MR;
 		while (i.hasNext()) {
 			Alternative x = i.next();
-			h.put(x, null);
+			worstAdv.put(x, null);
 			MR = getMR(x, knowledge);
 			if (MR == minMR) {
 				minAlt.add(x);
@@ -41,11 +42,11 @@ public class Regret {
 				minAlt.add(x);
 			}
 		}
-		MMR=minMR;
-		
-		xOpt= minAlt.get(0);
-		yAdv= h.get(minAlt.get(0));
-		
+		MMR = minMR;
+
+		xOpt = minAlt.get(0);
+		yAdv = worstAdv.get(minAlt.get(0));
+
 		return minAlt;
 	}
 
@@ -60,7 +61,7 @@ public class Regret {
 				PMR = getPMR(x, y, knowledge);
 				if (PMR > maxPMR) {
 					maxPMR = PMR;
-					h.replace(x, y);
+					worstAdv.replace(x, y);
 				}
 			}
 		}
@@ -99,7 +100,7 @@ public class Regret {
 			HashSet<Alternative> A = new HashSet<>(voterPartialPreference.asGraph().nodes());
 			A.remove(x);
 			A.remove(y);
-			
+
 			HashSet<Alternative> W1 = new HashSet<>(trans.successors(x));
 			W1.remove(y);
 			HashSet<Alternative> W3 = new HashSet<>(trans.predecessors(y));
@@ -120,7 +121,7 @@ public class Regret {
 			 **/
 			ranky = trans.predecessors(y).size() + 1;
 
-			rankx = voterPartialPreference.asGraph().nodes().size()-trans.successors(x).size();
+			rankx = voterPartialPreference.asGraph().nodes().size() - trans.successors(x).size();
 		}
 		int[] r = { rankx, ranky };
 		return r;
@@ -131,6 +132,7 @@ public class Regret {
 	}
 
 	private static double getTau1(Alternative x, Alternative y, PrefKnowledge knowledge) {
+		getMMRAlternatives(knowledge);
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
@@ -148,28 +150,21 @@ public class Regret {
 		SumTerms objective = sb.build();
 		return cow.minimize(objective);
 	}
-	
-	private static double getTau2(Alternative x, Alternative y, PrefKnowledge knowledge) {
+
+	private static double getTau2(PrefKnowledge knowledge) {
+		getMMRAlternatives(knowledge);
+		PSRWeights weights = null;// =knowledge.getConstraintsOnWeights().getSequence();
+
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
 		int[] r;
-		ConstraintsOnWeights cow = knowledge.getConstraintsOnWeights();
-		SumTermsBuilder sb = SumTerms.builder();
-		for (int i = 1; i <= nbAlt; i++) {
-			sb.add(cow.getTerm(yrank[i] - xrank[i], i));
-		}
-		SumTerms objective = sb.build();
-		cow.maximize(objective);
-		
-		//come minimizzare il profilo?
 		for (Voter v : knowledge.getProfile().keySet()) {
-			r = getWorstRanks(x, y, knowledge.getProfile().get(v));
+			r = getWorstRanks(yAdv, xOpt, knowledge.getProfile().get(v));
 			xrank[r[0]]++;
 			yrank[r[1]]++;
 		}
-		
-		return cow.minimize(objective);
+		return 0d;
 	}
-	
+
 }

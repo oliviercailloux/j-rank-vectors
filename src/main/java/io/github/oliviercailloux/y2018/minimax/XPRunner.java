@@ -63,20 +63,21 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-
-		m = 3;
-		n = 3;
-
+		run(4, 4, "test", StrategyType.MINIMAX_MIN);
+		
 		for (m = 3; m < 7; m++) {
 			for (n = 3; n < 7; n++) {
-//		title = root + "m" + m + "n" + n + "MiniMax_Min";
-//		run(m, n, title, StrategyType.MINIMAX_MIN);
-//		title = root + "m" + m + "n" + n + "MiniMax_Avg";
-//		run(m, n, title, StrategyType.MINIMAX_AVG);
-				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-				title = root + "m" + m + "n" + n + "Random";
-				run(m, n, title, StrategyType.RANDOM);
+//				title = root + "m" + m + "n" + n + "MiniMax_Min";
+//				run(m, n, title, StrategyType.MINIMAX_MIN);
+//				title = root + "m" + m + "n" + n + "MiniMax_Avg";
+//				run(m, n, title, StrategyType.MINIMAX_AVG);
+//				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+//				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+//				title = root + "m" + m + "n" + n + "Random";
+//				run(m, n, title, StrategyType.RANDOM);
+//				System.out.println(m +" "+ n);
+//				title = root + "m" + m + "n" + n + "TwoPhases";
+//				run(m, n, title, StrategyType.TWO_PHASES);
 			}
 		}
 	}
