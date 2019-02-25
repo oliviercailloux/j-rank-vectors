@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -21,6 +22,8 @@ import io.github.oliviercailloux.jlp.mp.MP;
 import io.github.oliviercailloux.jlp.mp.MPBuilder;
 import io.github.oliviercailloux.jlp.or_tools.OrToolsSolver;
 import io.github.oliviercailloux.jlp.result.Result;
+import io.github.oliviercailloux.jlp.result.ResultStatus;
+import io.github.oliviercailloux.jlp.result.Solution;
 
 /**
  *
@@ -33,6 +36,8 @@ import io.github.oliviercailloux.jlp.result.Result;
 public class ConstraintsOnWeights {
 	private MPBuilder builder;
 	private OrToolsSolver solver;
+	private Solution lastSolution;
+	private boolean convexityConstraintSet;
 
 	/**
 	 * @param m at least one: the number of ranks, or equivalently, the number of
@@ -41,10 +46,10 @@ public class ConstraintsOnWeights {
 	public static ConstraintsOnWeights withRankNumber(int m) {
 		return new ConstraintsOnWeights(m);
 	}
-	
+
 	public static ConstraintsOnWeights copyOf(ConstraintsOnWeights cw) {
-		ConstraintsOnWeights c=new ConstraintsOnWeights(cw.getM());
-		c.builder=MPBuilder.copyOf(cw.getBuilder());
+		ConstraintsOnWeights c = new ConstraintsOnWeights(cw.getM());
+		c.builder = MPBuilder.copyOf(cw.getBuilder());
 		return c;
 	}
 
@@ -66,7 +71,8 @@ public class ConstraintsOnWeights {
 					Variable.of("w", VariableDomain.REAL_DOMAIN, RangeOfDouble.closed(0d, 0d), ImmutableSet.of(m)));
 		}
 		solver = new OrToolsSolver();
-
+		lastSolution = null;
+		convexityConstraintSet = false;
 	}
 
 	/**
@@ -93,10 +99,14 @@ public class ConstraintsOnWeights {
 	 * May be called only once.
 	 */
 	public void setConvexityConstraint() {
+		checkState(!convexityConstraintSet);
 		for (int rank = 1; rank <= getM() - 2; ++rank) {
-			builder.addConstraint(Constraint
-					.GE(SumTerms.of(1d, getVariable(rank), -2d, getVariable(rank + 1), 1d, getVariable(rank + 2)), 0d));
+			/** TODO problem with description. */
+			builder.addConstraint(Constraint.of("",
+					SumTerms.of(1d, getVariable(rank), -2d, getVariable(rank + 1), 1d, getVariable(rank + 2)),
+					ComparisonOperator.GE, 0d));
 		}
+		convexityConstraintSet = true;
 	}
 
 	public Range<Double> getWeightRange(int rank) {
@@ -118,13 +128,21 @@ public class ConstraintsOnWeights {
 	}
 
 	public double maximize(SumTerms sum) {
-		builder.setObjective(Objective.max(sum));
-		return solver.solve(builder).getSolution().get().getObjectiveValue();
+		final Objective obj = Objective.max(sum);
+		return optimize(obj);
 	}
-	
+
+	private double optimize(Objective obj) {
+		builder.setObjective(obj);
+		final Result result = solver.solve(builder);
+		checkArgument(result.getResultStatus().equals(ResultStatus.OPTIMAL));
+		lastSolution = result.getSolution().get();
+		return lastSolution.getObjectiveValue();
+	}
+
 	public double minimize(SumTerms sum) {
-		builder.setObjective(Objective.min(sum));
-		return solver.solve(builder).getSolution().get().getObjectiveValue();
+		final Objective obj = Objective.min(sum);
+		return optimize(obj);
 	}
 
 	private Variable getVariable(int rank) {
@@ -175,10 +193,21 @@ public class ConstraintsOnWeights {
 	public String rangesAsString() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i <= builder.getVariables().size(); i++) {
-			sb.append("Rank "+ i+ " ");
+			sb.append("Rank " + i + " ");
 			sb.append(getWeightRange(i).toString());
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	public PSRWeights getLastSolution() {
+		/** PSRWeights only accept convex weights. */
+		checkState(convexityConstraintSet);
+		final ImmutableList.Builder<Double> weightsBuilder = ImmutableList.builder();
+		for (int r = 1; r <= getM(); ++r) {
+			final double value = lastSolution.getValue(getVariable(r));
+			weightsBuilder.add(value);
+		}
+		return PSRWeights.given(weightsBuilder.build());
 	}
 }
