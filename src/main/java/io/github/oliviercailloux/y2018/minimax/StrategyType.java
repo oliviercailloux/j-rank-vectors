@@ -2,7 +2,7 @@ package io.github.oliviercailloux.y2018.minimax;
 
 public enum StrategyType {
 
-	MINIMAX_MIN, MINIMAX_AVG, MINIMAX_WEIGHTED_AVG, RANDOM;
+	MINIMAX_MIN, MINIMAX_AVG, MINIMAX_WEIGHTED_AVG, RANDOM, TWO_PHASES;
 
 	@Override
 	public String toString() {
@@ -15,6 +15,8 @@ public enum StrategyType {
 			return "Minimax Strategy with weighted average aggregation operator";
 		case RANDOM:
 			return "Random Strategy";
+		case TWO_PHASES:
+			return "Two Phases Strategy";
 		default:
 			throw new IllegalStateException();
 		}
