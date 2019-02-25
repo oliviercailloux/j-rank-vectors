@@ -64,6 +64,11 @@ public class PSRWeights {
 		return this.weights;
 	}
 
+	/**
+	 * Returns the number of ranks.
+	 *
+	 * @return ≥ 0.
+	 */
 	public int size() {
 		return weights.size();
 	}
