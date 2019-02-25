@@ -63,8 +63,8 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-		run(4, 4, "test", StrategyType.MINIMAX_MIN);
-		
+		run(5, 4, "test1", StrategyType.RANDOM);
+
 		for (m = 3; m < 7; m++) {
 			for (n = 3; n < 7; n++) {
 //				title = root + "m" + m + "n" + n + "MiniMax_Min";
@@ -132,7 +132,9 @@ public class XPRunner {
 				case RANDOM:
 					strategy = StrategyRandom.build(knowledge);
 				case TWO_PHASES:
-					strategy = StrategyTwoPhases.build(knowledge);
+					strategy = StrategyTwoPhases.build(knowledge, AggOps.WEIGHTED_AVERAGE, 1d,
+							context.getWeights().getWeightAtRank(m - 1) / 2 * n);
+
 				}
 				sumOfRanks = new double[m];
 				trueWinners = computeTrueWinners();

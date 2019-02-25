@@ -1,11 +1,16 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import io.github.oliviercailloux.y2018.j_voting.Generator;
-
 
 public class StrategyTwoPhasesTest {
 
@@ -17,15 +22,18 @@ public class StrategyTwoPhasesTest {
 		assertEquals(QuestionType.COMMITTEE_QUESTION, s.nextQuestion().getType());
 		assertEquals(QuestionType.VOTER_QUESTION, s.nextQuestion().getType());
 	}
-	
+
 	@Test
 	void testTenAlts() {
 		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(10), Generator.getVoters(2));
 		final StrategyTwoPhases s = StrategyTwoPhases.build(k);
-		for(int i =0; i<k.getAlternatives().size()-2;i++) {
+		final StrategyMiniMax s2 = StrategyMiniMax.build(k);
+		for (int i = 0; i < k.getAlternatives().size() - 2; i++) {
 			assertEquals(QuestionType.COMMITTEE_QUESTION, s.nextQuestion().getType());
 		}
-		assertEquals(QuestionType.VOTER_QUESTION, s.nextQuestion().getType());
+		s2.nextQuestion();
+		List<Question> next = StrategyMiniMax.getNextQuestions();
+		assertTrue(next.contains(s.nextQuestion()));
 	}
-	
+
 }

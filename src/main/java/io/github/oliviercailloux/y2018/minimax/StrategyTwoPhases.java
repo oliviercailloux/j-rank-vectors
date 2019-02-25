@@ -39,11 +39,12 @@ public class StrategyTwoPhases implements Strategy {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
 
 	public static StrategyTwoPhases build(PrefKnowledge knowledge) {
-		op = AggOps.WEIGHTED_AVERAGE;
+		op = AggOps.MAX;
 		return new StrategyTwoPhases(knowledge);
 	}
 
 	public static StrategyTwoPhases build(PrefKnowledge knowledge, AggOps operator) {
+		checkArgument(!operator.equals(AggOps.WEIGHTED_AVERAGE));
 		op = operator;
 		return new StrategyTwoPhases(knowledge);
 	}
