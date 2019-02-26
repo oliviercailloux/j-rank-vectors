@@ -2,7 +2,7 @@ package io.github.oliviercailloux.y2018.minimax;
 
 public enum StrategyType {
 
-	MINIMAX_MIN, MINIMAX_AVG, MINIMAX_WEIGHTED_AVG, RANDOM, TWO_PHASES;
+	MINIMAX_MIN, MINIMAX_AVG, MINIMAX_WEIGHTED_AVG, RANDOM, TWO_PHASES, CURRENT_SOLUTION;
 
 	@Override
 	public String toString() {
@@ -17,6 +17,8 @@ public enum StrategyType {
 			return "Random Strategy";
 		case TWO_PHASES:
 			return "Two Phases Strategy";
+		case CURRENT_SOLUTION:
+			return "Current Solution Strategy";
 		default:
 			throw new IllegalStateException();
 		}

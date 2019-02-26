@@ -139,12 +139,14 @@ public class Regret {
 		double tau1 = getTau1(knowledge);
 		wTau = knowledge.getConstraintsOnWeights().getLastSolution();
 		double tau2 = getTau2(knowledge);
+//		double d= tau1/knowledge.getVoters().size();
 		System.out.println(wBar + " " + wTau + " " + tau1 + " " + tau2);
+		System.out.println("MMR "+ getMMR() + "Tau1 "+tau1+ " = "+ (getMMR()-tau1));
 		return tau1 < tau2;
 	}
 
-	private static double getTau1(PrefKnowledge knowledge) {
-		// getMMRAlternatives(knowledge);
+	public static double getTau1(PrefKnowledge knowledge) {
+		 getMMRAlternatives(knowledge);
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
@@ -163,8 +165,8 @@ public class Regret {
 		return cow.minimize(objective);
 	}
 
-	private static double getTau2(PrefKnowledge knowledge) {
-		// getMMRAlternatives(knowledge);
+	public static double getTau2(PrefKnowledge knowledge) {
+		getMMRAlternatives(knowledge);
 		getPMR(xOpt, yAdv, knowledge);
 		wBar = knowledge.getConstraintsOnWeights().getLastSolution();
 		int nbAlt = knowledge.getAlternatives().size();
@@ -176,8 +178,9 @@ public class Regret {
 		int yMaxRanksDiff = -1;
 		for (Voter v : knowledge.getProfile().keySet()) {
 			best = getWorstRanks(yAdv, xOpt, knowledge.getProfile().get(v));
-			xrank[best[0]]++;
-			yrank[best[1]]++;
+			yrank[best[0]]++;
+			xrank[best[1]]++;
+			System.out.println(v+" "+yrank[best[1]]);
 			worst = getWorstRanks(xOpt, yAdv, knowledge.getProfile().get(v));
 			int xDiffs = Math.abs(best[0] - worst[0]);
 			int yDiffs = Math.abs(best[1] - worst[1]);
@@ -188,13 +191,19 @@ public class Regret {
 				candidateMaxY = v;
 			}
 		}
-
+		for(int i = 1; i <= nbAlt; i++) {
+			System.out.println(yrank[i]);
+		}
 		double yScore = 0;
 		double xScore = 0;
 		for (int i = 1; i <= nbAlt; i++) {
 			yScore += yrank[i] * wBar.getWeightAtRank(i);
 			xScore += xrank[i] * wBar.getWeightAtRank(i);
 		}
+		
+		System.out.println(wBar);
+		System.out.println("x* = "+xOpt+" y= "+yAdv);
+		System.out.println("yscore "+yScore+" xscore "+xScore);
 		return yScore - xScore;
 	}
 

@@ -87,7 +87,7 @@ public class StrategyRandom implements Strategy {
 		QuestionCommittee qc = null;
 		for (int rank : candidateRanks) {
 			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(rank);
-			LOGGER.info("Range: {}.", lambdaRange);
+			//LOGGER.info("Range: {}.", lambdaRange);
 			if (!lambdaRange.lowerEndpoint().equals(lambdaRange.upperEndpoint())) {
 				final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 						.divide(new Apint(2));

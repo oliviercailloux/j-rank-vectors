@@ -312,10 +312,11 @@ public class RegretTest {
 		k.getProfile().get(new Voter(2)).asGraph().putEdge(new Alternative(1), new Alternative(2));
 		k.getProfile().get(new Voter(3)).asGraph().putEdge(new Alternative(3), new Alternative(1));
 		
-//		assertTrue(Regret.getTau1(k) == 0.5);
-//		assertTrue(Regret.getTau2(k) == 2);
-		
-		assertTrue(Regret.tau1SmallerThanTau2(k));
+		assertTrue(Regret.getTau1(k) == 0.5);
+		assertTrue(Regret.getTau2(k) == -2);
+		Regret.getMMRAlternatives(k);
+		System.out.println(Regret.getMMR());
+//		assertTrue(Regret.tau1SmallerThanTau2(k));
 	}
 
 }
