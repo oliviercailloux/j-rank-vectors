@@ -63,8 +63,19 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
+		NumberFormat formatter = new DecimalFormat("#0.00");
+		BufferedWriter b = initFile(root+"TimeRegret");
+		b.write("Average time of computing the Regret over 100 runs after m+n questions \n");
+		for (m = 5; m <= 25; m += 5) {
+			for (n = 5; n <= 25; n += 5) {
+				b.write("m="+m+" n="+n+" "+ formatter.format(runRegret(m,n))+ " milliseconds \n");
+				System.out.println("m="+m+" n="+n);
+				b.flush();
+			}
+		}
+		b.close();
 
-		run(4, 6, "test", StrategyType.CURRENT_SOLUTION);
+//		run(4, 6, "test", StrategyType.CURRENT_SOLUTION);
 
 //		for (m =5; m < 7; m++) {
 //			for (n = 3; n < 7; n++) {
@@ -82,6 +93,39 @@ public class XPRunner {
 ////				run(m, n, title, StrategyType.TWO_PHASES);
 //			}
 //		}
+	}
+
+	private static long runRegret(int m, int n) {
+		int nbQuestions = m + n;
+		int runs = 100;
+		long sumTimes = 0;
+		for (int j = 0; j < runs; j++) {
+			alternatives = new HashSet<>();
+			for (int i = 1; i <= m; i++) {
+				alternatives.add(new Alternative(i));
+			}
+			voters = new HashSet<>();
+			for (int i = 1; i <= n; i++) {
+				voters.add(new Voter(i));
+			}
+			context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
+			knowledge = PrefKnowledge.given(alternatives, voters);
+			Strategy strategy = StrategyRandom.build(knowledge);
+			for (k = 1; k <= nbQuestions; k++) {
+				try {
+					Question q = strategy.nextQuestion();
+					Answer a = context.getAnswer(q);
+					updateKnowledge(q, a);
+				} catch (Exception e) {
+					break;
+				}
+			}
+			final long startTime = System.currentTimeMillis();
+			Regret.getMMRAlternatives(knowledge);
+			final long endTime = System.currentTimeMillis();
+			sumTimes += (endTime - startTime);
+		}
+		return sumTimes / runs;
 	}
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
