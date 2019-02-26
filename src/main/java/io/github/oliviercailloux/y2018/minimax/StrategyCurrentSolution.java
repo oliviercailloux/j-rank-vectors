@@ -61,7 +61,7 @@ public class StrategyCurrentSolution implements Strategy {
 	}
 
 	@Override
-	public Question nextQuestion() {
+	public Question nextQuestion() throws Exception {
 		Question nextQ;
 		final int m = knowledge.getAlternatives().size();
 
@@ -71,8 +71,8 @@ public class StrategyCurrentSolution implements Strategy {
 			/** Ask a question to the committee about the most valuable rank */
 			PSRWeights wTau = Regret.getWTau();
 			PSRWeights wBar = Regret.getWBar();
-			double maxDiff = wBar.getWeightAtRank(1) - wTau.getWeightAtRank(1);
-			int maxRank = 1;
+			double maxDiff = wBar.getWeightAtRank(2) - wTau.getWeightAtRank(2);
+			int maxRank = 2;
 			for (int i = 2; i <= m; i++) {
 				double diff = Math.abs(wBar.getWeightAtRank(i) - wTau.getWeightAtRank(i));
 				if (diff > maxDiff) {
@@ -82,9 +82,8 @@ public class StrategyCurrentSolution implements Strategy {
 				System.out.println(diff + " " + maxDiff);
 				System.out.println(maxRank);
 			}
-
-			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(maxRank - 1);
-			final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
+			Range<Aprational> lambdaRange = knowledge.getLambdaRange(maxRank - 1);
+			Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 					.divide(new Apint(2));
 			nextQ = Question.toCommittee(QuestionCommittee.given(avg, maxRank - 1));
 		} else {
@@ -96,18 +95,19 @@ public class StrategyCurrentSolution implements Strategy {
 			final Graph<Alternative> graph = knowledge.getProfile().get(voter).asTransitiveGraph();
 			final Optional<Alternative> withIncomparabilities = altsRandomOrder.stream()
 					.filter((a1) -> graph.adjacentNodes(a1).size() != m - 1).findAny();
-			assert withIncomparabilities.isPresent();
+			if (!withIncomparabilities.isPresent()) {
+				throw new Exception("No more voter questions");
+			}
 			final Alternative a1 = withIncomparabilities.get();
 			final Optional<Alternative> incomparable = altsRandomOrder.stream()
 					.filter((a2) -> !a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)).findAny();
 			assert incomparable.isPresent();
 			final Alternative a2 = incomparable.get();
-			nextQ= Question.toVoter(voter, a1, a2);
+			nextQ = Question.toVoter(voter, a1, a2);
 		}
 		System.out.println(nextQ);
 		return nextQ;
 	}
-
 
 	public double getScore(Question q) {
 		PrefKnowledge yesKnowledge = PrefKnowledge.copyOf(knowledge);

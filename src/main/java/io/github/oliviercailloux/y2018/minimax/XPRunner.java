@@ -63,26 +63,27 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-//		run(3, 3, "test1", StrategyType.CURRENT_SOLUTION);
 
-		for (m =5; m < 7; m++) {
-			for (n = 3; n < 7; n++) {
-				
-//				title = root + "m" + m + "n" + n + "MiniMax_Min";
-//				run(m, n, title, StrategyType.MINIMAX_MIN);
-//				title = root + "m" + m + "n" + n + "MiniMax_Avg";
-//				run(m, n, title, StrategyType.MINIMAX_AVG);
-//				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-//				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-				title = root + "m" + m + "n" + n + "Random";
-				run(m, n, title, StrategyType.RANDOM);
-				System.out.println(m +" "+ n);
-//				title = root + "m" + m + "n" + n + "TwoPhases";
-//				run(m, n, title, StrategyType.TWO_PHASES);
-			}
-		}
+		run(4, 6, "test", StrategyType.CURRENT_SOLUTION);
+
+//		for (m =5; m < 7; m++) {
+//			for (n = 3; n < 7; n++) {
+//				
+////				title = root + "m" + m + "n" + n + "MiniMax_Min";
+////				run(m, n, title, StrategyType.MINIMAX_MIN);
+////				title = root + "m" + m + "n" + n + "MiniMax_Avg";
+////				run(m, n, title, StrategyType.MINIMAX_AVG);
+////				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+////				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+////				title = root + "m" + m + "n" + n + "Random";
+////				run(m, n, title, StrategyType.RANDOM);
+////				System.out.println(m +" "+ n);
+////				title = root + "m" + m + "n" + n + "TwoPhases";
+////				run(m, n, title, StrategyType.TWO_PHASES);
+//			}
+//		}
 	}
-	
+
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
 		final long startTime = System.currentTimeMillis();
 		int maxQuestions = 30;
@@ -92,8 +93,8 @@ public class XPRunner {
 		b.write(n + " Voters " + m + " Alternatives \n");
 		b.write(maxQuestions + " Questions for " + runs + " runs \n");
 		b.flush();
-		int qstVot=0;
-		int qstCom=0;
+		int qstVot = 0;
+		int qstCom = 0;
 		// bw = initFile("./mmstats.txt");
 //		XYSeriesCollection dataset = new XYSeriesCollection();
 //		XYSeries regretSeries = new XYSeries("Mean Regret");
@@ -152,16 +153,17 @@ public class XPRunner {
 					Question q;
 					try {
 						q = strategy.nextQuestion();
-					} catch (IllegalArgumentException e) {
+						if (q.getType() == QuestionType.COMMITTEE_QUESTION) {
+							qstCom++;
+						} else {
+							qstVot++;
+						}
+						Answer a = context.getAnswer(q);
+						updateKnowledge(q, a);
+					} catch (Exception e) {
+//						e.printStackTrace();
 						break;
 					}
-					if(q.getType()==QuestionType.COMMITTEE_QUESTION) {
-						qstCom++;
-					}else {
-						qstVot++;
-					}
-					Answer a = context.getAnswer(q);
-					updateKnowledge(q, a);
 					// avgLossSeries.add(k, avgloss);
 					// writeShortStats();
 				}
@@ -256,7 +258,7 @@ public class XPRunner {
 		}
 		NumberFormat formatter = new DecimalFormat("#0.00000");
 		b.write("Duration " + formatter.format((System.currentTimeMillis() - startTime) / 1000d) + " seconds \n");
-		b.write("Questions to the voters: "+qstVot+" Question to the committee: "+qstCom);
+		b.write("Questions to the voters: " + qstVot + " Question to the committee: " + qstCom);
 		b.flush();
 		b.close();
 //		plot(regretSeries, avgLossSeries, m, n);

@@ -1,5 +1,5 @@
 package io.github.oliviercailloux.y2018.minimax;
 
 public interface Strategy {
-	public Question nextQuestion();
+	public Question nextQuestion() throws Exception;
 }
