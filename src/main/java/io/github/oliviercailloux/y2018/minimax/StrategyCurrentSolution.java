@@ -16,6 +16,7 @@ import org.apfloat.AprationalMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
 
@@ -78,11 +79,14 @@ public class StrategyCurrentSolution implements Strategy {
 					maxDiff = diff;
 					maxRank = i;
 				}
+				System.out.println(diff + " " + maxDiff);
+				System.out.println(maxRank);
 			}
-			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(maxRank);
+
+			final Range<Aprational> lambdaRange = knowledge.getLambdaRange(maxRank - 1);
 			final Aprational avg = AprationalMath.sum(lambdaRange.lowerEndpoint(), lambdaRange.upperEndpoint())
 					.divide(new Apint(2));
-			nextQ = Question.toCommittee(QuestionCommittee.given(avg, maxRank));
+			nextQ = Question.toCommittee(QuestionCommittee.given(avg, maxRank - 1));
 		} else {
 			Random random = new Random();
 			Voter voter = Regret.getCandidateVoter(random.nextBoolean());
@@ -98,12 +102,12 @@ public class StrategyCurrentSolution implements Strategy {
 					.filter((a2) -> !a1.equals(a2) && !graph.adjacentNodes(a1).contains(a2)).findAny();
 			assert incomparable.isPresent();
 			final Alternative a2 = incomparable.get();
-			nextQ = Question.toVoter(voter, a1, a2);
-
+			nextQ= Question.toVoter(voter, a1, a2);
 		}
-
+		System.out.println(nextQ);
 		return nextQ;
 	}
+
 
 	public double getScore(Question q) {
 		PrefKnowledge yesKnowledge = PrefKnowledge.copyOf(knowledge);
