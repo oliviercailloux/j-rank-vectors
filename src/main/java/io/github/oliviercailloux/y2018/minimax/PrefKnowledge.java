@@ -22,19 +22,19 @@ public class PrefKnowledge {
 	public static PrefKnowledge given(Set<Alternative> alternatives, Set<Voter> voters) {
 		return new PrefKnowledge(alternatives, voters);
 	}
-	
-	public static PrefKnowledge copyOf(PrefKnowledge knowledge) {
-		PrefKnowledge pref=new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
-		Map<Voter, VoterPartialPreference> profile= new HashMap<>();
-		for(Voter v: knowledge.getVoters()) {
-			VoterPartialPreference vp= VoterPartialPreference.copyOf(knowledge.getProfile().get(v));
+
+	public static PrefKnowledge copyOfToCheck(PrefKnowledge knowledge) {
+		PrefKnowledge pref = new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
+		Map<Voter, VoterPartialPreference> profile = new HashMap<>();
+		for (Voter v : knowledge.getVoters()) {
+			VoterPartialPreference vp = VoterPartialPreference.copyOf(knowledge.getProfile().get(v));
 			profile.put(v, vp);
 		}
 		pref.partialProfile = ImmutableMap.copyOf(profile);
-		pref.cow=ConstraintsOnWeights.copyOf(knowledge.getConstraintsOnWeights());
+		pref.cow = ConstraintsOnWeights.copyOf(knowledge.getConstraintsOnWeights());
 		return pref;
 	}
-	
+
 	private ImmutableSet<Alternative> alternatives;
 	private ImmutableMap<Voter, VoterPartialPreference> partialProfile;
 	private ConstraintsOnWeights cow;
@@ -127,6 +127,10 @@ public class PrefKnowledge {
 
 	public ImmutableMap<Voter, VoterPartialPreference> getProfile() {
 		return partialProfile;
+	}
+
+	public VoterPartialPreference getPartialPreference(Voter voter) {
+		return partialProfile.get(voter);
 	}
 
 	public ConstraintsOnWeights getConstraintsOnWeights() {

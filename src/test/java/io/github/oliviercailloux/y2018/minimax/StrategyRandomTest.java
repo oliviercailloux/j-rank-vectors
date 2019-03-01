@@ -62,15 +62,24 @@ class StrategyRandomTest {
 	}
 
 	@Test
-	void testThreeAltsOneVKnown() {
-		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(1));
+	void testFourAltsTwoVKnown() {
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(4), Generator.getVoters(2));
+		
 		final StrategyRandom s = StrategyRandom.build(k);
 		final Random notRandom = new Random(0);
 		s.setRandom(notRandom);
-		final MutableGraph<Alternative> g = k.getProfile().get(new Voter(1)).asGraph();
-		g.putEdge(new Alternative(1), new Alternative(2));
-		g.putEdge(new Alternative(2), new Alternative(3));
-		assertThrows(IllegalArgumentException.class, () -> s.nextQuestion());
+		
+		final MutableGraph<Alternative> g1 = k.getProfile().get(new Voter(1)).asGraph();
+		g1.putEdge(new Alternative(1), new Alternative(2));
+		g1.putEdge(new Alternative(2), new Alternative(3));
+		g1.putEdge(new Alternative(3), new Alternative(4));
+		
+		final MutableGraph<Alternative> g2 = k.getProfile().get(new Voter(2)).asGraph();
+		g2.putEdge(new Alternative(1), new Alternative(2));
+		g2.putEdge(new Alternative(2), new Alternative(3));
+		g2.putEdge(new Alternative(3), new Alternative(4));
+		
+		assertEquals(Question.toCommittee(new Aprational(new Apint(3), new Apint(2)), 2), s.nextQuestion());
 	}
 
 	@Test
@@ -101,6 +110,18 @@ class StrategyRandomTest {
 		g2.putEdge(new Alternative(1), new Alternative(2));
 		g2.putEdge(new Alternative(2), new Alternative(3));
 		k.addConstraint(1, ComparisonOperator.EQ, new Apint(1));
+		assertThrows(IllegalArgumentException.class, () -> s.nextQuestion());
+	}
+
+	@Test
+	void testThreeAltsOneVKnown() {
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(1));
+		final StrategyRandom s = StrategyRandom.build(k);
+		final Random notRandom = new Random(0);
+		s.setRandom(notRandom);
+		final MutableGraph<Alternative> g = k.getProfile().get(new Voter(1)).asGraph();
+		g.putEdge(new Alternative(1), new Alternative(2));
+		g.putEdge(new Alternative(2), new Alternative(3));
 		assertThrows(IllegalArgumentException.class, () -> s.nextQuestion());
 	}
 
