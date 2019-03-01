@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,16 +34,18 @@ public class StrategyMiniMax implements Strategy {
 	private static double w1;
 	private static double w2;
 	private static HashMap<Question, Double> questions;
-
+	private static List<Question> nextQuestions;
+	
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
 
 	public static StrategyMiniMax build(PrefKnowledge knowledge) {
-		op = AggOps.WEIGHTED_AVERAGE;
+		op = AggOps.MAX;
 		return new StrategyMiniMax(knowledge);
 	}
 
 	public static StrategyMiniMax build(PrefKnowledge knowledge, AggOps operator) {
+		checkArgument(!operator.equals(AggOps.WEIGHTED_AVERAGE));
 		op = operator;
 		return new StrategyMiniMax(knowledge);
 	}
@@ -103,12 +107,19 @@ public class StrategyMiniMax implements Strategy {
 
 		Question nextQ = questions.keySet().iterator().next();
 		double minScore = questions.get(nextQ);
-
+		nextQuestions= new LinkedList<>();
+		nextQuestions.add(nextQ);
+		
 		for (Question q : questions.keySet()) {
 			double score = questions.get(q);
 			if (score < minScore) {
 				nextQ = q;
 				minScore = score;
+				nextQuestions.clear();
+				nextQuestions.add(nextQ);
+			}
+			if (score == minScore) {
+				nextQuestions.add(q);
 			}
 		}
 		return nextQ;
@@ -164,6 +175,11 @@ public class StrategyMiniMax implements Strategy {
 	/** only for testing purposes */
 	public static HashMap<Question, Double> getQuestions() {
 		return questions;
+	}
+	
+	/** only for testing purposes */
+	public static List<Question> getNextQuestions() {
+		return nextQuestions;
 	}
 
 }

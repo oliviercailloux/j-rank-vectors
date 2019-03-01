@@ -18,9 +18,11 @@ public class Regret {
 	private static double MMR;
 	private static Alternative xOpt;
 	private static Alternative yAdv;
-	private static HashMap<Alternative, Integer> ranks;
-	// private static PrefKnowledge knowAdv;
 	private static HashMap<Alternative, Alternative> worstAdv = new HashMap<>();
+	private static PSRWeights wTau;
+	private static PSRWeights wBar;
+	private static Voter candidateMaxX;
+	private static Voter candidateMaxY;
 
 	public static List<Alternative> getMMRAlternatives(PrefKnowledge knowledge) {
 		List<Alternative> alt = knowledge.getAlternatives().asList();
@@ -61,7 +63,7 @@ public class Regret {
 				PMR = getPMR(x, y, knowledge);
 				if (PMR > maxPMR) {
 					maxPMR = PMR;
-					worstAdv.replace(x, y);
+					worstAdv.put(x, y);
 				}
 			}
 		}
@@ -78,6 +80,7 @@ public class Regret {
 			xrank[r[0]]++;
 			yrank[r[1]]++;
 		}
+
 		ConstraintsOnWeights cow = knowledge.getConstraintsOnWeights();
 		SumTermsBuilder sb = SumTerms.builder();
 		for (int i = 1; i <= nbAlt; i++) {
@@ -131,14 +134,24 @@ public class Regret {
 		return MMR;
 	}
 
-	private static double getTau1(Alternative x, Alternative y, PrefKnowledge knowledge) {
+	public static boolean tau1SmallerThanTau2(PrefKnowledge knowledge) {
 		getMMRAlternatives(knowledge);
+		double tau1 = getTau1(knowledge);
+		wTau = knowledge.getConstraintsOnWeights().getLastSolution();
+		double tau2 = getTau2(knowledge);
+		System.out.println(wBar + " " + wTau + " Tau1: " + tau1 + " Tau2: " + tau2);
+		System.out.println("MMR "+ getMMR() + "Tau1 "+tau1+ " = "+ (getMMR()-tau1));
+		return tau1 < Math.abs(tau2);
+	}
+
+	public static double getTau1(PrefKnowledge knowledge) {
+		 getMMRAlternatives(knowledge);
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
 		int[] r;
 		for (Voter v : knowledge.getProfile().keySet()) {
-			r = getWorstRanks(x, y, knowledge.getProfile().get(v));
+			r = getWorstRanks(xOpt, yAdv, knowledge.getProfile().get(v));
 			xrank[r[0]]++;
 			yrank[r[1]]++;
 		}
@@ -151,20 +164,53 @@ public class Regret {
 		return cow.minimize(objective);
 	}
 
-	private static double getTau2(PrefKnowledge knowledge) {
+	public static double getTau2(PrefKnowledge knowledge) {
 		getMMRAlternatives(knowledge);
-		PSRWeights weights = null;// =knowledge.getConstraintsOnWeights().getSequence();
-
+		getPMR(xOpt, yAdv, knowledge);
+		wBar = knowledge.getConstraintsOnWeights().getLastSolution();
 		int nbAlt = knowledge.getAlternatives().size();
 		int[] xrank = new int[nbAlt + 1];
 		int[] yrank = new int[nbAlt + 1];
-		int[] r;
+		int[] best;
+		int[] worst;
+		int xMaxRanksDiff = -1;
+		int yMaxRanksDiff = -1;
 		for (Voter v : knowledge.getProfile().keySet()) {
-			r = getWorstRanks(yAdv, xOpt, knowledge.getProfile().get(v));
-			xrank[r[0]]++;
-			yrank[r[1]]++;
+			best = getWorstRanks(yAdv, xOpt, knowledge.getProfile().get(v));
+			yrank[best[0]]++;
+			xrank[best[1]]++;
+			worst = getWorstRanks(xOpt, yAdv, knowledge.getProfile().get(v));
+			int xDiffs = Math.abs(best[0] - worst[0]);
+			int yDiffs = Math.abs(best[1] - worst[1]);
+			if (xDiffs > xMaxRanksDiff) {
+				candidateMaxX = v;
+			}
+			if (yDiffs > yMaxRanksDiff) {
+				candidateMaxY = v;
+			}
 		}
-		return 0d;
+		double yScore = 0;
+		double xScore = 0;
+		for (int i = 1; i <= nbAlt; i++) {
+			yScore += yrank[i] * wBar.getWeightAtRank(i);
+			xScore += xrank[i] * wBar.getWeightAtRank(i);
+		}
+		return yScore - xScore;
 	}
 
+	public static PSRWeights getWTau() {
+		return wTau;
+	}
+
+	public static PSRWeights getWBar() {
+		return wBar;
+	}
+
+	public static Voter getCandidateVoter(boolean firstAlternative) {
+		if(firstAlternative) {
+			return candidateMaxX;
+		}
+		return candidateMaxY;
+	}
+	
 }

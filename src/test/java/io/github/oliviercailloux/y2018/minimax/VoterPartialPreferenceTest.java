@@ -37,4 +37,18 @@ class VoterPartialPreferenceTest {
 		testIt(p2);
 	}
 
+	@Test
+	void testAddRemove() {
+		final Alternative a2 = new Alternative(2);
+		final Alternative a3 = new Alternative(3);
+		final Alternative a1 = new Alternative(1);
+		final VoterPartialPreference p = VoterPartialPreference.about(new Voter(1), ImmutableSet.of(a1, a2, a3));
+		p.asGraph().putEdge(a1, a2);
+		p.asGraph().putEdge(a2, a3);
+		assertEquals(2, p.asGraph().edges().size());
+		assertEquals(3, p.asTransitiveGraph().edges().size());
+		p.asGraph().removeEdge(a2, a3);
+		assertEquals(1, p.asGraph().edges().size());
+		assertEquals(1, p.asTransitiveGraph().edges().size());
+	}
 }

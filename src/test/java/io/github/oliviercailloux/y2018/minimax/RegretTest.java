@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.minimax;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
@@ -15,6 +17,7 @@ import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
+import io.github.oliviercailloux.y2018.j_voting.Generator;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class RegretTest {
@@ -299,6 +302,21 @@ public class RegretTest {
 		/** changed the visibility of the method in class Regret **/
 		// assertEquals(8,Regret.getWorstRanks(x, y, pref)[0]);
 		// assertEquals(1,Regret.getWorstRanks(x, y, pref)[1]);
+	}
+
+	@Test
+	void testTau() throws Exception {
+		final PrefKnowledge k = PrefKnowledge.given(Generator.getAlternatives(3), Generator.getVoters(3));
+		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(1), new Alternative(2));
+		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(2), new Alternative(3));
+		k.getProfile().get(new Voter(2)).asGraph().putEdge(new Alternative(1), new Alternative(2));
+		k.getProfile().get(new Voter(3)).asGraph().putEdge(new Alternative(3), new Alternative(1));
+		
+		assertTrue(Regret.getTau1(k) == 0.5);
+		assertTrue(Regret.getTau2(k) == -2);
+		Regret.getMMRAlternatives(k);
+		System.out.println(Regret.getMMR());
+//		assertTrue(Regret.tau1SmallerThanTau2(k));
 	}
 
 }

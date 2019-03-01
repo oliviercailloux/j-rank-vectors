@@ -63,23 +63,69 @@ public class XPRunner {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-		run(4, 4, "test", StrategyType.MINIMAX_MIN);
-		
-		for (m = 3; m < 7; m++) {
-			for (n = 3; n < 7; n++) {
-//				title = root + "m" + m + "n" + n + "MiniMax_Min";
-//				run(m, n, title, StrategyType.MINIMAX_MIN);
-//				title = root + "m" + m + "n" + n + "MiniMax_Avg";
-//				run(m, n, title, StrategyType.MINIMAX_AVG);
-//				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
-//				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-//				title = root + "m" + m + "n" + n + "Random";
-//				run(m, n, title, StrategyType.RANDOM);
-//				System.out.println(m +" "+ n);
-//				title = root + "m" + m + "n" + n + "TwoPhases";
-//				run(m, n, title, StrategyType.TWO_PHASES);
+		NumberFormat formatter = new DecimalFormat("#0.00");
+		BufferedWriter b = initFile(root+"TimeRegret");
+		b.write("Average time of computing the Regret over 100 runs after m+n questions \n");
+		for (m = 5; m <= 25; m += 5) {
+			for (n = 5; n <= 25; n += 5) {
+				b.write("m="+m+" n="+n+" "+ formatter.format(runRegret(m,n))+ " milliseconds \n");
+				System.out.println("m="+m+" n="+n);
+				b.flush();
 			}
 		}
+		b.close();
+
+//		run(4, 6, "test", StrategyType.CURRENT_SOLUTION);
+
+//		for (m =5; m < 7; m++) {
+//			for (n = 3; n < 7; n++) {
+//				
+////				title = root + "m" + m + "n" + n + "MiniMax_Min";
+////				run(m, n, title, StrategyType.MINIMAX_MIN);
+////				title = root + "m" + m + "n" + n + "MiniMax_Avg";
+////				run(m, n, title, StrategyType.MINIMAX_AVG);
+////				title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
+////				run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
+////				title = root + "m" + m + "n" + n + "Random";
+////				run(m, n, title, StrategyType.RANDOM);
+////				System.out.println(m +" "+ n);
+////				title = root + "m" + m + "n" + n + "TwoPhases";
+////				run(m, n, title, StrategyType.TWO_PHASES);
+//			}
+//		}
+	}
+
+	private static long runRegret(int m, int n) {
+		int nbQuestions = m + n;
+		int runs = 100;
+		long sumTimes = 0;
+		for (int j = 0; j < runs; j++) {
+			alternatives = new HashSet<>();
+			for (int i = 1; i <= m; i++) {
+				alternatives.add(new Alternative(i));
+			}
+			voters = new HashSet<>();
+			for (int i = 1; i <= n; i++) {
+				voters.add(new Voter(i));
+			}
+			context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
+			knowledge = PrefKnowledge.given(alternatives, voters);
+			Strategy strategy = StrategyRandom.build(knowledge);
+			for (k = 1; k <= nbQuestions; k++) {
+				try {
+					Question q = strategy.nextQuestion();
+					Answer a = context.getAnswer(q);
+					updateKnowledge(q, a);
+				} catch (Exception e) {
+					break;
+				}
+			}
+			final long startTime = System.currentTimeMillis();
+			Regret.getMMRAlternatives(knowledge);
+			final long endTime = System.currentTimeMillis();
+			sumTimes += (endTime - startTime);
+		}
+		return sumTimes / runs;
 	}
 
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
@@ -89,8 +135,10 @@ public class XPRunner {
 		BufferedWriter b = initFile(file);
 		b.write(st + "\n");
 		b.write(n + " Voters " + m + " Alternatives \n");
-		b.write(maxQuestions + " Questions for" + runs + " runs \n");
+		b.write(maxQuestions + " Questions for " + runs + " runs \n");
 		b.flush();
+		int qstVot = 0;
+		int qstCom = 0;
 		// bw = initFile("./mmstats.txt");
 //		XYSeriesCollection dataset = new XYSeriesCollection();
 //		XYSeries regretSeries = new XYSeries("Mean Regret");
@@ -131,8 +179,15 @@ public class XPRunner {
 					break;
 				case RANDOM:
 					strategy = StrategyRandom.build(knowledge);
+					break;
 				case TWO_PHASES:
-					strategy = StrategyTwoPhases.build(knowledge);
+					strategy = StrategyTwoPhases.build(knowledge, AggOps.WEIGHTED_AVERAGE, 1d,
+							context.getWeights().getWeightAtRank(m - 1) / 2 * n);
+					break;
+				case CURRENT_SOLUTION:
+					strategy = StrategyCurrentSolution.build(knowledge, AggOps.WEIGHTED_AVERAGE, 1d,
+							context.getWeights().getWeightAtRank(m - 1) / 2 * n);
+					break;
 				}
 				sumOfRanks = new double[m];
 				trueWinners = computeTrueWinners();
@@ -142,11 +197,17 @@ public class XPRunner {
 					Question q;
 					try {
 						q = strategy.nextQuestion();
-					} catch (IllegalArgumentException e) {
+						if (q.getType() == QuestionType.COMMITTEE_QUESTION) {
+							qstCom++;
+						} else {
+							qstVot++;
+						}
+						Answer a = context.getAnswer(q);
+						updateKnowledge(q, a);
+					} catch (Exception e) {
+//						e.printStackTrace();
 						break;
 					}
-					Answer a = context.getAnswer(q);
-					updateKnowledge(q, a);
 					// avgLossSeries.add(k, avgloss);
 					// writeShortStats();
 				}
@@ -240,7 +301,8 @@ public class XPRunner {
 			b.write(i + "\t" + regretSeriesSD.get(i - 1) + "\n");
 		}
 		NumberFormat formatter = new DecimalFormat("#0.00000");
-		b.write("Duration " + formatter.format((System.currentTimeMillis() - startTime) / 1000d) + " seconds");
+		b.write("Duration " + formatter.format((System.currentTimeMillis() - startTime) / 1000d) + " seconds \n");
+		b.write("Questions to the voters: " + qstVot + " Question to the committee: " + qstCom);
 		b.flush();
 		b.close();
 //		plot(regretSeries, avgLossSeries, m, n);
