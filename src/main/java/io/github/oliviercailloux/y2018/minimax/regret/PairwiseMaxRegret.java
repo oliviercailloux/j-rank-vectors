@@ -1,9 +1,13 @@
 package io.github.oliviercailloux.y2018.minimax.regret;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
@@ -27,7 +31,11 @@ public class PairwiseMaxRegret {
 		this.ranksOfX = ImmutableMap.copyOf(requireNonNull(ranksOfX));
 		this.ranksOfY = ImmutableMap.copyOf(requireNonNull(ranksOfY));
 		this.weights = requireNonNull(weights);
-		pMRValue = getScore(ranksOfY, weights) - getScore(ranksOfX, weights);
+		pmrValue = getScore(ranksOfY, weights) - getScore(ranksOfX, weights);
+		if (x.equals(y)) {
+			checkArgument(ranksOfX.equals(ranksOfY));
+			checkArgument(pmrValue == 0d);
+		}
 	}
 
 	public static double getScore(Map<Voter, Integer> ranks, PSRWeights weights) {
@@ -59,8 +67,8 @@ public class PairwiseMaxRegret {
 		return weights;
 	}
 
-	public double getPMRValue() {
-		return pMRValue;
+	public double getPmrValue() {
+		return pmrValue;
 	}
 
 	public static double getScore(Alternative alternative, VoterStrictPreference v, PSRWeights weights) {
@@ -77,5 +85,28 @@ public class PairwiseMaxRegret {
 	private ImmutableMap<Voter, Integer> ranksOfX;
 	private ImmutableMap<Voter, Integer> ranksOfY;
 	private PSRWeights weights;
-	private double pMRValue;
+	private double pmrValue;
+	public static final Comparator<PairwiseMaxRegret> COMPARING_BY_VALUE = Comparator
+			.comparingDouble(PairwiseMaxRegret::getPmrValue);
+
+	@Override
+	public boolean equals(Object o2) {
+		if (!(o2 instanceof PairwiseMaxRegret)) {
+			return false;
+		}
+		final PairwiseMaxRegret p2 = (PairwiseMaxRegret) o2;
+		return x.equals(p2.x) && y.equals(p2.y) && ranksOfX.equals(p2.ranksOfX) && ranksOfY.equals(p2.ranksOfY)
+				&& weights.equals(p2.weights);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y, ranksOfX, ranksOfY, weights);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("x", x).add("y", y).add("ranks x", ranksOfX)
+				.add("ranks y", ranksOfY).add("weights", weights).add("value", pmrValue).toString();
+	}
 }
