@@ -101,8 +101,7 @@ public class ConstraintsOnWeights {
 	public void setConvexityConstraint() {
 		checkState(!convexityConstraintSet);
 		for (int rank = 1; rank <= getM() - 2; ++rank) {
-			/** TODO problem with description. */
-			builder.addConstraint(Constraint.of("",
+			builder.addConstraint(Constraint.of("Convexity rank " + rank,
 					SumTerms.of(1d, getVariable(rank), -2d, getVariable(rank + 1), 1d, getVariable(rank + 2)),
 					ComparisonOperator.GE, 0d));
 		}
@@ -141,7 +140,12 @@ public class ConstraintsOnWeights {
 	}
 
 	public double minimize(SumTerms sum) {
-		final Objective obj = Objective.min(sum);
+		final Objective obj;
+		if (sum.size() == 0) {
+			obj = Objective.ZERO;
+		} else {
+			obj = Objective.min(sum);
+		}
 		return optimize(obj);
 	}
 
