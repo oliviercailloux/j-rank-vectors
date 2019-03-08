@@ -46,6 +46,12 @@ public class VoterPartialPreference {
 		return this.pref;
 	}
 
+	/**
+	 * Returns the “is strictly preferred to” relation, transitively closed, thus,
+	 * not including reflective edges.
+	 *
+	 * @return a transitively closed, irreflexive graph.
+	 */
 	public ImmutableGraph<Alternative> asTransitiveGraph() {
 		if (transitiveEquivalent == null) {
 			final MutableGraph<Alternative> trans = Graphs.copyOf(Graphs.transitiveClosure(pref));
