@@ -4,11 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.apfloat.Apint;
 import org.apfloat.Aprational;
@@ -16,7 +13,6 @@ import org.apfloat.AprationalMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
 
@@ -61,7 +57,7 @@ public class StrategyCurrentSolution implements Strategy {
 	}
 
 	@Override
-	public Question nextQuestion() throws Exception {
+	public Question nextQuestion() {
 		Question nextQ;
 		final int m = knowledge.getAlternatives().size();
 
@@ -96,7 +92,7 @@ public class StrategyCurrentSolution implements Strategy {
 			final Optional<Alternative> withIncomparabilities = altsRandomOrder.stream()
 					.filter((a1) -> graph.adjacentNodes(a1).size() != m - 1).findAny();
 			if (!withIncomparabilities.isPresent()) {
-				throw new Exception("No more voter questions");
+				throw new IllegalStateException("No more voter questions");
 			}
 			final Alternative a1 = withIncomparabilities.get();
 			final Optional<Alternative> incomparable = altsRandomOrder.stream()
