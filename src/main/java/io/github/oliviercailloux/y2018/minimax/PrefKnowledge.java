@@ -23,7 +23,10 @@ public class PrefKnowledge {
 		return new PrefKnowledge(alternatives, voters);
 	}
 
-	public static PrefKnowledge copyOfToCheck(PrefKnowledge knowledge) {
+	/**
+	 * TODO May be incorrect. Consider removing?
+	 */
+	public static PrefKnowledge copyOf(PrefKnowledge knowledge) {
 		PrefKnowledge pref = new PrefKnowledge(knowledge.getAlternatives(), knowledge.getVoters());
 		Map<Voter, VoterPartialPreference> profile = new HashMap<>();
 		for (Voter v : knowledge.getVoters()) {
