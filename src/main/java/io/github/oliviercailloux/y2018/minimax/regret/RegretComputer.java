@@ -29,7 +29,9 @@ public class RegretComputer {
 		this.knowledge = requireNonNull(knowledge);
 	}
 
-	public ImmutableSet<PairwiseMaxRegret> getPaiwiseMaxRegrets(Alternative x) {
+	private ImmutableSet<PairwiseMaxRegret> getHighestPairwiseMaxRegrets(Alternative x) {
+		assert knowledge.getAlternatives().contains(x);
+
 		final ImmutableMap<Voter, Integer> ranksOfX = getWorstRanksOfX(x);
 		final ImmutableSortedMultiset<Integer> multiSetOfRanksOfX = ImmutableSortedMultiset.copyOf(ranksOfX.values());
 
@@ -41,8 +43,33 @@ public class RegretComputer {
 
 		final SortedMap<Double, Collection<PairwiseMaxRegret>> sortedPmrs = (SortedMap<Double, Collection<PairwiseMaxRegret>>) pmrs
 				.asMap();
+		assert !sortedPmrs.isEmpty();
 		final double highestRegret = sortedPmrs.lastKey();
+		assert highestRegret >= 0;
 		return ImmutableSet.copyOf(pmrs.get(highestRegret));
+	}
+
+	public SetMultimap<Alternative, PairwiseMaxRegret> getMinimalMaxRegrets() {
+		final ImmutableSet<Alternative> alternatives = knowledge.getAlternatives();
+		final SetMultimap<Double, Alternative> byPmrValues = MultimapBuilder.treeKeys().linkedHashSetValues().build();
+		final SetMultimap<Alternative, PairwiseMaxRegret> pmrValues = MultimapBuilder.hashKeys().linkedHashSetValues()
+				.build();
+		for (Alternative x : alternatives) {
+			final ImmutableSet<PairwiseMaxRegret> highestPairwiseMaxRegrets = getHighestPairwiseMaxRegrets(x);
+			byPmrValues.put(highestPairwiseMaxRegrets.iterator().next().getPmrValue(), x);
+			pmrValues.putAll(x, highestPairwiseMaxRegrets);
+		}
+		assert pmrValues.keySet().size() == alternatives.size();
+
+		final SortedMap<Double, Collection<Alternative>> sortedByPmrValues = (SortedMap<Double, Collection<Alternative>>) byPmrValues
+				.asMap();
+		final double minMaxPmrValue = sortedByPmrValues.firstKey();
+		final Collection<Alternative> alternativesWithMinPmrValue = sortedByPmrValues.get(minMaxPmrValue);
+		pmrValues.asMap().keySet().retainAll(alternativesWithMinPmrValue);
+		/** We check that each of these collections of PMRs have the same value. */
+		assert pmrValues.asMap().entrySet().stream()
+				.allMatch((e) -> (e.getValue().stream().map(PairwiseMaxRegret::getPmrValue).distinct().count() == 1));
+		return pmrValues;
 	}
 
 	private PairwiseMaxRegret getPmr(Alternative x, Alternative y, Map<Voter, Integer> ranksOfX,

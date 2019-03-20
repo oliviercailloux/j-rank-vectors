@@ -25,7 +25,7 @@ class RegretComputerTest {
 		final PairwiseMaxRegret pmrAVsA = PairwiseMaxRegret.given(a, a, allFirst, allFirst,
 				PSRWeights.given(ImmutableList.of(1d)));
 
-		assertEquals(ImmutableSet.of(pmrAVsA), regretComputer.getPaiwiseMaxRegrets(a));
+		assertEquals(ImmutableSet.of(pmrAVsA), regretComputer.getHighestPairwiseMaxRegrets(a));
 	}
 
 	@Test
@@ -43,8 +43,8 @@ class RegretComputerTest {
 		final PairwiseMaxRegret pmrBVsA = PairwiseMaxRegret.given(b, a, allSecond, allFirst,
 				PSRWeights.given(ImmutableList.of(1d, 0d)));
 
-		assertEquals(ImmutableSet.of(pmrAVsB), regretComputer.getPaiwiseMaxRegrets(a));
-		assertEquals(ImmutableSet.of(pmrBVsA), regretComputer.getPaiwiseMaxRegrets(b));
+		assertEquals(ImmutableSet.of(pmrAVsB), regretComputer.getHighestPairwiseMaxRegrets(a));
+		assertEquals(ImmutableSet.of(pmrBVsA), regretComputer.getHighestPairwiseMaxRegrets(b));
 	}
 
 }
