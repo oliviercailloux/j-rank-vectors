@@ -29,7 +29,7 @@ public class RegretComputer {
 		this.knowledge = requireNonNull(knowledge);
 	}
 
-	private ImmutableSet<PairwiseMaxRegret> getHighestPairwiseMaxRegrets(Alternative x) {
+	ImmutableSet<PairwiseMaxRegret> getHighestPairwiseMaxRegrets(Alternative x) {
 		assert knowledge.getAlternatives().contains(x);
 
 		final ImmutableMap<Voter, Integer> ranksOfX = getWorstRanksOfX(x);
