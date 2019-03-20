@@ -212,6 +212,15 @@ public class ConstraintsOnWeights {
 			final double value = lastSolution.getValue(getVariable(r));
 			weightsBuilder.add(value);
 		}
-		return PSRWeights.given(weightsBuilder.build());
+		final ImmutableList<Double> weights = weightsBuilder.build();
+		/**
+		 * Because of imprecision in linear programming optimization, we could end up
+		 * with weights that are non convex up to a very minor error.
+		 *
+		 * After restoring convexity (by adding small epsilons where adequate), we have
+		 * to check that the optimal solution didn’t change too much.
+		 */
+		TODO();
+		return PSRWeights.given(weights);
 	}
 }
