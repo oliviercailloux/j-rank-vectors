@@ -74,7 +74,7 @@ public class XPRunner {
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
 				
-		run(4, 8, "prova", StrategyType.CURRENT_SOLUTION);
+		run(4, 8, "prova", StrategyType.EXTREME_COMPLETION);
 		
 //	    m=6;n=4;
 //	    System.out.println(m+" "+n);
@@ -204,8 +204,8 @@ public class XPRunner {
 					strategy = StrategyTwoPhases.build(knowledge, AggOps.WEIGHTED_AVERAGE, 1d,
 							context.getWeights().getWeightAtRank(m - 1) / 2 * n);
 					break;
-				case CURRENT_SOLUTION:
-					strategy = StrategyCurrentSolution.build(knowledge);
+				case EXTREME_COMPLETION:
+					strategy = StrategyExtremeCompletion.build(knowledge);
 					break;
 				}
 				sumOfRanks = new double[m];

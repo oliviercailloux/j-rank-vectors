@@ -23,17 +23,17 @@ import io.github.oliviercailloux.j_voting.elicitation.QuestionCommittee;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
-public class StrategyCurrentSolution implements Strategy {
+public class StrategyExtremeCompletion implements Strategy {
 	private PrefKnowledge knowledge;
 
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
 
-	public static StrategyCurrentSolution build(PrefKnowledge knowledge) {
-		return new StrategyCurrentSolution(knowledge);
+	public static StrategyExtremeCompletion build(PrefKnowledge knowledge) {
+		return new StrategyExtremeCompletion(knowledge);
 	}
 
-	private StrategyCurrentSolution(PrefKnowledge knowledge) {
+	private StrategyExtremeCompletion(PrefKnowledge knowledge) {
 		this.knowledge = knowledge;
 	}
 
