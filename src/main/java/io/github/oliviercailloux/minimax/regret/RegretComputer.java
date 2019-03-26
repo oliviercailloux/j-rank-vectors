@@ -3,7 +3,9 @@ package io.github.oliviercailloux.minimax.regret;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 
 import com.google.common.collect.ImmutableMap;
@@ -14,6 +16,7 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.graph.ImmutableGraph;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import io.github.oliviercailloux.j_voting.VoterPartialPreference;
 import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
@@ -46,6 +49,7 @@ public class RegretComputer {
 		assert !sortedPmrs.isEmpty();
 		final double highestRegret = sortedPmrs.lastKey();
 		assert highestRegret >= 0;
+		System.out.println(sortedPmrs);
 		return ImmutableSet.copyOf(pmrs.get(highestRegret));
 	}
 
@@ -106,7 +110,7 @@ public class RegretComputer {
 		return ranksOfX;
 	}
 
-	private int getWorstRankOfX(Alternative x, VoterPartialPreference partialPreference) {
+	int getWorstRankOfX(Alternative x, VoterPartialPreference partialPreference) {
 		final ImmutableGraph<Alternative> transitivePreference = partialPreference.asTransitiveGraph();
 		final int m = transitivePreference.nodes().size();
 		/** +1 because x itself is to be counted. */
@@ -129,15 +133,30 @@ public class RegretComputer {
 		return ranksOfY;
 	}
 
-	private int getBestRankOfY(Alternative x, Alternative y, VoterPartialPreference partialPreference) {
+	int getBestRankOfY(Alternative x, Alternative y, VoterPartialPreference partialPreference) {
 		final ImmutableGraph<Alternative> transitivePreference = partialPreference.asTransitiveGraph();
 		final int m = transitivePreference.nodes().size();
-		final int nbStrictlyBetterThanY = transitivePreference.predecessors(y).size();
+		Set<Alternative> strictlyBetterThanY = transitivePreference.predecessors(y);
+		final int nbStrictlyBetterThanY = strictlyBetterThanY.size();
 		assert 0 <= nbStrictlyBetterThanY && nbStrictlyBetterThanY <= m - 1;
 		final int beta;
 		if (transitivePreference.hasEdgeConnecting(x, y) || x.equals(y)) {
+			HashSet<Alternative> indifferentToX = new HashSet<>(transitivePreference.nodes());
+			indifferentToX.removeAll(transitivePreference.adjacentNodes(x));
+			indifferentToX.removeAll(strictlyBetterThanY);
+			/** If transitivePreference.hasEdgeConnecting(x, y) then x is already counted in 
+			 * 	strictlyBetterThanY and it shouldn't be counted again. This is solved by simply 
+			 * 	removing the elements in strictlyBetterThanY.
+			 *  If x.equals(y) x should not be counted because a position will be added later 
+			 *  when computing rankY so it should not compare in the list of indifferentToX. 
+			 *  But in this case it does not appear in the strictlyBetterThanY list so it's not 
+			 *  automatically removed and we have to explicitly remove it. */
+			indifferentToX.remove(x); 
+			
 			/** −1 because x is indifferent to x. */
-			final int nbIndifferentToX = m - transitivePreference.adjacentNodes(x).size() - 1;
+//			final int nbIndifferentToX = m - transitivePreference.adjacentNodes(x).size() - 1;
+			
+			final int nbIndifferentToX = indifferentToX.size();
 			assert 0 <= nbIndifferentToX && nbIndifferentToX <= m - 1;
 			beta = nbIndifferentToX;
 		} else {

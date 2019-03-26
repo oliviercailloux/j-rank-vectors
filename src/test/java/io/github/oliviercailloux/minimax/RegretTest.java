@@ -181,7 +181,10 @@ public class RegretTest {
 
 	@Test
 	void testRanksCase1() throws Exception {
-		final MutableGraph<Alternative> pref = GraphBuilder.directed().build();
+		Voter v1 = new Voter(1);
+		Set<Voter> voters = new HashSet<Voter>();
+		voters.add(v1);
+		
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -196,6 +199,25 @@ public class RegretTest {
 		Alternative c1 = new Alternative(11);
 		Alternative d1 = new Alternative(12);
 		Alternative u1 = new Alternative(13);
+		
+		Set<Alternative> alt = new HashSet<Alternative>();
+		alt.add(a);
+		alt.add(b);
+		alt.add(c);
+		alt.add(d);
+		alt.add(x);
+		alt.add(y);
+		alt.add(u);
+		alt.add(f);
+		alt.add(a1);
+		alt.add(b1);
+		alt.add(c1);
+		alt.add(d1);
+		alt.add(u1);
+		
+		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
+
+		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
 
 		pref.putEdge(a, x);
 		pref.putEdge(x, b);
@@ -212,8 +234,8 @@ public class RegretTest {
 		pref.putEdge(a1, u1);
 
 		/** changed the visibility of the method in class Regret **/
-		// assertEquals(7,Regret.getWorstRanks(x, y, pref)[0]);
-		// assertEquals(10,Regret.getWorstRanks(x, y, pref)[1]);
+		assertEquals(7,Regret.getWorstRanks(x, y, knowledge.getPartialPreference(v1))[0]);
+		assertEquals(10,Regret.getWorstRanks(x, y,  knowledge.getPartialPreference(v1))[1]);
 	}
 
 	@Test

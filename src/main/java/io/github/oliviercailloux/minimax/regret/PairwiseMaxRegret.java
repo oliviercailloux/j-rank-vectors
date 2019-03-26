@@ -31,7 +31,7 @@ public class PairwiseMaxRegret {
 		this.ranksOfX = ImmutableMap.copyOf(requireNonNull(ranksOfX));
 		this.ranksOfY = ImmutableMap.copyOf(requireNonNull(ranksOfY));
 		this.weights = requireNonNull(weights);
-		pmrValue = getScore(ranksOfY, weights) - getScore(ranksOfX, weights);
+		pmrValue = Math.round((getScore(ranksOfY, weights) - getScore(ranksOfX, weights))*1e4)/1e4;
 		if (x.equals(y)) {
 			checkArgument(ranksOfX.equals(ranksOfY));
 			checkArgument(pmrValue == 0d);
