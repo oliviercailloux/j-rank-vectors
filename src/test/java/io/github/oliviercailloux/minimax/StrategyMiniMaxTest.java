@@ -2,7 +2,6 @@ package io.github.oliviercailloux.minimax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -82,7 +81,7 @@ public class StrategyMiniMaxTest {
 		q.add(q4);
 		assertEquals(q, StrategyMiniMax.getQuestions().keySet());
 		for (Double d : StrategyMiniMax.getQuestions().values()) {
-			assertTrue(d == 0);
+			assertEquals(0d,d,0.0001);
 		}
 	}
 
