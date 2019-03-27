@@ -16,7 +16,6 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.SortedMultiset;
 import com.google.common.graph.ImmutableGraph;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import io.github.oliviercailloux.j_voting.VoterPartialPreference;
 import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
@@ -49,7 +48,6 @@ public class RegretComputer {
 		assert !sortedPmrs.isEmpty();
 		final double highestRegret = sortedPmrs.lastKey();
 		assert highestRegret >= 0;
-		System.out.println(sortedPmrs);
 		return ImmutableSet.copyOf(pmrs.get(highestRegret));
 	}
 
@@ -141,24 +139,15 @@ public class RegretComputer {
 		assert 0 <= nbStrictlyBetterThanY && nbStrictlyBetterThanY <= m - 1;
 		final int beta;
 		if (transitivePreference.hasEdgeConnecting(x, y) || x.equals(y)) {
-			HashSet<Alternative> indifferentToX = new HashSet<>(transitivePreference.nodes());
-			indifferentToX.removeAll(transitivePreference.adjacentNodes(x));
-			indifferentToX.removeAll(strictlyBetterThanY);
-			/** If transitivePreference.hasEdgeConnecting(x, y) then x is already counted in 
-			 * 	strictlyBetterThanY and it shouldn't be counted again. This is solved by simply 
-			 * 	removing the elements in strictlyBetterThanY.
-			 *  If x.equals(y) x should not be counted because a position will be added later 
-			 *  when computing rankY so it should not compare in the list of indifferentToX. 
-			 *  But in this case it does not appear in the strictlyBetterThanY list so it's not 
-			 *  automatically removed and we have to explicitly remove it. */
-			indifferentToX.remove(x); 
-			
-			/** −1 because x is indifferent to x. */
-//			final int nbIndifferentToX = m - transitivePreference.adjacentNodes(x).size() - 1;
-			
-			final int nbIndifferentToX = indifferentToX.size();
-			assert 0 <= nbIndifferentToX && nbIndifferentToX <= m - 1;
-			beta = nbIndifferentToX;
+			HashSet<Alternative> incomparableAlternatives = new HashSet<>(transitivePreference.nodes());
+			HashSet<Alternative> notBetterThanX = new HashSet<>(transitivePreference.successors(x));
+			notBetterThanX.add(x);
+			incomparableAlternatives.removeAll(notBetterThanX);
+			incomparableAlternatives.removeAll(strictlyBetterThanY);
+
+			final int nbIncomparableAlts = incomparableAlternatives.size();
+			assert 0 <= nbIncomparableAlts && nbIncomparableAlts <= m - 1;
+			beta = nbIncomparableAlts;
 		} else {
 			beta = 0;
 		}

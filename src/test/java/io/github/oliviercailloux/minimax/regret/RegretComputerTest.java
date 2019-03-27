@@ -3,7 +3,6 @@ package io.github.oliviercailloux.minimax.regret;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.j_voting.elicitation.PSRWeights;
@@ -95,21 +93,20 @@ class RegretComputerTest {
 		pref3.putEdge(b, d);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		List<PairwiseMaxRegret> pmr= regretComputer.getHighestPairwiseMaxRegrets(a).asList();
-		System.out.println(pmr);
-		assertEquals(3,pmr.size());
-		for(PairwiseMaxRegret p: pmr) {
-			assertEquals(0d,p.getPmrValue(),0.00001);
+		List<PairwiseMaxRegret> pmr = regretComputer.getHighestPairwiseMaxRegrets(a).asList();
+		assertEquals(3, pmr.size());
+		for (PairwiseMaxRegret p : pmr) {
+			assertEquals(0d, p.getPmrValue(), 0.00001);
 		}
 	}
-	
+
 	@Test
 	void testRanksXpreferredY() throws Exception {
 		/** case 1: x>y put as much alts as possible above x **/
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -124,7 +121,7 @@ class RegretComputerTest {
 		Alternative c1 = new Alternative(11);
 		Alternative d1 = new Alternative(12);
 		Alternative u1 = new Alternative(13);
-		
+
 		Set<Alternative> alt = new HashSet<Alternative>();
 		alt.add(a);
 		alt.add(b);
@@ -139,7 +136,7 @@ class RegretComputerTest {
 		alt.add(c1);
 		alt.add(d1);
 		alt.add(u1);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
@@ -159,17 +156,18 @@ class RegretComputerTest {
 		pref.putEdge(a1, u1);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		assertEquals(7,regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
-		assertEquals(10,regretComputer.getBestRankOfY(x,y, knowledge.getPartialPreference(v1)));
+		assertEquals(7, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
+		assertEquals(10, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
+		assertEquals(7, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
 	}
-	
+
 	@Test
 	void testRanksXprefY() throws Exception {
 		/** case 1: x>y put as much alts as possible above x **/
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -179,7 +177,7 @@ class RegretComputerTest {
 		Alternative b = new Alternative(6);
 		Alternative d = new Alternative(7);
 		Alternative f = new Alternative(8);
-		
+
 		Set<Alternative> alt = new HashSet<Alternative>();
 		alt.add(a);
 		alt.add(b);
@@ -189,7 +187,7 @@ class RegretComputerTest {
 		alt.add(y);
 		alt.add(u);
 		alt.add(f);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
@@ -203,17 +201,18 @@ class RegretComputerTest {
 		pref.addNode(u);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		assertEquals(4,regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
-		assertEquals(6,regretComputer.getBestRankOfY(x,y, knowledge.getPartialPreference(v1)));
+		assertEquals(4, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
+		assertEquals(6, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
+		assertEquals(4, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
 	}
-	
+
 	@Test
 	void TestRanksYPreferredX() throws Exception {
 		/** case 2: y>x put as much alts as possible in between **/
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -243,11 +242,11 @@ class RegretComputerTest {
 		alt.add(c1);
 		alt.add(d1);
 		alt.add(u1);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
-		
+
 		pref.putEdge(a, y);
 		pref.putEdge(y, b);
 		pref.putEdge(y, d);
@@ -263,17 +262,18 @@ class RegretComputerTest {
 		pref.putEdge(a1, u1);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		assertEquals(11,regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
-		assertEquals(3,regretComputer.getBestRankOfY(x,y, knowledge.getPartialPreference(v1)));
+		assertEquals(11, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
+		assertEquals(3, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
+		assertEquals(11, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
 	}
-	
+
 	@Test
 	void TestRanksYPrefX() throws Exception {
 		/** case 2: y>x put as much alts as possible in between **/
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -293,11 +293,11 @@ class RegretComputerTest {
 		alt.add(y);
 		alt.add(u);
 		alt.add(f);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
-		
+
 		pref.putEdge(a, y);
 		pref.putEdge(y, b);
 		pref.putEdge(y, d);
@@ -307,17 +307,21 @@ class RegretComputerTest {
 		pref.addNode(u);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		assertEquals(7,regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
-		assertEquals(2,regretComputer.getBestRankOfY(x,y, knowledge.getPartialPreference(v1)));
+		assertEquals(7, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
+		assertEquals(2, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
+		assertEquals(7, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
 	}
-	
+
 	@Test
 	void testRanksZeroKnowledge() throws Exception {
-		/** case 3: assume y>x and go to case 2 (i.e. put as much alts as possible in between) **/
+		/**
+		 * case 3: assume y>x and go to case 2 (i.e. put as much alts as possible in
+		 * between)
+		 **/
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -337,7 +341,7 @@ class RegretComputerTest {
 		alt.add(y);
 		alt.add(u);
 		alt.add(f);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
@@ -352,9 +356,9 @@ class RegretComputerTest {
 		pref.addNode(b);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-		assertEquals(8,regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
-		assertEquals(1,regretComputer.getBestRankOfY(x,y, knowledge.getPartialPreference(v1)));
+		assertEquals(8, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
+		assertEquals(1, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
+		assertEquals(8, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
 	}
-	
-	
+
 }
