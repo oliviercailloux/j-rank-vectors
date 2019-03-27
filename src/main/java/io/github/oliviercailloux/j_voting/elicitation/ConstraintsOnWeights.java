@@ -5,12 +5,10 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
-import com.google.common.collect.UnmodifiableIterator;
 
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.jlp.elements.Constraint;
@@ -43,6 +41,11 @@ public class ConstraintsOnWeights {
 	private OrToolsSolver solver;
 	private Solution lastSolution;
 	private boolean convexityConstraintSet;
+	/**
+	 * Because of imprecision in linear programming optimization, we could end up
+	 * with weights that are non convex up to a very minor error.
+	 * This is solved by adding a small epsilon to the constraints.
+	 */
 	private static final double EPSILON=1e-5;
 	/**
 	 * @param m at least one: the number of ranks, or equivalently, the number of
@@ -217,29 +220,6 @@ public class ConstraintsOnWeights {
 			final double value = lastSolution.getValue(getVariable(r));
 			weights.add(value);
 		}
-		/**
-		 * Because of imprecision in linear programming optimization, we could end up
-		 * with weights that are non convex up to a very minor error.
-		 *
-		 * After restoring convexity (by adding small epsilons where adequate), we have
-		 * to check that the optimal solution didn’t change too much.
-		 */
-//		double epsilon = 0.00001;
-//		double wi1, wi2, wi3;
-//		for (int i = 0; i < weights.size() - 2; i++) {
-//			wi1 = weights.get(i);
-//			wi2 = weights.get(i + 1);
-//			wi3 = weights.get(i + 2);
-//			double delta = wi1-2*wi2+wi3;
-//			assert -delta < epsilon;
-//			if(delta < 0) {
-//				assert (wi1 - wi2) < (wi2 - wi3);
-//				double wi2prime = wi2-delta;
-//				assert (wi1 - wi2prime) >= (wi2prime - wi3);
-//				weights.set(i+1, wi2prime);
-//			}
-//		}
-		System.out.println(weights);
 		return PSRWeights.given(weights);
 	}
 }
