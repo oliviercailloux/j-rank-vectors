@@ -2,6 +2,7 @@ package io.github.oliviercailloux.minimax.regret;
 
 import static java.util.Objects.requireNonNull;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,12 +21,19 @@ import io.github.oliviercailloux.j_voting.VoterPartialPreference;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
 import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
 import io.github.oliviercailloux.jlp.elements.Term;
+import io.github.oliviercailloux.minimax.elicitation.ConstraintsOnWeights;
 import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 public class RegretComputer {
 	private final PrefKnowledge knowledge;
+	/**
+	 * Because of the differences of weights approximation, we end up with an
+	 * imprecise score, far from the real value by the error introduced. This is
+	 * solved by rounding the pmrValue.
+	 */
+	private static final int EPSILON_EXPONENT = 4; // 1e-4
 
 	public RegretComputer(PrefKnowledge knowledge) {
 		this.knowledge = requireNonNull(knowledge);
@@ -76,7 +84,6 @@ public class RegretComputer {
 
 	private PairwiseMaxRegret getPmr(Alternative x, Alternative y, Map<Voter, Integer> ranksOfX,
 			SortedMultiset<Integer> multiSetOfRanksOfX) {
-		final PairwiseMaxRegret pmrY;
 		final int m = knowledge.getAlternatives().size();
 		final ImmutableMap<Voter, Integer> ranksOfY = getBestRanksOfY(x, y);
 		final ImmutableSortedMultiset<Integer> multiSetOfRanksOfY = ImmutableSortedMultiset.copyOf(ranksOfY.values());
@@ -92,8 +99,10 @@ public class RegretComputer {
 			}
 		}
 		final double pmr = knowledge.getConstraintsOnWeights().maximize(builder.build());
-		pmrY = PairwiseMaxRegret.given(x, y, ranksOfX, ranksOfY, knowledge.getConstraintsOnWeights().getLastSolution());
-		assert Math.abs(pmrY.getPmrValue() - pmr) <= 1e-3;
+		assert (10 ^ (-1 * EPSILON_EXPONENT)) > ConstraintsOnWeights.EPSILON;
+		final double pmrRounded = BigDecimal.valueOf(pmr).setScale(EPSILON_EXPONENT, BigDecimal.ROUND_HALF_UP).doubleValue();
+		final PairwiseMaxRegret pmrY = PairwiseMaxRegret.given(x, y, ranksOfX, ranksOfY,
+				knowledge.getConstraintsOnWeights().getLastSolution(), pmrRounded);
 		return pmrY;
 	}
 

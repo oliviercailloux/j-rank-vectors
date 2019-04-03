@@ -33,6 +33,14 @@ import io.github.oliviercailloux.jlp.result.Solution;
  * The weight of rank 1 is 1. If there is more than one rank, the weight of
  * lowest rank is 0.
  *
+ * Because of imprecision in linear programming optimization, we could end up
+ * with weights that are non convex up to a very minor error. This is solved by
+ * adding a small epsilon ({@link ConstraintsOnWeights#EPSILON}) to the
+ * constraints.
+ *
+ * Because of this epsilon constraint, the weights that are returned are not
+ * permitted to be equal. TODO is this a problem?
+ *
  * @author Olivier Cailloux
  *
  */
@@ -41,12 +49,8 @@ public class ConstraintsOnWeights {
 	private OrToolsSolver solver;
 	private Solution lastSolution;
 	private boolean convexityConstraintSet;
-	/**
-	 * Because of imprecision in linear programming optimization, we could end up
-	 * with weights that are non convex up to a very minor error.
-	 * This is solved by adding a small epsilon to the constraints.
-	 */
-	private static final double EPSILON=1e-5;
+	public static final double EPSILON = 1e-5;
+
 	/**
 	 * @param m at least one: the number of ranks, or equivalently, the number of
 	 *          alternatives.
@@ -215,7 +219,7 @@ public class ConstraintsOnWeights {
 	public PSRWeights getLastSolution() {
 		/** PSRWeights only accept convex weights. */
 		checkState(convexityConstraintSet);
-		final List<Double> weights= new LinkedList<Double>();
+		final List<Double> weights = new LinkedList<Double>();
 		for (int r = 1; r <= getM(); ++r) {
 			final double value = lastSolution.getValue(getVariable(r));
 			weights.add(value);
