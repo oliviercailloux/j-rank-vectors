@@ -10,12 +10,12 @@ import org.apfloat.Apint;
 import org.apfloat.Aprational;
 import org.junit.jupiter.api.Test;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
-import io.github.oliviercailloux.j_voting.elicitation.Question;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionType;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.minimax.Regret;
 import io.github.oliviercailloux.minimax.StrategyMiniMax;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.Question;
+import io.github.oliviercailloux.minimax.elicitation.QuestionType;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator.AggOps;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Generator;

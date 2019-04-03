@@ -11,8 +11,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import io.github.oliviercailloux.j_voting.VoterStrictPreference;
-import io.github.oliviercailloux.j_voting.elicitation.PSRWeights;
 import io.github.oliviercailloux.minimax.XPRunner;
+import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 

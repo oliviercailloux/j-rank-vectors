@@ -1,6 +1,6 @@
 package io.github.oliviercailloux.minimax;
 
-import io.github.oliviercailloux.j_voting.elicitation.Question;
+import io.github.oliviercailloux.minimax.elicitation.Question;
 
 public interface Strategy {
 	/**

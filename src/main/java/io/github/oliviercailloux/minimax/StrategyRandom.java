@@ -21,9 +21,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
-import io.github.oliviercailloux.j_voting.elicitation.Question;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionCommittee;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.Question;
+import io.github.oliviercailloux.minimax.elicitation.QuestionCommittee;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 

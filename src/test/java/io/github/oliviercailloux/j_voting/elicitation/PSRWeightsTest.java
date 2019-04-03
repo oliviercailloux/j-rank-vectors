@@ -6,10 +6,10 @@ import org.apfloat.Apint;
 import org.apfloat.Aprational;
 import org.junit.Test;
 
-import io.github.oliviercailloux.j_voting.elicitation.Answer;
-import io.github.oliviercailloux.j_voting.elicitation.PSRWeights;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionCommittee;
 import io.github.oliviercailloux.minimax.XPRunner;
+import io.github.oliviercailloux.minimax.elicitation.Answer;
+import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
+import io.github.oliviercailloux.minimax.elicitation.QuestionCommittee;
 
 public class PSRWeightsTest {
 

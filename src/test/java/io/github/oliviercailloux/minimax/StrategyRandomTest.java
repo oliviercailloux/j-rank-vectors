@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.graph.MutableGraph;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
-import io.github.oliviercailloux.j_voting.elicitation.Question;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.minimax.StrategyRandom;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.Question;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Generator;
 import io.github.oliviercailloux.y2018.j_voting.Voter;

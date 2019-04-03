@@ -10,8 +10,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import io.github.oliviercailloux.j_voting.VoterStrictPreference;
-import io.github.oliviercailloux.j_voting.elicitation.Oracle;
-import io.github.oliviercailloux.j_voting.elicitation.PSRWeights;
+import io.github.oliviercailloux.minimax.elicitation.Oracle;
+import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 

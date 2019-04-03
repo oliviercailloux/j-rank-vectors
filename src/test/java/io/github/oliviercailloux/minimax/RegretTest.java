@@ -15,9 +15,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.minimax.Regret;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Generator;
 import io.github.oliviercailloux.y2018.j_voting.Voter;

@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Range;
 
-import io.github.oliviercailloux.j_voting.elicitation.ConstraintsOnWeights;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
 import io.github.oliviercailloux.jlp.elements.SumTerms;
 import io.github.oliviercailloux.jlp.elements.SumTermsBuilder;
+import io.github.oliviercailloux.minimax.elicitation.ConstraintsOnWeights;
 
 public class ConstraintsOnWeightsTest {
 	@Test

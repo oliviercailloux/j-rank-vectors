@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Range;
 import com.google.common.graph.Graph;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
-import io.github.oliviercailloux.j_voting.elicitation.Question;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionCommittee;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionType;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionVoter;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.Question;
+import io.github.oliviercailloux.minimax.elicitation.QuestionCommittee;
+import io.github.oliviercailloux.minimax.elicitation.QuestionType;
+import io.github.oliviercailloux.minimax.elicitation.QuestionVoter;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator.AggOps;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;

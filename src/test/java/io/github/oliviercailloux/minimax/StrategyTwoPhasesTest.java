@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
-import io.github.oliviercailloux.j_voting.elicitation.Question;
-import io.github.oliviercailloux.j_voting.elicitation.QuestionType;
 import io.github.oliviercailloux.minimax.StrategyMiniMax;
 import io.github.oliviercailloux.minimax.StrategyTwoPhases;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.Question;
+import io.github.oliviercailloux.minimax.elicitation.QuestionType;
 import io.github.oliviercailloux.y2018.j_voting.Generator;
 
 public class StrategyTwoPhasesTest {

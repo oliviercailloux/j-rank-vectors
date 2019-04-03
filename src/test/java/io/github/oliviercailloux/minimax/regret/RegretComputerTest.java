@@ -13,8 +13,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.graph.MutableGraph;
 
-import io.github.oliviercailloux.j_voting.elicitation.PSRWeights;
-import io.github.oliviercailloux.j_voting.elicitation.PrefKnowledge;
+import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
+import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.minimax.regret.PairwiseMaxRegret;
 import io.github.oliviercailloux.minimax.regret.RegretComputer;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
