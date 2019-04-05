@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.minimax;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -131,7 +130,7 @@ public class RegretTest {
 
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 		/** changed the visibility of the method in class Regret **/
-//		assertEquals(3d,Regret.getPMR(a, b, knowledge));
+		assertEquals(3d, Regret.getPMR(a, b, knowledge));
 	}
 
 	@Test
@@ -184,7 +183,7 @@ public class RegretTest {
 		Voter v1 = new Voter(1);
 		Set<Voter> voters = new HashSet<Voter>();
 		voters.add(v1);
-		
+
 		Alternative x = new Alternative(1);
 		Alternative y = new Alternative(2);
 
@@ -199,7 +198,7 @@ public class RegretTest {
 		Alternative c1 = new Alternative(11);
 		Alternative d1 = new Alternative(12);
 		Alternative u1 = new Alternative(13);
-		
+
 		Set<Alternative> alt = new HashSet<Alternative>();
 		alt.add(a);
 		alt.add(b);
@@ -214,7 +213,7 @@ public class RegretTest {
 		alt.add(c1);
 		alt.add(d1);
 		alt.add(u1);
-		
+
 		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
 
 		MutableGraph<Alternative> pref = knowledge.getProfile().get(v1).asGraph();
@@ -234,8 +233,8 @@ public class RegretTest {
 		pref.putEdge(a1, u1);
 
 		/** changed the visibility of the method in class Regret **/
-		assertEquals(7,Regret.getWorstRanks(x, y, knowledge.getPartialPreference(v1))[0]);
-		assertEquals(10,Regret.getWorstRanks(x, y,  knowledge.getPartialPreference(v1))[1]);
+		assertEquals(7, Regret.getWorstRanks(x, y, knowledge.getPartialPreference(v1))[0]);
+		assertEquals(10, Regret.getWorstRanks(x, y, knowledge.getPartialPreference(v1))[1]);
 	}
 
 	@Test
@@ -335,7 +334,7 @@ public class RegretTest {
 		k.getProfile().get(new Voter(1)).asGraph().putEdge(new Alternative(2), new Alternative(3));
 		k.getProfile().get(new Voter(2)).asGraph().putEdge(new Alternative(1), new Alternative(2));
 		k.getProfile().get(new Voter(3)).asGraph().putEdge(new Alternative(3), new Alternative(1));
-		
+
 		assertTrue(Regret.getTau1(k) == 0.5);
 		assertTrue(Regret.getTau2(k) == -2);
 		Regret.getMMRAlternatives(k);

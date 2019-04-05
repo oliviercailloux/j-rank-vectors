@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.j_voting.elicitation;
+package io.github.oliviercailloux.minimax.elicitation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

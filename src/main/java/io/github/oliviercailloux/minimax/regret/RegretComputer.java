@@ -59,6 +59,9 @@ public class RegretComputer {
 		return ImmutableSet.copyOf(pmrs.get(highestRegret));
 	}
 
+	/** @return The alternative x associated to the minimal max regret M together with 
+	 *  the set of all pairwise max regrets of x and any alternative y for which PMR(x,y)=M
+	 * */
 	public SetMultimap<Alternative, PairwiseMaxRegret> getMinimalMaxRegrets() {
 		final ImmutableSet<Alternative> alternatives = knowledge.getAlternatives();
 		final SetMultimap<Double, Alternative> byPmrValues = MultimapBuilder.treeKeys().linkedHashSetValues().build();
@@ -99,7 +102,7 @@ public class RegretComputer {
 			}
 		}
 		final double pmr = knowledge.getConstraintsOnWeights().maximize(builder.build());
-		assert (10 ^ (-1 * EPSILON_EXPONENT)) > ConstraintsOnWeights.EPSILON;
+		assert (Math.pow(10, -1 * EPSILON_EXPONENT) > ConstraintsOnWeights.EPSILON);
 		final double pmrRounded = BigDecimal.valueOf(pmr).setScale(EPSILON_EXPONENT, BigDecimal.ROUND_HALF_UP).doubleValue();
 		final PairwiseMaxRegret pmrY = PairwiseMaxRegret.given(x, y, ranksOfX, ranksOfY,
 				knowledge.getConstraintsOnWeights().getLastSolution(), pmrRounded);

@@ -1,13 +1,11 @@
 package io.github.oliviercailloux.minimax;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.junit.Test;
 
 import io.github.oliviercailloux.j_voting.VoterStrictPreference;
@@ -20,14 +18,14 @@ public class XPRunnerTest {
 
 	@Test
 	public void testOracle() {
-		//final Oracle oracle = XPRunner.genContext(); 
+		// final Oracle oracle = XPRunner.genContext();
 	}
-	
+
 	@Test
 	public void testGenWeights() {
 		int m = 9;
 		final PSRWeights weights = XPRunner.genWeights(m);
-		assertEquals(m,weights.getWeights().size());
+		assertEquals(m, weights.getWeights().size());
 	}
 
 	@Test

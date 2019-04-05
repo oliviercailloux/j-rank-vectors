@@ -1,8 +1,10 @@
 package io.github.oliviercailloux.minimax.regret;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.SetMultimap;
 import com.google.common.graph.MutableGraph;
 
 import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
@@ -55,6 +58,61 @@ class RegretComputerTest {
 	}
 
 	@Test
+	void testMMR() throws Exception {
+		/** Test with complete knowledge about voters' preferences **/
+		Voter v1 = new Voter(1);
+		Voter v2 = new Voter(2);
+		Voter v3 = new Voter(3);
+		Set<Voter> voters = new HashSet<Voter>();
+		voters.add(v1);
+		voters.add(v2);
+		voters.add(v3);
+
+		Alternative a = new Alternative(1);
+		Alternative b = new Alternative(2);
+		Alternative c = new Alternative(3);
+		Alternative d = new Alternative(4);
+		Set<Alternative> alt = new HashSet<Alternative>();
+		alt.add(a);
+		alt.add(b);
+		alt.add(c);
+		alt.add(d);
+
+		PrefKnowledge knowledge = PrefKnowledge.given(alt, voters);
+
+		MutableGraph<Alternative> pref1 = knowledge.getProfile().get(v1).asGraph();
+		pref1.putEdge(a, b);
+		pref1.putEdge(b, c);
+		pref1.putEdge(c, d);
+
+		MutableGraph<Alternative> pref2 = knowledge.getProfile().get(v2).asGraph();
+		pref2.putEdge(d, a);
+		pref2.putEdge(a, b);
+		pref2.putEdge(b, c);
+
+		MutableGraph<Alternative> pref3 = knowledge.getProfile().get(v3).asGraph();
+		pref3.putEdge(c, a);
+		pref3.putEdge(a, b);
+		pref3.putEdge(b, d);
+
+		final RegretComputer regretComputer = new RegretComputer(knowledge);
+
+		SetMultimap<Alternative, PairwiseMaxRegret> mrs = regretComputer.getMinimalMaxRegrets();
+		assertEquals(1,mrs.keySet().size());
+		
+		Set<Alternative> mmrAlt=new HashSet<Alternative>();
+		mmrAlt.add(a);
+		assertEquals(mmrAlt,mrs.keySet());
+		
+		Set<PairwiseMaxRegret> p = mrs.get(a);
+		Iterator<PairwiseMaxRegret> pit = p.iterator();
+		assertEquals(3,p.size());
+		assertTrue(pit.next().getY()==a);
+		assertTrue(pit.next().getY()==c);
+		assertTrue(pit.next().getY()==d);
+	}
+
+	@Test
 	void testPMR1() throws Exception {
 		/** Test with complete knowledge about voters' preferences **/
 		Voter v1 = new Voter(1);
@@ -94,6 +152,7 @@ class RegretComputerTest {
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
 		List<PairwiseMaxRegret> pmr = regretComputer.getHighestPairwiseMaxRegrets(a).asList();
+
 		assertEquals(3, pmr.size());
 		for (PairwiseMaxRegret p : pmr) {
 			assertEquals(0d, p.getPmrValue(), 0.00001);
