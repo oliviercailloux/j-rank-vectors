@@ -24,7 +24,9 @@ import io.github.oliviercailloux.minimax.elicitation.Question;
 import io.github.oliviercailloux.minimax.elicitation.QuestionCommittee;
 import io.github.oliviercailloux.minimax.elicitation.QuestionType;
 import io.github.oliviercailloux.minimax.elicitation.QuestionVoter;
+import io.github.oliviercailloux.minimax.regret.RegretComputer;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator;
+import io.github.oliviercailloux.minimax.utils.Rounder;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator.AggOps;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
@@ -40,6 +42,7 @@ public class StrategyMiniMax implements Strategy {
 	private static double w2;
 	private static HashMap<Question, Double> questions;
 	private static List<Question> nextQuestions;
+	private static RegretComputer regretComputer;
 	
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(StrategyMiniMax.class);
@@ -70,6 +73,10 @@ public class StrategyMiniMax implements Strategy {
 		profileCompleted = false;
 	}
 
+	public void setRounder(Rounder r) {
+		regretComputer.setRounder(r);
+	}
+	
 	@Override
 	public Question nextQuestion() {
 		final int m = knowledge.getAlternatives().size();

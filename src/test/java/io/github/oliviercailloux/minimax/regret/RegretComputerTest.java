@@ -20,11 +20,14 @@ import io.github.oliviercailloux.minimax.elicitation.PSRWeights;
 import io.github.oliviercailloux.minimax.elicitation.PrefKnowledge;
 import io.github.oliviercailloux.minimax.regret.PairwiseMaxRegret;
 import io.github.oliviercailloux.minimax.regret.RegretComputer;
+import io.github.oliviercailloux.minimax.utils.Rounder;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
 class RegretComputerTest {
 
+	private Rounder rounder = Rounder.given(Rounder.Mode.ROUND_HALF_UP, 3);
+	
 	@Test
 	void testEmptyKSizeOne() {
 		final Alternative a = new Alternative(1);
@@ -96,7 +99,8 @@ class RegretComputerTest {
 		pref3.putEdge(b, d);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
-
+		regretComputer.setRounder(rounder);
+		
 		SetMultimap<Alternative, PairwiseMaxRegret> mrs = regretComputer.getMinimalMaxRegrets();
 		assertEquals(1,mrs.keySet().size());
 		
@@ -151,6 +155,7 @@ class RegretComputerTest {
 		pref3.putEdge(b, d);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		List<PairwiseMaxRegret> pmr = regretComputer.getHighestPairwiseMaxRegrets(a).asList();
 
 		assertEquals(3, pmr.size());
@@ -215,6 +220,7 @@ class RegretComputerTest {
 		pref.putEdge(a1, u1);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		assertEquals(7, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
 		assertEquals(10, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
 		assertEquals(7, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
@@ -260,6 +266,7 @@ class RegretComputerTest {
 		pref.addNode(u);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		assertEquals(4, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
 		assertEquals(6, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
 		assertEquals(4, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
@@ -321,6 +328,7 @@ class RegretComputerTest {
 		pref.putEdge(a1, u1);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		assertEquals(11, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
 		assertEquals(3, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
 		assertEquals(11, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
@@ -366,6 +374,7 @@ class RegretComputerTest {
 		pref.addNode(u);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		assertEquals(7, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
 		assertEquals(2, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
 		assertEquals(7, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));
@@ -415,6 +424,7 @@ class RegretComputerTest {
 		pref.addNode(b);
 
 		final RegretComputer regretComputer = new RegretComputer(knowledge);
+		regretComputer.setRounder(rounder);
 		assertEquals(8, regretComputer.getWorstRankOfX(x, knowledge.getPartialPreference(v1)));
 		assertEquals(1, regretComputer.getBestRankOfY(x, y, knowledge.getPartialPreference(v1)));
 		assertEquals(8, regretComputer.getBestRankOfY(x, x, knowledge.getPartialPreference(v1)));

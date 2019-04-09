@@ -20,17 +20,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import org.apfloat.Aprational;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RefineryUtilities;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -48,6 +38,7 @@ import io.github.oliviercailloux.minimax.elicitation.QuestionCommittee;
 import io.github.oliviercailloux.minimax.elicitation.QuestionType;
 import io.github.oliviercailloux.minimax.elicitation.QuestionVoter;
 import io.github.oliviercailloux.minimax.utils.AggregationOperator.AggOps;
+import io.github.oliviercailloux.minimax.utils.Rounder;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
@@ -58,7 +49,6 @@ public class XPRunner {
 	static Oracle context;
 	static PrefKnowledge knowledge;
 	static double[] sumOfRanks;
-	private static BufferedWriter bw;
 	static int k; // number of questions
 	static List<Alternative> winners;
 	static List<Alternative> trueWinners;
@@ -67,20 +57,21 @@ public class XPRunner {
 	static double regret;
 	static List<Double> avglosses;
 	static List<Double> regrets;
+	static Rounder rounder;
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws IOException {
 		int n, m;
 		String title;
 		String root = Paths.get("").toAbsolutePath() + "/experiments/";
-				
+
 		run(4, 8, "prova", StrategyType.EXTREME_COMPLETION);
-		
+
 //	    m=6;n=4;
 //	    System.out.println(m+" "+n);
 //	    title = root + "m" + m + "n" + n + "MiniMax_WeightedAvg";
 //	    run(m, n, title, StrategyType.MINIMAX_WEIGHTED_AVG);
-	    		
+
 //		NumberFormat formatter = new DecimalFormat("#0.00");
 //		BufferedWriter b = initFile(root+"TimeRegret");
 //		b.write("Average time of computing the Regret over 100 runs after m+n questions \n");
@@ -113,45 +104,11 @@ public class XPRunner {
 //		}
 	}
 
-	@SuppressWarnings("unused")
-	private static long runRegret(int m, int n) {
-		int nbQuestions = m + n;
-		int runs = 100;
-		long sumTimes = 0;
-		for (int j = 0; j < runs; j++) {
-			alternatives = new HashSet<>();
-			for (int i = 1; i <= m; i++) {
-				alternatives.add(new Alternative(i));
-			}
-			voters = new HashSet<>();
-			for (int i = 1; i <= n; i++) {
-				voters.add(new Voter(i));
-			}
-			context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
-			knowledge = PrefKnowledge.given(alternatives, voters);
-			Strategy strategy = StrategyRandom.build(knowledge);
-			for (k = 1; k <= nbQuestions; k++) {
-				try {
-					Question q = strategy.nextQuestion();
-					Answer a = context.getAnswer(q);
-					updateKnowledge(q, a);
-				} catch (Exception e) {
-					break;
-				}
-			}
-			final long startTime = System.currentTimeMillis();
-			Regret.getMMRAlternatives(knowledge);
-			final long endTime = System.currentTimeMillis();
-			sumTimes += (endTime - startTime);
-		}
-		System.out.println(sumTimes / runs);
-		return sumTimes / runs;
-	}
-
 	private static void run(int m, int n, String file, StrategyType st) throws IOException {
 		final long startTime = System.currentTimeMillis();
 		int maxQuestions = 30;
 		int runs = 10;
+		rounder = Rounder.given(Rounder.Mode.ROUND_HALF_UP, 3);
 		BufferedWriter b = initFile(file);
 		b.write(st + "\n");
 		b.write(n + " Voters " + m + " Alternatives \n");
@@ -159,10 +116,6 @@ public class XPRunner {
 		b.flush();
 		int qstVot = 0;
 		int qstCom = 0;
-		// bw = initFile("./mmstats.txt");
-//		XYSeriesCollection dataset = new XYSeriesCollection();
-//		XYSeries regretSeries = new XYSeries("Mean Regret");
-//		XYSeries avgLossSeries = new XYSeries("Mean Average Loss");
 		ArrayList<Double> regretSeriesMean = new ArrayList<>();
 		ArrayList<Double> avgLossSeriesMean = new ArrayList<>();
 		ArrayList<Double> regretSeriesSD = new ArrayList<>();
@@ -185,6 +138,7 @@ public class XPRunner {
 				}
 				context = Oracle.build(ImmutableMap.copyOf(genProfile(n, m)), genWeights(m));
 				knowledge = PrefKnowledge.given(alternatives, voters);
+				knowledge.setRounder(rounder);
 				Strategy strategy = null;
 				switch (st) {
 				case MINIMAX_MIN:
@@ -210,7 +164,6 @@ public class XPRunner {
 				}
 				sumOfRanks = new double[m];
 				trueWinners = computeTrueWinners();
-				// writeContext();
 
 				for (k = 1; k <= nbquest; k++) {
 					Question q;
@@ -227,14 +180,11 @@ public class XPRunner {
 //						e.printStackTrace();
 						break;
 					}
-					// avgLossSeries.add(k, avgloss);
-					// writeShortStats();
 				}
 
 				winners = Regret.getMMRAlternatives(knowledge);
 				regret = Regret.getMMR();
 				regrets.add(regret);
-				// regretSeries.add(k, regret);
 				List<Double> losses = new LinkedList<>();
 				for (Alternative alt : winners) {
 					double approxTrueScore = 0;
@@ -284,8 +234,6 @@ public class XPRunner {
 			if (lossMean <= (initialAvgLoss / 8) && avgLoss8 < 0) {
 				avgLoss8 = nbquest;
 			}
-//			regretSeries.add(nbquest, regretMean);
-//			avgLossSeries.add(nbquest, lossMean);
 		}
 		b.write("Mean of Regret reduced by half in " + regret2 + " questions \n");
 		b.write("Mean of Regret reduced by four in " + regret4 + " questions \n");
@@ -324,29 +272,8 @@ public class XPRunner {
 		b.write("Questions to the voters: " + qstVot + " Question to the committee: " + qstCom);
 		b.flush();
 		b.close();
-//		plot(regretSeries, avgLossSeries, m, n);
 	}
 
-	@SuppressWarnings("unused")
-	private static void plot(XYSeries regretSeries, XYSeries avgLossSeries, int m, int n) {
-		XYSeriesCollection dataset = new XYSeriesCollection();
-		dataset.addSeries(regretSeries);
-		dataset.addSeries(avgLossSeries);
-		JFreeChart chart = ChartFactory.createXYLineChart(n + " Voters " + m + " Alternatives", "k", "", dataset,
-				PlotOrientation.VERTICAL, true, true, false);
-//		NumberAxis xAxis = new NumberAxis();
-//		xAxis.setTickUnit(new NumberTickUnit(1));
-//		XYPlot plot = (XYPlot) chart.getPlot();
-//		plot.setDomainAxis(xAxis);
-		final ChartPanel chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new java.awt.Dimension(700, 470));
-		JFrame jf = new JFrame("Plot");
-		jf.setContentPane(chartPanel);
-		jf.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		jf.pack();
-		RefineryUtilities.centerFrameOnScreen(jf);
-		jf.setVisible(true);
-	}
 
 	private static BufferedWriter initFile(String tfile) {
 		BufferedWriter b = null;
@@ -361,52 +288,6 @@ public class XPRunner {
 			e.printStackTrace();
 		}
 		return b;
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeContext() {
-		try {
-			bw.write("True preferences: " + alternatives.size() + " alternatives " + voters.size() + " voters \n");
-			bw.write("Profile: " + context.getProfile().values().toString() + "\n");
-			bw.write("Weights: " + context.getWeights().toString() + " \n");
-			bw.write("Scores: \n");
-			for (Alternative a : alternatives) {
-				bw.write(a.getId() + ": " + sumOfRanks[a.getId() - 1] + "\n");
-			}
-			bw.write("True winners: " + trueWinners + " True score: " + trueWinScore + "\n \n");
-			bw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeShortStats() {
-		try {
-//			if (profileCompleted) {
-//				bw.write("Profile completed after " + k_vot + " questions: \n");
-//			}
-//			bw.write(k_vot + " questions to the voters, " + (k - k_vot) + " questions to the committee \n");
-			bw.write("After " + k + " questions ");
-			bw.write("Approximate winners: " + winners + " Regret: " + regret + " Average Loss: " + avgloss + "\n \n");
-			bw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeStats() {
-		try {
-			bw.write("Deducted preferences after " + k + " questions: \n");
-			// bw.write(k_vot + " questions to the voters, " + (k - k_vot) + " questions to
-			// the committee \n");
-			bw.write("Partial Profile: " + knowledge.getProfile().values().toString() + "\n");
-			bw.write("Weights Ranges: \n" + knowledge.getConstraintsOnWeights().rangesAsString() + "\n \n");
-			bw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static void updateKnowledge(Question qt, Answer answ) {
@@ -497,7 +378,7 @@ public class XPRunner {
 		}
 		Arrays.sort(differences);
 		for (int i = nbAlternatives - 2; i > 0; i--) {
-			double curr = previous - differences[i];
+			double curr = rounder.round(previous - differences[i]); 
 			weights.add(curr);
 			previous = curr;
 		}

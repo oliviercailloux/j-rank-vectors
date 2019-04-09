@@ -16,6 +16,7 @@ import com.google.common.collect.Range;
 
 import io.github.oliviercailloux.j_voting.VoterPartialPreference;
 import io.github.oliviercailloux.jlp.elements.ComparisonOperator;
+import io.github.oliviercailloux.minimax.utils.Rounder;
 import io.github.oliviercailloux.y2018.j_voting.Alternative;
 import io.github.oliviercailloux.y2018.j_voting.Voter;
 
@@ -78,6 +79,10 @@ public class PrefKnowledge {
 				lambdaRanges.put(rank, Range.closed(new Apint(1), new Apint(n)));
 			}
 		}
+	}
+	
+	public void setRounder(Rounder r) {
+		cow.setRounder(r);
 	}
 
 	/**
